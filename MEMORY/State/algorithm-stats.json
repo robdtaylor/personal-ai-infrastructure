@@ -1,0 +1,12 @@
+{
+  "total_sessions": 0,
+  "phases_completed": {
+    "OBSERVE": 0,
+    "THINK": 0,
+    "PLAN": 0,
+    "BUILD": 0,
+    "EXECUTE": 0,
+    "VERIFY": 0
+  },
+  "last_updated": null
+}

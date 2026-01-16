@@ -1,0 +1,695 @@
+#!/usr/bin/env bun
+
+/**
+ * AI Newsletter Generator
+ *
+ * Aggregates AI news from multiple sources and generates a Hugo-ready newsletter.
+ *
+ * Usage:
+ *   ai-newsletter                    # Generate today's newsletter
+ *   ai-newsletter --date 2026-01-15  # Generate for specific date
+ *   ai-newsletter --dry-run          # Preview without writing file
+ *   ai-newsletter --publish          # Generate and git push to deploy
+ *
+ * Sources:
+ *   - RSS: arXiv, HuggingFace, OpenAI, Google AI, MIT, etc.
+ *   - Research CLI: Perplexity, Claude, Gemini for recent news
+ *
+ * Output: Hugo markdown file in /Users/robt/Projects/robt-uk/content/newsletters/
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import { execSync, spawn } from 'child_process';
+
+// ============================================================================
+// Configuration
+// ============================================================================
+
+const BLOG_PATH = '/Users/robt/Projects/robt-uk';
+const NEWSLETTER_DIR = path.join(BLOG_PATH, 'content/newsletters');
+const RESEARCH_CLI = path.join(process.env.HOME || '', '.claude/bin/research');
+
+// RSS Feeds to aggregate
+const RSS_FEEDS = [
+  // Research papers (arXiv uses export.arxiv.org)
+  { name: 'arXiv AI', url: 'https://export.arxiv.org/rss/cs.AI', category: 'research' },
+  { name: 'arXiv ML', url: 'https://export.arxiv.org/rss/cs.LG', category: 'research' },
+  { name: 'arXiv NLP', url: 'https://export.arxiv.org/rss/cs.CL', category: 'research' },
+
+  // Company blogs
+  { name: 'OpenAI', url: 'https://openai.com/news/rss.xml', category: 'industry' },
+  { name: 'Google AI', url: 'https://blog.google/technology/ai/rss/', category: 'industry' },
+  { name: 'HuggingFace', url: 'https://huggingface.co/blog/feed.xml', category: 'industry' },
+  { name: 'DeepMind', url: 'https://deepmind.google/blog/rss.xml', category: 'industry' },
+
+  // News sites
+  { name: 'MIT AI News', url: 'https://news.mit.edu/rss/topic/artificial-intelligence2', category: 'news' },
+  { name: 'VentureBeat AI', url: 'https://venturebeat.com/category/ai/feed/', category: 'news' },
+  { name: 'The Verge AI', url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', category: 'news' },
+  { name: 'Ars Technica AI', url: 'https://feeds.arstechnica.com/arstechnica/technology-lab', category: 'news' },
+  { name: 'TechCrunch AI', url: 'https://techcrunch.com/category/artificial-intelligence/feed/', category: 'news' },
+  { name: 'Wired AI', url: 'https://www.wired.com/feed/tag/ai/latest/rss', category: 'news' },
+];
+
+interface FeedItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+  source: string;
+  category: string;
+}
+
+interface ResearchResult {
+  source: string;
+  content: string;
+  citations: string[];
+  success: boolean;
+}
+
+// ============================================================================
+// Content Sanitization
+// ============================================================================
+
+/**
+ * Strip internal Kai/Claude agent messages from content
+ * Defense in depth - research CLI also sanitizes, but double-check here
+ */
+function sanitizeResearchContent(content: string): string {
+  if (!content) return content;
+
+  // Filter line by line for more reliable matching
+  const lines = content.split('\n');
+  const filteredLines = lines.filter(line => {
+    const lower = line.toLowerCase();
+
+    // Skip Kai voice messages (🗣️ Kai: ...)
+    if (line.includes('Kai:') && (line.includes('🗣️') || line.includes('🗣'))) return false;
+
+    // Skip permission-related prompts (comprehensive patterns)
+    if (lower.includes('websearch tool requires permission')) return false;
+    if (lower.includes('permission to be granted')) return false;
+    if (lower.includes('please approve') && lower.includes('permission')) return false;
+    if (lower.includes('requires explicit user')) return false;
+    if (lower.includes('i need permission to use')) return false;
+    if (lower.includes('please grant access')) return false;
+    if (lower.includes('grant access so i can')) return false;
+    if (lower.includes('need permission to use websearch')) return false;
+    if (lower.includes('websearch') && lower.includes('permission')) return false;
+
+    // Skip internal format headers
+    if (line.match(/^📋\s*SUMMARY:/)) return false;
+    if (line.match(/^🔍\s*ANALYSIS:/)) return false;
+    if (line.match(/^⚡\s*ACTIONS:/)) return false;
+    if (line.match(/^✅\s*RESULTS:/)) return false;
+    if (line.match(/^➡️\s*NEXT:/)) return false;
+
+    return true;
+  });
+
+  // Clean up multiple blank lines left by removals
+  let sanitized = filteredLines.join('\n');
+  sanitized = sanitized.replace(/\n{3,}/g, '\n\n').trim();
+
+  return sanitized;
+}
+
+// ============================================================================
+// Deduplication - Check Previous Newsletters
+// ============================================================================
+
+interface PreviousContent {
+  urls: Set<string>;
+  titles: Set<string>;
+  titleWords: Set<string>;
+}
+
+function loadPreviousNewsletters(days: number = 7): PreviousContent {
+  const result: PreviousContent = {
+    urls: new Set(),
+    titles: new Set(),
+    titleWords: new Set(),
+  };
+
+  try {
+    const files = fs.readdirSync(NEWSLETTER_DIR)
+      .filter(f => f.endsWith('.md') && f !== '_index.md')
+      .sort()
+      .reverse()
+      .slice(0, days); // Last N newsletters
+
+    console.error(`[Dedup] Loading ${files.length} previous newsletters...`);
+
+    for (const file of files) {
+      const content = fs.readFileSync(path.join(NEWSLETTER_DIR, file), 'utf-8');
+
+      // Extract all URLs from markdown links [text](url)
+      const urlMatches = content.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g);
+      for (const match of urlMatches) {
+        const title = match[1];
+        const url = match[2];
+
+        // Normalize URL (remove tracking params, trailing slashes)
+        const normalizedUrl = normalizeUrl(url);
+        result.urls.add(normalizedUrl);
+
+        // Store title for fuzzy matching
+        const normalizedTitle = normalizeTitle(title);
+        result.titles.add(normalizedTitle);
+
+        // Store significant words for partial matching
+        const words = extractSignificantWords(title);
+        words.forEach(w => result.titleWords.add(w));
+      }
+    }
+
+    console.error(`[Dedup] Found ${result.urls.size} URLs, ${result.titles.size} titles from previous editions`);
+  } catch (err) {
+    console.error(`[Dedup] Error loading previous newsletters: ${err instanceof Error ? err.message : 'Unknown'}`);
+  }
+
+  return result;
+}
+
+function normalizeUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    // Remove common tracking params
+    ['utm_source', 'utm_medium', 'utm_campaign', 'ref', 'source'].forEach(p => {
+      parsed.searchParams.delete(p);
+    });
+    // Remove trailing slash
+    let path = parsed.pathname.replace(/\/$/, '');
+    return `${parsed.hostname}${path}`;
+  } catch {
+    return url.toLowerCase().trim();
+  }
+}
+
+function normalizeTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractSignificantWords(title: string): string[] {
+  const stopWords = new Set(['the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been',
+    'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
+    'may', 'might', 'must', 'shall', 'can', 'need', 'dare', 'ought', 'used', 'to', 'of',
+    'in', 'for', 'on', 'with', 'at', 'by', 'from', 'as', 'into', 'through', 'during',
+    'before', 'after', 'above', 'below', 'between', 'under', 'again', 'further', 'then',
+    'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'each', 'few', 'more',
+    'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so',
+    'than', 'too', 'very', 'just', 'and', 'but', 'if', 'or', 'because', 'until', 'while',
+    'about', 'against', 'its', 'new', 'says', 'said', 'now', 'also', 'get', 'gets']);
+
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .split(/\s+/)
+    .filter(w => w.length > 3 && !stopWords.has(w));
+}
+
+function isDuplicate(item: FeedItem, previous: PreviousContent): boolean {
+  // Check exact URL match
+  const normalizedUrl = normalizeUrl(item.link);
+  if (previous.urls.has(normalizedUrl)) {
+    return true;
+  }
+
+  // Check exact title match
+  const normalizedTitle = normalizeTitle(item.title);
+  if (previous.titles.has(normalizedTitle)) {
+    return true;
+  }
+
+  // Check for high word overlap (same story, different source)
+  const itemWords = extractSignificantWords(item.title);
+  if (itemWords.length >= 3) {
+    const matchCount = itemWords.filter(w => previous.titleWords.has(w)).length;
+    const matchRatio = matchCount / itemWords.length;
+    // If 70%+ of significant words match, likely duplicate story
+    if (matchRatio >= 0.7 && matchCount >= 3) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function deduplicateItems(items: FeedItem[], previous: PreviousContent): FeedItem[] {
+  const unique: FeedItem[] = [];
+  let duplicateCount = 0;
+
+  for (const item of items) {
+    if (isDuplicate(item, previous)) {
+      duplicateCount++;
+    } else {
+      unique.push(item);
+      // Also add this item to prevent duplicates within current batch
+      previous.urls.add(normalizeUrl(item.link));
+      previous.titles.add(normalizeTitle(item.title));
+      extractSignificantWords(item.title).forEach(w => previous.titleWords.add(w));
+    }
+  }
+
+  console.error(`[Dedup] Removed ${duplicateCount} duplicate items, ${unique.length} unique remaining`);
+  return unique;
+}
+
+// ============================================================================
+// RSS Fetching
+// ============================================================================
+
+async function fetchRSS(feed: typeof RSS_FEEDS[0]): Promise<FeedItem[]> {
+  try {
+    const response = await fetch(feed.url, {
+      headers: { 'User-Agent': 'PAI-Newsletter/1.0' },
+      signal: AbortSignal.timeout(10000),
+    });
+
+    if (!response.ok) {
+      console.error(`[RSS] ${feed.name}: HTTP ${response.status}`);
+      return [];
+    }
+
+    const xml = await response.text();
+    const items: FeedItem[] = [];
+
+    // Simple XML parsing for RSS items
+    const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
+    let match;
+
+    while ((match = itemRegex.exec(xml)) !== null) {
+      const itemXml = match[1];
+
+      const title = extractTag(itemXml, 'title');
+      const link = extractTag(itemXml, 'link') || extractTag(itemXml, 'guid');
+      const pubDate = extractTag(itemXml, 'pubDate') || extractTag(itemXml, 'dc:date');
+      const description = extractTag(itemXml, 'description') || extractTag(itemXml, 'summary');
+
+      if (title && link) {
+        items.push({
+          title: cleanText(title),
+          link: link.trim(),
+          pubDate: pubDate || new Date().toISOString(),
+          description: cleanText(description || '').slice(0, 300),
+          source: feed.name,
+          category: feed.category,
+        });
+      }
+    }
+
+    // Also try Atom format
+    const entryRegex = /<entry>([\s\S]*?)<\/entry>/gi;
+    while ((match = entryRegex.exec(xml)) !== null) {
+      const entryXml = match[1];
+
+      const title = extractTag(entryXml, 'title');
+      const linkMatch = entryXml.match(/<link[^>]*href=["']([^"']+)["']/);
+      const link = linkMatch ? linkMatch[1] : extractTag(entryXml, 'id');
+      const pubDate = extractTag(entryXml, 'published') || extractTag(entryXml, 'updated');
+      const description = extractTag(entryXml, 'summary') || extractTag(entryXml, 'content');
+
+      if (title && link) {
+        items.push({
+          title: cleanText(title),
+          link: link.trim(),
+          pubDate: pubDate || new Date().toISOString(),
+          description: cleanText(description || '').slice(0, 300),
+          source: feed.name,
+          category: feed.category,
+        });
+      }
+    }
+
+    console.error(`[RSS] ${feed.name}: ${items.length} items`);
+    return items;
+  } catch (err) {
+    console.error(`[RSS] ${feed.name}: ${err instanceof Error ? err.message : 'Failed'}`);
+    return [];
+  }
+}
+
+function extractTag(xml: string, tag: string): string {
+  const regex = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, 'i');
+  const match = xml.match(regex);
+  return match ? match[1] : '';
+}
+
+function cleanText(text: string): string {
+  return text
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&#8211;/g, '-')
+    .replace(/&#8212;/g, '-')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+async function fetchAllRSS(): Promise<FeedItem[]> {
+  console.error('[RSS] Fetching from', RSS_FEEDS.length, 'sources...');
+
+  const results = await Promise.all(RSS_FEEDS.map(feed => fetchRSS(feed)));
+  const allItems = results.flat();
+
+  // Filter to last 24-48 hours
+  const cutoff = new Date();
+  cutoff.setHours(cutoff.getHours() - 48);
+
+  const recentItems = allItems.filter(item => {
+    try {
+      const itemDate = new Date(item.pubDate);
+      return itemDate >= cutoff;
+    } catch {
+      return true; // Include if date parsing fails
+    }
+  });
+
+  // Sort by date (newest first)
+  recentItems.sort((a, b) => {
+    try {
+      return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+    } catch {
+      return 0;
+    }
+  });
+
+  console.error(`[RSS] Total recent items: ${recentItems.length}`);
+  return recentItems;
+}
+
+// ============================================================================
+// Research CLI Integration
+// ============================================================================
+
+async function runResearch(query: string): Promise<ResearchResult[]> {
+  return new Promise((resolve) => {
+    console.error(`[Research] Running: ${query}`);
+
+    try {
+      const result = execSync(`${RESEARCH_CLI} --all "${query}"`, {
+        encoding: 'utf-8',
+        timeout: 120000,
+        stdio: ['pipe', 'pipe', 'pipe'],
+      });
+
+      const parsed = JSON.parse(result);
+      resolve(Array.isArray(parsed) ? parsed : [parsed]);
+    } catch (err) {
+      console.error(`[Research] Error: ${err instanceof Error ? err.message : 'Failed'}`);
+      resolve([]);
+    }
+  });
+}
+
+async function gatherResearchContent(dateStr: string): Promise<ResearchResult[]> {
+  const queries = [
+    `AI news announcements ${dateStr} breakthroughs launches`,
+    `AI funding deals acquisitions startups ${dateStr}`,
+    `AI regulation policy government ${dateStr}`,
+  ];
+
+  const results: ResearchResult[] = [];
+
+  for (const query of queries) {
+    const queryResults = await runResearch(query);
+    results.push(...queryResults);
+  }
+
+  return results;
+}
+
+// ============================================================================
+// Newsletter Generation
+// ============================================================================
+
+function categorizeItems(items: FeedItem[]): Record<string, FeedItem[]> {
+  const categories: Record<string, FeedItem[]> = {
+    'Top Stories': [],
+    'Research & Papers': [],
+    'Industry Updates': [],
+    'News & Analysis': [],
+  };
+
+  for (const item of items) {
+    if (item.category === 'research') {
+      categories['Research & Papers'].push(item);
+    } else if (item.category === 'industry') {
+      categories['Industry Updates'].push(item);
+    } else {
+      categories['News & Analysis'].push(item);
+    }
+  }
+
+  // Promote interesting items to Top Stories (simple heuristic)
+  const topKeywords = ['launch', 'announce', 'release', 'breakthrough', 'billion', 'million', 'gpt', 'claude', 'gemini', 'llama'];
+
+  for (const cat of ['Industry Updates', 'News & Analysis']) {
+    const promoted: FeedItem[] = [];
+    categories[cat] = categories[cat].filter(item => {
+      const isTop = topKeywords.some(kw =>
+        item.title.toLowerCase().includes(kw) ||
+        item.description.toLowerCase().includes(kw)
+      );
+      if (isTop && categories['Top Stories'].length < 5) {
+        promoted.push(item);
+        return false;
+      }
+      return true;
+    });
+    categories['Top Stories'].push(...promoted);
+  }
+
+  return categories;
+}
+
+function generateMarkdown(
+  dateStr: string,
+  rssItems: FeedItem[],
+  researchResults: ResearchResult[]
+): string {
+  const categorized = categorizeItems(rssItems);
+  const formattedDate = new Date(dateStr).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  // Generate title from top story if available
+  const topStory = categorized['Top Stories'][0];
+  const titleSuffix = topStory
+    ? topStory.title.slice(0, 50) + (topStory.title.length > 50 ? '...' : '')
+    : 'Daily AI Roundup';
+
+  let md = `---
+title: "AI Daily Briefing: ${titleSuffix}"
+date: ${dateStr}
+draft: false
+description: "Your daily digest of AI news, research breakthroughs, and industry updates for ${formattedDate}"
+tags: ["AI", "Machine Learning", "Newsletter", "Daily Briefing"]
+---
+
+*${formattedDate}*
+
+`;
+
+  // TL;DR Section
+  md += `## TL;DR
+
+`;
+
+  const totalItems = Object.values(categorized).flat().length;
+  md += `Today's briefing covers **${totalItems} items** from ${RSS_FEEDS.length} sources. `;
+
+  if (categorized['Top Stories'].length > 0) {
+    md += `Top stories include: ${categorized['Top Stories'].slice(0, 3).map(i => i.title).join('; ')}.\n\n`;
+  } else {
+    md += '\n\n';
+  }
+
+  // Top Stories
+  if (categorized['Top Stories'].length > 0) {
+    md += `## Top Stories\n\n`;
+    for (const item of categorized['Top Stories'].slice(0, 5)) {
+      md += `### [${item.title}](${item.link})\n`;
+      md += `*${item.source}*\n\n`;
+      if (item.description) {
+        md += `${item.description}\n\n`;
+      }
+    }
+  }
+
+  // Research & Papers
+  if (categorized['Research & Papers'].length > 0) {
+    md += `## Research Corner\n\n`;
+    md += `| Paper | Source |\n|-------|--------|\n`;
+    for (const item of categorized['Research & Papers'].slice(0, 10)) {
+      const shortTitle = item.title.length > 80 ? item.title.slice(0, 77) + '...' : item.title;
+      md += `| [${shortTitle}](${item.link}) | ${item.source} |\n`;
+    }
+    md += '\n';
+  }
+
+  // Industry Updates
+  if (categorized['Industry Updates'].length > 0) {
+    md += `## Industry Updates\n\n`;
+    for (const item of categorized['Industry Updates'].slice(0, 8)) {
+      md += `- **[${item.title}](${item.link})** - ${item.source}\n`;
+    }
+    md += '\n';
+  }
+
+  // News & Analysis
+  if (categorized['News & Analysis'].length > 0) {
+    md += `## News & Analysis\n\n`;
+    for (const item of categorized['News & Analysis'].slice(0, 8)) {
+      md += `- [${item.title}](${item.link}) *(${item.source})*\n`;
+    }
+    md += '\n';
+  }
+
+  // Research-sourced content (from Perplexity/Claude/Gemini)
+  const successfulResearch = researchResults.filter(r => r.success && r.content);
+  if (successfulResearch.length > 0) {
+    md += `## Deep Dive: Today's AI Landscape\n\n`;
+    md += `*Synthesized from multiple research sources*\n\n`;
+
+    // Extract key points from research
+    for (const result of successfulResearch.slice(0, 2)) {
+      if (result.content) {
+        // Sanitize to remove any internal agent messages, then take first 800 chars
+        const cleanContent = sanitizeResearchContent(result.content);
+        const summary = cleanContent.slice(0, 800).split('\n').slice(0, 5).join('\n');
+        if (summary.trim()) {
+          md += `${summary}\n\n`;
+        }
+      }
+
+      // Add citations as additional reading
+      if (result.citations && result.citations.length > 0) {
+        md += `**Sources:**\n`;
+        for (const citation of result.citations.slice(0, 5)) {
+          if (citation.startsWith('http')) {
+            const domain = new URL(citation).hostname.replace('www.', '');
+            md += `- [${domain}](${citation})\n`;
+          }
+        }
+        md += '\n';
+      }
+    }
+  }
+
+  // Footer
+  md += `---
+
+*This newsletter is automatically generated by [PAI](https://github.com/robdtaylor/pai) using RSS aggregation and AI research tools. Sources include arXiv, HuggingFace, OpenAI, Google AI, MIT News, VentureBeat, and more.*
+
+*Have feedback? Reply to this post or reach out on [X/Twitter](https://twitter.com/robdtaylor).*
+`;
+
+  return md;
+}
+
+// ============================================================================
+// Main
+// ============================================================================
+
+async function main() {
+  const args = process.argv.slice(2);
+  const dryRun = args.includes('--dry-run');
+  const publish = args.includes('--publish');
+  const skipResearch = args.includes('--skip-research');
+
+  // Parse date
+  let dateStr: string;
+  const dateIdx = args.indexOf('--date');
+  if (dateIdx !== -1 && args[dateIdx + 1]) {
+    dateStr = args[dateIdx + 1];
+  } else {
+    dateStr = new Date().toISOString().split('T')[0];
+  }
+
+  console.error(`\n=== AI Newsletter Generator ===`);
+  console.error(`Date: ${dateStr}`);
+  console.error(`Dry run: ${dryRun}`);
+  console.error(`Skip research: ${skipResearch}`);
+  console.error('');
+
+  // Load previous newsletters for deduplication
+  const previousContent = loadPreviousNewsletters(7);
+
+  // Fetch RSS feeds
+  const rawRssItems = await fetchAllRSS();
+
+  // Deduplicate against previous newsletters
+  const rssItems = deduplicateItems(rawRssItems, previousContent);
+
+  // Check if we have enough unique content
+  if (rssItems.length < 3 && !dryRun) {
+    console.error(`\n[Warning] Only ${rssItems.length} unique items found after deduplication.`);
+    console.error('[Warning] Consider: slow news day, or RSS feeds need refresh.');
+  }
+
+  // Run research queries (optional, slower)
+  let researchResults: ResearchResult[] = [];
+  if (!skipResearch) {
+    researchResults = await gatherResearchContent(dateStr);
+    console.error(`[Research] Got ${researchResults.length} results`);
+  }
+
+  // Generate markdown
+  const markdown = generateMarkdown(dateStr, rssItems, researchResults);
+
+  if (dryRun) {
+    console.log(markdown);
+    return;
+  }
+
+  // Write file
+  const slug = 'ai-daily-briefing';
+  const filename = `${dateStr}-${slug}.md`;
+  const filepath = path.join(NEWSLETTER_DIR, filename);
+
+  // Ensure directory exists
+  if (!fs.existsSync(NEWSLETTER_DIR)) {
+    fs.mkdirSync(NEWSLETTER_DIR, { recursive: true });
+  }
+
+  fs.writeFileSync(filepath, markdown);
+  console.error(`\n[Output] Written to: ${filepath}`);
+
+  // Publish if requested
+  if (publish) {
+    console.error('\n[Publish] Deploying to blog...');
+    try {
+      execSync(`cd ${BLOG_PATH} && git add content/newsletters/ && git commit -m "Add newsletter: ${dateStr}" && git push origin main`, {
+        stdio: 'inherit',
+      });
+      console.error('[Publish] Done! Cloudflare will deploy in ~1-2 minutes.');
+    } catch (err) {
+      console.error('[Publish] Git operation failed:', err instanceof Error ? err.message : err);
+    }
+  }
+
+  console.error('\n=== Complete ===\n');
+}
+
+main().catch(err => {
+  console.error('Fatal error:', err);
+  process.exit(1);
+});

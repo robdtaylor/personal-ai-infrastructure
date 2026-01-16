@@ -1,0 +1,106 @@
+#!/bin/bash
+#
+# AI Newsletter Service Manager
+#
+# Usage:
+#   newsletter-manage install    - Enable daily auto-generation at 7 AM
+#   newsletter-manage uninstall  - Disable auto-generation
+#   newsletter-manage status     - Check service status
+#   newsletter-manage logs       - View recent logs
+#   newsletter-manage run        - Generate newsletter now (dry run)
+#   newsletter-manage publish    - Generate and publish now
+#
+
+PLIST_SRC="$HOME/.claude/bin/ai-newsletter.plist"
+PLIST_DST="$HOME/Library/LaunchAgents/com.pai.ai-newsletter.plist"
+LOG_DIR="$HOME/.claude/logs"
+NEWSLETTER_CLI="$HOME/.claude/bin/ai-newsletter"
+
+# Ensure log directory exists
+mkdir -p "$LOG_DIR"
+
+case "$1" in
+    install)
+        echo "Installing AI Newsletter service..."
+
+        # Copy plist to LaunchAgents
+        cp "$PLIST_SRC" "$PLIST_DST"
+
+        # Load the service
+        launchctl load "$PLIST_DST"
+
+        echo "Done! Newsletter will generate daily at 7:00 AM"
+        echo "Logs: $LOG_DIR/ai-newsletter.log"
+        ;;
+
+    uninstall)
+        echo "Uninstalling AI Newsletter service..."
+
+        # Unload the service
+        launchctl unload "$PLIST_DST" 2>/dev/null
+
+        # Remove plist
+        rm -f "$PLIST_DST"
+
+        echo "Done! Auto-generation disabled."
+        ;;
+
+    status)
+        echo "=== AI Newsletter Service Status ==="
+        if launchctl list | grep -q "com.pai.ai-newsletter"; then
+            echo "Status: RUNNING"
+            launchctl list | grep "com.pai.ai-newsletter"
+        else
+            echo "Status: NOT RUNNING"
+        fi
+
+        echo ""
+        echo "=== Recent Activity ==="
+        if [ -f "$LOG_DIR/ai-newsletter.log" ]; then
+            tail -20 "$LOG_DIR/ai-newsletter.log"
+        else
+            echo "No logs yet"
+        fi
+        ;;
+
+    logs)
+        echo "=== Newsletter Logs ==="
+        if [ -f "$LOG_DIR/ai-newsletter.log" ]; then
+            tail -50 "$LOG_DIR/ai-newsletter.log"
+        else
+            echo "No logs yet"
+        fi
+
+        echo ""
+        echo "=== Error Logs ==="
+        if [ -f "$LOG_DIR/ai-newsletter.error.log" ]; then
+            tail -20 "$LOG_DIR/ai-newsletter.error.log"
+        else
+            echo "No errors"
+        fi
+        ;;
+
+    run)
+        echo "Generating newsletter (dry run)..."
+        "$NEWSLETTER_CLI" --dry-run
+        ;;
+
+    publish)
+        echo "Generating and publishing newsletter..."
+        "$NEWSLETTER_CLI" --publish
+        ;;
+
+    *)
+        echo "AI Newsletter Service Manager"
+        echo ""
+        echo "Usage: newsletter-manage <command>"
+        echo ""
+        echo "Commands:"
+        echo "  install    - Enable daily auto-generation at 7 AM"
+        echo "  uninstall  - Disable auto-generation"
+        echo "  status     - Check service status"
+        echo "  logs       - View recent logs"
+        echo "  run        - Generate newsletter now (dry run)"
+        echo "  publish    - Generate and publish now"
+        ;;
+esac

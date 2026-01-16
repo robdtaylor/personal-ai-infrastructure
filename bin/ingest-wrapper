@@ -1,0 +1,2 @@
+#!/bin/bash
+exec bun ${PAI_DIR:-~/.config/pai}/bin/ingest/ingest.ts "$@"

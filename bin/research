@@ -1,0 +1,422 @@
+#!/usr/bin/env bun
+
+/**
+ * PAI Research CLI - Miessler-style composable research tool
+ *
+ * Usage:
+ *   research --perplexity "query"    # Search via Perplexity API
+ *   research --claude "query"        # Search via Claude WebSearch
+ *   research --gemini "query"        # Search via Gemini API
+ *   research --all "query"           # All sources in parallel
+ *   research --help                  # Show help
+ *
+ * Output: JSON to stdout (pipe-friendly)
+ * Errors: stderr (won't break pipes)
+ */
+
+import * as fs from 'fs';
+import * as path from 'path';
+import * as os from 'os';
+
+// ============================================================================
+// Configuration
+// ============================================================================
+
+interface ResearchResult {
+  source: string;
+  query: string;
+  timestamp: string;
+  success: boolean;
+  content?: string;
+  citations?: string[];
+  error?: string;
+  duration_ms?: number;
+}
+
+// Load environment variables from multiple locations
+function loadEnv(): Record<string, string> {
+  const env: Record<string, string> = { ...process.env } as Record<string, string>;
+
+  const envPaths = [
+    path.join(os.homedir(), '.claude', '.env'),
+    path.join(os.homedir(), '.config', 'pai', '.env'),
+    path.join(os.homedir(), '.env'),
+  ];
+
+  for (const envPath of envPaths) {
+    if (fs.existsSync(envPath)) {
+      const content = fs.readFileSync(envPath, 'utf-8');
+      content.split('\n').forEach(line => {
+        const trimmed = line.trim();
+        if (trimmed && !trimmed.startsWith('#')) {
+          const eqIndex = trimmed.indexOf('=');
+          if (eqIndex > 0) {
+            const key = trimmed.slice(0, eqIndex);
+            const value = trimmed.slice(eqIndex + 1).replace(/^["']|["']$/g, '');
+            env[key] = value;
+          }
+        }
+      });
+    }
+  }
+
+  return env;
+}
+
+const ENV = loadEnv();
+
+// ============================================================================
+// Content Sanitization
+// ============================================================================
+
+/**
+ * Strip internal Kai/Claude agent messages from content
+ * These should never appear in published output
+ */
+function sanitizeContent(content: string): string {
+  if (!content) return content;
+
+  // Filter line by line for more reliable matching
+  const lines = content.split('\n');
+  const filteredLines = lines.filter(line => {
+    const lower = line.toLowerCase();
+
+    // Skip Kai voice messages (🗣️ Kai: ...)
+    if (line.includes('Kai:') && (line.includes('🗣️') || line.includes('🗣'))) return false;
+
+    // Skip permission-related prompts (comprehensive patterns)
+    if (lower.includes('websearch tool requires permission')) return false;
+    if (lower.includes('permission to be granted')) return false;
+    if (lower.includes('please approve') && lower.includes('permission')) return false;
+    if (lower.includes('requires explicit user')) return false;
+    if (lower.includes('i need permission to use')) return false;
+    if (lower.includes('please grant access')) return false;
+    if (lower.includes('grant access so i can')) return false;
+    if (lower.includes('need permission to use websearch')) return false;
+    if (lower.includes('websearch') && lower.includes('permission')) return false;
+
+    // Skip internal format headers
+    if (line.match(/^📋\s*SUMMARY:/)) return false;
+    if (line.match(/^🔍\s*ANALYSIS:/)) return false;
+    if (line.match(/^⚡\s*ACTIONS:/)) return false;
+    if (line.match(/^✅\s*RESULTS:/)) return false;
+    if (line.match(/^➡️\s*NEXT:/)) return false;
+
+    return true;
+  });
+
+  // Clean up multiple blank lines left by removals
+  let sanitized = filteredLines.join('\n');
+  sanitized = sanitized.replace(/\n{3,}/g, '\n\n').trim();
+
+  return sanitized;
+}
+
+// ============================================================================
+// Research Providers
+// ============================================================================
+
+async function searchPerplexity(query: string): Promise<ResearchResult> {
+  const start = Date.now();
+  const apiKey = ENV.PERPLEXITY_API_KEY;
+
+  if (!apiKey) {
+    return {
+      source: 'perplexity',
+      query,
+      timestamp: new Date().toISOString(),
+      success: false,
+      error: 'PERPLEXITY_API_KEY not set. Add to ~/.claude/.env or ~/.config/pai/.env',
+    };
+  }
+
+  try {
+    const response = await fetch('https://api.perplexity.ai/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'sonar',
+        messages: [{ role: 'user', content: query }],
+        return_citations: true,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json() as any;
+    const content = data.choices?.[0]?.message?.content || '';
+    const citations = data.citations?.map((c: any) => c.url || c) || [];
+
+    return {
+      source: 'perplexity',
+      query,
+      timestamp: new Date().toISOString(),
+      success: true,
+      content,
+      citations,
+      duration_ms: Date.now() - start,
+    };
+  } catch (error: any) {
+    return {
+      source: 'perplexity',
+      query,
+      timestamp: new Date().toISOString(),
+      success: false,
+      error: error.message,
+      duration_ms: Date.now() - start,
+    };
+  }
+}
+
+async function searchGemini(query: string): Promise<ResearchResult> {
+  const start = Date.now();
+  const apiKey = ENV.GOOGLE_API_KEY || ENV.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    return {
+      source: 'gemini',
+      query,
+      timestamp: new Date().toISOString(),
+      success: false,
+      error: 'GOOGLE_API_KEY not set. Add to ~/.claude/.env or ~/.config/pai/.env',
+    };
+  }
+
+  try {
+    // Use Gemini 2.0 Flash with Google Search grounding
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: query }] }],
+          tools: [{ googleSearch: {} }],
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`API error: ${response.status} - ${errText}`);
+    }
+
+    const data = await response.json() as any;
+    const content = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+    // Extract grounding sources if available
+    const groundingMetadata = data.candidates?.[0]?.groundingMetadata;
+    const citations = groundingMetadata?.groundingChunks?.map((c: any) =>
+      c.web?.uri || c.retrievedContext?.uri
+    ).filter(Boolean) || [];
+
+    return {
+      source: 'gemini',
+      query,
+      timestamp: new Date().toISOString(),
+      success: true,
+      content,
+      citations,
+      duration_ms: Date.now() - start,
+    };
+  } catch (error: any) {
+    return {
+      source: 'gemini',
+      query,
+      timestamp: new Date().toISOString(),
+      success: false,
+      error: error.message,
+      duration_ms: Date.now() - start,
+    };
+  }
+}
+
+async function searchClaude(query: string): Promise<ResearchResult> {
+  const start = Date.now();
+
+  try {
+    // Use Claude Code as subprocess with WebSearch
+    const claudePath = path.join(os.homedir(), '.local', 'bin', 'claude');
+
+    const proc = Bun.spawn([
+      claudePath,
+      '-p', `Use WebSearch to research: "${query}". Return ONLY the key findings as a concise summary. No preamble.`,
+      '--output-format', 'json',
+      '--max-turns', '3',
+    ], {
+      stdout: 'pipe',
+      stderr: 'pipe',
+      env: { ...process.env, NO_COLOR: '1' },
+    });
+
+    const stdout = await new Response(proc.stdout).text();
+    const stderr = await new Response(proc.stderr).text();
+    const exitCode = await proc.exited;
+
+    if (exitCode !== 0) {
+      throw new Error(`Claude exited with code ${exitCode}: ${stderr}`);
+    }
+
+    // Parse the JSONL output to extract the response
+    // Collect all assistant text content, prefer final result if available
+    let assistantContent = '';
+    let resultContent = '';
+
+    const lines = stdout.trim().split('\n');
+    for (const line of lines) {
+      try {
+        const parsed = JSON.parse(line);
+
+        // Check for final result with actual content
+        if (parsed.type === 'result' && typeof parsed.result === 'string' && parsed.result.length > 0) {
+          resultContent = parsed.result;
+        }
+
+        // Collect assistant message text blocks
+        if (parsed.type === 'assistant' && parsed.message?.content) {
+          for (const block of parsed.message.content) {
+            if (block.type === 'text') {
+              assistantContent += block.text + '\n';
+            }
+          }
+        }
+      } catch {
+        // Not JSON, skip
+      }
+    }
+
+    // Prefer result content if available, otherwise use collected assistant content
+    const rawContent = resultContent || assistantContent.trim();
+
+    if (!rawContent) {
+      throw new Error('No content extracted from Claude response');
+    }
+
+    // Sanitize to remove any internal Kai/agent messages
+    const content = sanitizeContent(rawContent);
+
+    return {
+      source: 'claude',
+      query,
+      timestamp: new Date().toISOString(),
+      success: true,
+      content,
+      citations: [], // Claude doesn't provide structured citations via CLI
+      duration_ms: Date.now() - start,
+    };
+  } catch (error: any) {
+    return {
+      source: 'claude',
+      query,
+      timestamp: new Date().toISOString(),
+      success: false,
+      error: error.message,
+      duration_ms: Date.now() - start,
+    };
+  }
+}
+
+// ============================================================================
+// CLI Handler
+// ============================================================================
+
+function printHelp() {
+  console.log(`
+PAI Research CLI - Miessler-style composable research tool
+
+USAGE:
+  research --perplexity "query"    Search via Perplexity API (requires PERPLEXITY_API_KEY)
+  research --claude "query"        Search via Claude WebSearch (free, no API key)
+  research --gemini "query"        Search via Gemini API (requires GOOGLE_API_KEY)
+  research --all "query"           All sources in parallel
+  research --help                  Show this help
+
+OUTPUT:
+  JSON to stdout (pipe-friendly)
+
+EXAMPLES:
+  research --perplexity "latest AI news 2026"
+  research --all "quantum computing breakthroughs" | jq '.[] | .content'
+  research --claude "rust vs go performance" > results.json
+
+ENVIRONMENT:
+  API keys can be set in:
+    ~/.claude/.env
+    ~/.config/pai/.env
+    ~/.env
+
+  Required keys:
+    PERPLEXITY_API_KEY - For --perplexity
+    GOOGLE_API_KEY     - For --gemini
+`);
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+
+  if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
+    printHelp();
+    process.exit(0);
+  }
+
+  // Parse flags and query
+  let sources: string[] = [];
+  let query = '';
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    if (arg === '--perplexity' || arg === '-p') {
+      sources.push('perplexity');
+    } else if (arg === '--claude' || arg === '-c') {
+      sources.push('claude');
+    } else if (arg === '--gemini' || arg === '-g') {
+      sources.push('gemini');
+    } else if (arg === '--all' || arg === '-a') {
+      sources = ['perplexity', 'claude', 'gemini'];
+    } else if (!arg.startsWith('-')) {
+      // This is the query
+      query = args.slice(i).join(' ');
+      break;
+    }
+  }
+
+  if (!query) {
+    console.error('Error: No query provided');
+    console.error('Usage: research --perplexity "your query here"');
+    process.exit(1);
+  }
+
+  if (sources.length === 0) {
+    console.error('Error: No source specified');
+    console.error('Use --perplexity, --claude, --gemini, or --all');
+    process.exit(1);
+  }
+
+  // Execute searches in parallel
+  const searchFns: Record<string, (q: string) => Promise<ResearchResult>> = {
+    perplexity: searchPerplexity,
+    claude: searchClaude,
+    gemini: searchGemini,
+  };
+
+  const promises = sources.map(source => searchFns[source](query));
+  const results = await Promise.all(promises);
+
+  // Output JSON
+  if (results.length === 1) {
+    console.log(JSON.stringify(results[0], null, 2));
+  } else {
+    console.log(JSON.stringify(results, null, 2));
+  }
+}
+
+main().catch(err => {
+  console.error(JSON.stringify({ error: err.message }));
+  process.exit(1);
+});

@@ -1,0 +1,91 @@
+#!/bin/bash
+# Screenshot capture script for macOS
+# Takes a screenshot and sends it to Telegram capture bot
+#
+# Usage:
+#   capture-screenshot              # Interactive selection
+#   capture-screenshot --window     # Capture active window
+#   capture-screenshot --fullscreen # Capture full screen
+#   capture-screenshot --caption "my caption"  # Add caption
+
+set -euo pipefail
+
+CONFIG_FILE="${PAI_DIR:-$HOME/.config/pai}/.telegram-config.json"
+TEMP_FILE="/tmp/capture-screenshot-$(date +%s).png"
+CAPTION="#screenshot"
+MODE="interactive"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --window|-w)
+            MODE="window"
+            shift
+            ;;
+        --fullscreen|-f)
+            MODE="fullscreen"
+            shift
+            ;;
+        --caption|-c)
+            CAPTION="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            echo "Usage: capture-screenshot [--window|--fullscreen] [--caption TEXT]" >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Check if config exists
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "Error: Telegram not configured. Run 'ingest setup' first." >&2
+    exit 1
+fi
+
+# Read config
+TOKEN=$(grep -o '"botToken"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+CHAT_ID=$(grep -o '"chatId"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+
+if [[ -z "$TOKEN" ]] || [[ -z "$CHAT_ID" ]]; then
+    echo "Error: Invalid configuration. Run 'ingest setup' to reconfigure." >&2
+    exit 1
+fi
+
+# Take screenshot based on mode
+case "$MODE" in
+    interactive)
+        screencapture -i "$TEMP_FILE"
+        ;;
+    window)
+        screencapture -w "$TEMP_FILE"
+        ;;
+    fullscreen)
+        screencapture "$TEMP_FILE"
+        ;;
+esac
+
+# Check if screenshot was taken (user might have cancelled)
+if [[ ! -f "$TEMP_FILE" ]]; then
+    echo "Screenshot cancelled"
+    exit 0
+fi
+
+# Send photo to Telegram
+RESPONSE=$(curl -s "https://api.telegram.org/bot${TOKEN}/sendPhoto" \
+    -F "chat_id=${CHAT_ID}" \
+    -F "photo=@${TEMP_FILE}" \
+    -F "caption=${CAPTION}")
+
+# Clean up temp file
+rm -f "$TEMP_FILE"
+
+if echo "$RESPONSE" | grep -q '"ok":true'; then
+    osascript -e 'display notification "Screenshot captured" with title "Captured"' 2>/dev/null || true
+    echo "Screenshot captured with caption: $CAPTION"
+else
+    osascript -e 'display notification "Failed to capture screenshot" with title "Error"' 2>/dev/null || true
+    echo "Error: $RESPONSE" >&2
+    exit 1
+fi

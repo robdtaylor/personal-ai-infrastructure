@@ -1,0 +1,63 @@
+#!/bin/bash
+# Quick capture script for macOS
+# Sends text to Telegram capture bot
+#
+# Usage:
+#   capture "text to capture"     # Send text directly
+#   capture                        # Send clipboard contents
+#   echo "text" | capture          # Pipe text to capture
+
+set -euo pipefail
+
+CONFIG_FILE="${PAI_DIR:-$HOME/.config/pai}/.telegram-config.json"
+
+# Check if config exists
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "Error: Telegram not configured. Run 'ingest setup' first." >&2
+    exit 1
+fi
+
+# Read config
+TOKEN=$(grep -o '"botToken"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+CHAT_ID=$(grep -o '"chatId"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+
+if [[ -z "$TOKEN" ]] || [[ -z "$CHAT_ID" ]]; then
+    echo "Error: Invalid configuration. Run 'ingest setup' to reconfigure." >&2
+    exit 1
+fi
+
+# Get text from argument, stdin, or clipboard
+if [[ -n "${1:-}" ]]; then
+    # Text provided as argument
+    TEXT="$*"
+elif [[ ! -t 0 ]]; then
+    # Text piped via stdin
+    TEXT=$(cat)
+else
+    # No argument or stdin, use clipboard
+    TEXT=$(pbpaste 2>/dev/null || echo "")
+fi
+
+if [[ -z "$TEXT" ]]; then
+    echo "Error: No text provided and clipboard is empty" >&2
+    exit 1
+fi
+
+# Send to Telegram
+RESPONSE=$(curl -s "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+    -d "chat_id=${CHAT_ID}" \
+    --data-urlencode "text=${TEXT}")
+
+if echo "$RESPONSE" | grep -q '"ok":true'; then
+    # Show notification on macOS
+    osascript -e 'display notification "Captured to Telegram" with title "Captured"' 2>/dev/null || true
+
+    # Show preview in terminal
+    PREVIEW="${TEXT:0:50}"
+    [[ ${#TEXT} -gt 50 ]] && PREVIEW="${PREVIEW}..."
+    echo "Captured: $PREVIEW"
+else
+    osascript -e 'display notification "Failed to capture" with title "Error"' 2>/dev/null || true
+    echo "Error: $RESPONSE" >&2
+    exit 1
+fi

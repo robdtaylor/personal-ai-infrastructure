@@ -1,0 +1,93 @@
+#!/bin/bash
+#
+# pai-note - Quick note capture from phone SSH
+#
+# Usage:
+#   pai-note "BOM review with John - discussed 3% reduction target"
+#   pai-note -c quality "Scrap rate increased on line 4"
+#   pai-note -c hoshin "A1 objective behind - need A3"
+#
+# Categories: quality, supplier, cost, hoshin, meeting, action, idea, general
+#
+
+set -e
+
+OBSIDIAN_DIR="${HOME}/Documents/personal"
+INBOX_DIR="${OBSIDIAN_DIR}/Inbox"
+
+# Colors
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+usage() {
+    echo "PAI Quick Note Capture"
+    echo ""
+    echo "Usage: pai-note [-c category] \"note content\""
+    echo ""
+    echo "Categories:"
+    echo "  quality   - Quality issues, defects, PPM"
+    echo "  supplier  - Supplier related"
+    echo "  cost      - Cost, BOM, budget"
+    echo "  hoshin    - Strategy, objectives"
+    echo "  meeting   - Meeting notes"
+    echo "  action    - Action items, todos"
+    echo "  idea      - Ideas, suggestions"
+    echo "  general   - General notes (default)"
+    echo ""
+    echo "Examples:"
+    echo "  pai-note \"Quick thought about process improvement\""
+    echo "  pai-note -c quality \"Line 3 scrap spike - investigate\""
+}
+
+# Default category
+CATEGORY="general"
+
+# Parse arguments
+while getopts "c:h" opt; do
+    case $opt in
+        c) CATEGORY="$OPTARG" ;;
+        h) usage; exit 0 ;;
+        *) usage; exit 1 ;;
+    esac
+done
+shift $((OPTIND-1))
+
+# Get note content
+NOTE_CONTENT="$*"
+
+if [ -z "$NOTE_CONTENT" ]; then
+    echo "Error: Note content required"
+    usage
+    exit 1
+fi
+
+# Ensure inbox exists
+mkdir -p "$INBOX_DIR"
+
+# Generate filename
+TIMESTAMP=$(date '+%Y-%m-%d-%H%M%S')
+DATE=$(date '+%Y-%m-%d')
+TITLE=$(echo "$NOTE_CONTENT" | head -c 40 | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/-$//')
+FILENAME="${DATE}-${TITLE}-ssh-note.md"
+FILEPATH="${INBOX_DIR}/${FILENAME}"
+
+# Create note
+cat > "$FILEPATH" << EOF
+---
+date: ${DATE}
+time: $(date '+%H:%M:%S')
+source: ssh-phone
+category: ${CATEGORY}
+---
+
+# ${NOTE_CONTENT}
+
+---
+*Captured via SSH from phone - $(date '+%Y-%m-%d %H:%M')*
+EOF
+
+echo -e "${GREEN}✓ Note saved:${NC} ${FILENAME}"
+echo -e "${BLUE}Category:${NC} ${CATEGORY}"
+echo ""
+echo "Process later with: pai-quick inbox"

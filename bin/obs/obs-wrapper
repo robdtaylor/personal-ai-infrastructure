@@ -1,0 +1,3 @@
+#!/bin/bash
+# obs-wrapper - Run the obs CLI with bun
+cd "$(dirname "$0")" && exec bun run obs.ts "$@"

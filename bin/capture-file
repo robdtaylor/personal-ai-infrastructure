@@ -1,0 +1,102 @@
+#!/bin/bash
+# File capture script for macOS
+# Sends a file to Telegram capture bot as a document
+#
+# Usage:
+#   capture-file /path/to/file.pdf
+#   capture-file /path/to/file.pdf --caption "Important doc"
+#   capture-file --pick                    # Open file picker
+
+set -euo pipefail
+
+CONFIG_FILE="${PAI_DIR:-$HOME/.config/pai}/.telegram-config.json"
+CAPTION=""
+FILE_PATH=""
+PICK_MODE=false
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --caption|-c)
+            CAPTION="$2"
+            shift 2
+            ;;
+        --pick|-p)
+            PICK_MODE=true
+            shift
+            ;;
+        -*)
+            echo "Unknown option: $1" >&2
+            echo "Usage: capture-file FILE [--caption TEXT] | capture-file --pick" >&2
+            exit 1
+            ;;
+        *)
+            FILE_PATH="$1"
+            shift
+            ;;
+    esac
+done
+
+# Check if config exists
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "Error: Telegram not configured. Run 'ingest setup' first." >&2
+    exit 1
+fi
+
+# Read config
+TOKEN=$(grep -o '"botToken"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+CHAT_ID=$(grep -o '"chatId"[[:space:]]*:[[:space:]]*"[^"]*"' "$CONFIG_FILE" | cut -d'"' -f4)
+
+if [[ -z "$TOKEN" ]] || [[ -z "$CHAT_ID" ]]; then
+    echo "Error: Invalid configuration. Run 'ingest setup' to reconfigure." >&2
+    exit 1
+fi
+
+# If pick mode, open file dialog
+if $PICK_MODE; then
+    FILE_PATH=$(osascript -e 'set theFile to choose file with prompt "Select file to capture"
+return POSIX path of theFile' 2>/dev/null) || {
+        echo "File selection cancelled"
+        exit 0
+    }
+fi
+
+# Check if file was provided
+if [[ -z "$FILE_PATH" ]]; then
+    echo "Error: No file specified" >&2
+    echo "Usage: capture-file FILE [--caption TEXT] | capture-file --pick" >&2
+    exit 1
+fi
+
+# Check if file exists
+if [[ ! -f "$FILE_PATH" ]]; then
+    echo "Error: File not found: $FILE_PATH" >&2
+    exit 1
+fi
+
+# Get filename for display
+FILENAME=$(basename "$FILE_PATH")
+
+# Build curl command
+CURL_ARGS=(
+    -s
+    "https://api.telegram.org/bot${TOKEN}/sendDocument"
+    -F "chat_id=${CHAT_ID}"
+    -F "document=@${FILE_PATH}"
+)
+
+if [[ -n "$CAPTION" ]]; then
+    CURL_ARGS+=(-F "caption=${CAPTION}")
+fi
+
+# Send document to Telegram
+RESPONSE=$(curl "${CURL_ARGS[@]}")
+
+if echo "$RESPONSE" | grep -q '"ok":true'; then
+    osascript -e "display notification \"Sent: $FILENAME\" with title \"Captured\"" 2>/dev/null || true
+    echo "Captured file: $FILENAME"
+else
+    osascript -e 'display notification "Failed to capture file" with title "Error"' 2>/dev/null || true
+    echo "Error: $RESPONSE" >&2
+    exit 1
+fi

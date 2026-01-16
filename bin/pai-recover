@@ -1,0 +1,384 @@
+#!/usr/bin/env bun
+/**
+ * PAI Session Recovery Tool
+ * View and recover work from interrupted sessions
+ */
+
+import { readFileSync, readdirSync, existsSync, statSync } from 'fs';
+import { join } from 'path';
+import { homedir } from 'os';
+
+const PAI_DIR = process.env.PAI_DIR || join(homedir(), '.claude');
+const CHECKPOINT_DIR = join(PAI_DIR, 'checkpoints');
+
+// Color codes
+const RESET = '\x1b[0m';
+const BRIGHT = '\x1b[1m';
+const RED = '\x1b[31m';
+const GREEN = '\x1b[32m';
+const YELLOW = '\x1b[33m';
+const BLUE = '\x1b[34m';
+const CYAN = '\x1b[36m';
+
+interface Checkpoint {
+  session_id: string;
+  timestamp: number;
+  timestamp_pst: string;
+  last_prompt: string;
+  tools_used: string[];
+  files_modified: string[];
+  current_task: string;
+  status: string;
+  event_count: number;
+  timestamp_end?: number;
+  timestamp_end_pst?: string;
+}
+
+interface EmergencySave {
+  session_id: string;
+  timestamp: number;
+  timestamp_pst: string;
+  event_type: string;
+  last_prompt: string;
+  work_completed: string[];
+  files_modified: string[];
+  tools_used: string[];
+  status: 'completed' | 'interrupted' | 'error';
+  notification_sent: boolean;
+}
+
+// Format timestamp for display
+function formatTimestamp(pst: string): string {
+  // Convert "2025-12-14 14:35:00 PST" to "Dec 14, 14:35"
+  const parts = pst.split(' ');
+  if (parts.length < 2) return pst;
+
+  const dateParts = parts[0].split('-');
+  const timeParts = parts[1].split(':');
+
+  if (dateParts.length < 3 || timeParts.length < 2) return pst;
+
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = months[parseInt(dateParts[1]) - 1] || dateParts[1];
+  const day = dateParts[2];
+  const time = `${timeParts[0]}:${timeParts[1]}`;
+
+  return `${month} ${day}, ${time}`;
+}
+
+// Get status icon and color
+function getStatusDisplay(status: string): { icon: string; color: string } {
+  switch (status) {
+    case 'completed':
+      return { icon: '✅', color: GREEN };
+    case 'interrupted':
+      return { icon: '⚠️ ', color: YELLOW };
+    case 'in_progress':
+      return { icon: '🔄', color: CYAN };
+    case 'error':
+      return { icon: '❌', color: RED };
+    default:
+      return { icon: '  ', color: RESET };
+  }
+}
+
+// List all sessions
+function listSessions() {
+  if (!existsSync(CHECKPOINT_DIR)) {
+    console.log(`${YELLOW}No checkpoints found. Sessions will be tracked once you start using Claude.${RESET}`);
+    return;
+  }
+
+  // Get all checkpoint files
+  const files = readdirSync(CHECKPOINT_DIR)
+    .filter(f => f.endsWith('.json') && !f.startsWith('.') && f !== 'last-checkpoint.json')
+    .sort((a, b) => {
+      const statA = statSync(join(CHECKPOINT_DIR, a));
+      const statB = statSync(join(CHECKPOINT_DIR, b));
+      return statB.mtimeMs - statA.mtimeMs; // Most recent first
+    });
+
+  if (files.length === 0) {
+    console.log(`${YELLOW}No session checkpoints found.${RESET}`);
+    return;
+  }
+
+  console.log(`${BRIGHT}Recent PAI Sessions${RESET}`);
+  console.log('═══════════════════════════════════════════════════════════════\n');
+
+  const sessions: Array<{ id: string; checkpoint?: Checkpoint; emergency?: EmergencySave }> = [];
+
+  // Load sessions
+  files.forEach(file => {
+    try {
+      const filePath = join(CHECKPOINT_DIR, file);
+      const data = JSON.parse(readFileSync(filePath, 'utf-8'));
+
+      if (file.startsWith('emergency-')) {
+        const sessionId = file.replace('emergency-', '').replace('.json', '');
+        let existing = sessions.find(s => s.id === sessionId);
+        if (!existing) {
+          existing = { id: sessionId };
+          sessions.push(existing);
+        }
+        existing.emergency = data;
+      } else {
+        const sessionId = file.replace('.json', '');
+        let existing = sessions.find(s => s.id === sessionId);
+        if (!existing) {
+          existing = { id: sessionId };
+          sessions.push(existing);
+        }
+        existing.checkpoint = data;
+      }
+    } catch {
+      // Ignore invalid files
+    }
+  });
+
+  // Display sessions (limit to 10 most recent)
+  sessions.slice(0, 10).forEach((session, index) => {
+    const data = session.emergency || session.checkpoint;
+    if (!data) return;
+
+    const sessionIdShort = session.id.substring(0, 12);
+    const statusData = session.emergency ? session.emergency.status : session.checkpoint?.status || 'unknown';
+    const { icon, color } = getStatusDisplay(statusData);
+    const timeStr = formatTimestamp(data.timestamp_pst);
+    const task = data.last_prompt ? data.last_prompt.substring(0, 60) : 'No task recorded';
+
+    console.log(`${icon} ${color}${statusData.toUpperCase().padEnd(12)}${RESET} ${CYAN}${sessionIdShort}${RESET}`);
+    console.log(`   ${BLUE}Time:${RESET} ${timeStr}`);
+    console.log(`   ${BLUE}Task:${RESET} ${task}${data.last_prompt.length > 60 ? '...' : ''}`);
+
+    if (session.emergency) {
+      const work = session.emergency.work_completed.length;
+      const files = session.emergency.files_modified.length;
+      console.log(`   ${BLUE}Work:${RESET} ${work} actions, ${files} files modified`);
+
+      if (session.emergency.notification_sent) {
+        console.log(`   ${GREEN}📱 Telegram notification sent${RESET}`);
+      }
+    }
+
+    console.log('');
+  });
+
+  console.log(`${BRIGHT}Commands:${RESET}`);
+  console.log(`  pai-recover show <session-id>  - View session details`);
+  console.log(`  pai-recover checkpoint         - View current session checkpoint`);
+  console.log('');
+}
+
+// Show session details
+function showSession(sessionIdPrefix: string) {
+  if (!existsSync(CHECKPOINT_DIR)) {
+    console.log(`${RED}No checkpoints found.${RESET}`);
+    return;
+  }
+
+  // Find matching session
+  const files = readdirSync(CHECKPOINT_DIR).filter(f => f.startsWith(sessionIdPrefix));
+
+  if (files.length === 0) {
+    console.log(`${RED}No session found matching: ${sessionIdPrefix}${RESET}`);
+    return;
+  }
+
+  // Load checkpoint and emergency data
+  let checkpoint: Checkpoint | null = null;
+  let emergency: EmergencySave | null = null;
+
+  files.forEach(file => {
+    const filePath = join(CHECKPOINT_DIR, file);
+    try {
+      const data = JSON.parse(readFileSync(filePath, 'utf-8'));
+      if (file.startsWith('emergency-')) {
+        emergency = data;
+      } else if (file.endsWith('.json') && !file.startsWith('.')) {
+        checkpoint = data;
+      }
+    } catch {
+      // Ignore
+    }
+  });
+
+  if (!checkpoint && !emergency) {
+    console.log(`${RED}Could not load session data.${RESET}`);
+    return;
+  }
+
+  const data = emergency || checkpoint;
+  if (!data) return;
+
+  const sessionId = data.session_id;
+  const { icon, color } = getStatusDisplay(emergency?.status || checkpoint?.status || 'unknown');
+
+  console.log(`${BRIGHT}Session Recovery${RESET}`);
+  console.log('═══════════════════════════════════════════════════════════════\n');
+
+  console.log(`${BLUE}Session ID:${RESET} ${sessionId}`);
+  console.log(`${BLUE}Status:${RESET} ${icon} ${color}${(emergency?.status || checkpoint?.status || 'unknown').toUpperCase()}${RESET}`);
+  console.log(`${BLUE}Started:${RESET} ${formatTimestamp(data.timestamp_pst)}`);
+
+  if (checkpoint?.timestamp_end_pst) {
+    console.log(`${BLUE}Ended:${RESET} ${formatTimestamp(checkpoint.timestamp_end_pst)}`);
+  }
+
+  console.log('');
+
+  // Last task/prompt
+  if (data.last_prompt) {
+    console.log(`${BRIGHT}Last Task:${RESET}`);
+    console.log(`  ${data.last_prompt}`);
+    console.log('');
+  }
+
+  // Work completed
+  if (emergency && emergency.work_completed.length > 0) {
+    console.log(`${BRIGHT}Work Completed:${RESET}`);
+    emergency.work_completed.forEach(item => {
+      console.log(`  ${GREEN}•${RESET} ${item}`);
+    });
+    console.log('');
+  }
+
+  // Files modified
+  const modifiedFiles = emergency?.files_modified || checkpoint?.files_modified || [];
+  if (modifiedFiles.length > 0) {
+    console.log(`${BRIGHT}Files Modified (${modifiedFiles.length}):${RESET}`);
+    modifiedFiles.slice(0, 10).forEach(file => {
+      console.log(`  ${CYAN}•${RESET} ${file}`);
+    });
+    if (modifiedFiles.length > 10) {
+      console.log(`  ${YELLOW}... and ${modifiedFiles.length - 10} more${RESET}`);
+    }
+    console.log('');
+  }
+
+  // Tools used
+  const tools = data.tools_used || [];
+  if (tools.length > 0) {
+    console.log(`${BRIGHT}Tools Used:${RESET} ${tools.join(', ')}`);
+    console.log('');
+  }
+
+  // Event count
+  if (checkpoint?.event_count) {
+    console.log(`${BLUE}Total Events:${RESET} ${checkpoint.event_count}`);
+    console.log('');
+  }
+
+  // Recovery suggestions
+  if (emergency && emergency.status === 'interrupted') {
+    console.log(`${BRIGHT}${YELLOW}Recovery Suggestions:${RESET}`);
+    console.log(`  1. Review files modified above`);
+    console.log(`  2. Check git status for uncommitted changes`);
+    console.log(`  3. Resume work with context: "${data.last_prompt.substring(0, 50)}..."`);
+    console.log('');
+  }
+}
+
+// Show current checkpoint
+function showCurrentCheckpoint() {
+  if (!existsSync(CHECKPOINT_DIR)) {
+    console.log(`${YELLOW}No checkpoints directory found.${RESET}`);
+    return;
+  }
+
+  const lastCheckpointFile = join(CHECKPOINT_DIR, 'last-checkpoint.json');
+
+  if (!existsSync(lastCheckpointFile)) {
+    console.log(`${YELLOW}No active session checkpoint.${RESET}`);
+    return;
+  }
+
+  try {
+    const lastInfo = JSON.parse(readFileSync(lastCheckpointFile, 'utf-8'));
+    const sessionId = lastInfo.session_id;
+
+    const checkpointFile = join(CHECKPOINT_DIR, `${sessionId}.json`);
+    if (!existsSync(checkpointFile)) {
+      console.log(`${YELLOW}Current checkpoint file not found.${RESET}`);
+      return;
+    }
+
+    const checkpoint: Checkpoint = JSON.parse(readFileSync(checkpointFile, 'utf-8'));
+
+    console.log(`${BRIGHT}Current Session Checkpoint${RESET}`);
+    console.log('═══════════════════════════════════════════════════════════════\n');
+
+    console.log(`${BLUE}Session ID:${RESET} ${sessionId.substring(0, 12)}`);
+    console.log(`${BLUE}Last Checkpoint:${RESET} ${formatTimestamp(checkpoint.timestamp_pst)}`);
+    console.log(`${BLUE}Status:${RESET} ${checkpoint.status}`);
+    console.log('');
+
+    if (checkpoint.current_task) {
+      console.log(`${BRIGHT}Current Task:${RESET}`);
+      console.log(`  ${checkpoint.current_task}`);
+      console.log('');
+    }
+
+    console.log(`${BLUE}Events Captured:${RESET} ${checkpoint.event_count}`);
+    console.log(`${BLUE}Tools Used:${RESET} ${checkpoint.tools_used.join(', ') || 'None'}`);
+    console.log(`${BLUE}Files Modified:${RESET} ${checkpoint.files_modified.length}`);
+
+    console.log('');
+  } catch (error) {
+    console.log(`${RED}Error reading checkpoint: ${error}${RESET}`);
+  }
+}
+
+// Show help
+function showHelp() {
+  console.log(`${BRIGHT}PAI Session Recovery Tool${RESET}`);
+  console.log('═══════════════════════════════════════════════════════════════\n');
+  console.log('Recover work from interrupted or crashed sessions.\n');
+  console.log(`${BRIGHT}Usage:${RESET}`);
+  console.log('  pai-recover list                  List recent sessions');
+  console.log('  pai-recover show <session-id>     Show session details');
+  console.log('  pai-recover checkpoint            Show current checkpoint');
+  console.log('  pai-recover help                  Show this help\n');
+  console.log(`${BRIGHT}Examples:${RESET}`);
+  console.log('  pai-recover list');
+  console.log('  pai-recover show abc123');
+  console.log('  pai-recover checkpoint\n');
+}
+
+// Main
+function main() {
+  const args = process.argv.slice(2);
+  const command = args[0] || 'list';
+
+  switch (command) {
+    case 'list':
+      listSessions();
+      break;
+
+    case 'show':
+      if (args.length < 2) {
+        console.log(`${RED}Error: Session ID required${RESET}`);
+        console.log('Usage: pai-recover show <session-id>');
+        process.exit(1);
+      }
+      showSession(args[1]);
+      break;
+
+    case 'checkpoint':
+      showCurrentCheckpoint();
+      break;
+
+    case 'help':
+    case '--help':
+    case '-h':
+      showHelp();
+      break;
+
+    default:
+      console.log(`${RED}Unknown command: ${command}${RESET}\n`);
+      showHelp();
+      process.exit(1);
+  }
+}
+
+main();

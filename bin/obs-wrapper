@@ -1,0 +1,3 @@
+#\!/bin/bash
+# obs - Obsidian Vault CLI wrapper
+exec bun ${PAI_DIR:-~/.config/pai}/bin/obs/obs.ts "$@"

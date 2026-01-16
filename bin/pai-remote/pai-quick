@@ -1,0 +1,180 @@
+#!/bin/bash
+#
+# pai-quick - Quick PAI queries from phone via SSH
+#
+# Usage:
+#   pai-quick "what's the status of our Q4 objectives?"
+#   pai-quick hoshin          # Quick Hoshin status
+#   pai-quick inbox           # Process Telegram inbox
+#   pai-quick brief           # Morning briefing
+#
+
+set -e
+
+PAI_DIR="${HOME}/.claude"
+OBSIDIAN_DIR="${HOME}/Documents/personal"
+
+# Color codes for terminal
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+usage() {
+    echo "PAI Quick Commands (Phone SSH)"
+    echo ""
+    echo "Usage: pai-quick <command|query>"
+    echo ""
+    echo "Built-in commands:"
+    echo "  hoshin    - Show Hoshin Kanri status summary"
+    echo "  inbox     - Process Telegram inbox notes"
+    echo "  brief     - Generate morning briefing"
+    echo "  actions   - List pending action items"
+    echo "  help      - Show this help"
+    echo ""
+    echo "Or pass any query:"
+    echo "  pai-quick \"what are the key quality issues this month?\""
+    echo ""
+}
+
+# Process Telegram inbox
+process_inbox() {
+    echo -e "${BLUE}📬 Processing Telegram Inbox...${NC}"
+    if [ -f "${PAI_DIR}/hooks/process-telegram-inbox.ts" ]; then
+        bun run "${PAI_DIR}/hooks/process-telegram-inbox.ts"
+    else
+        echo -e "${RED}Error: Telegram processor not found${NC}"
+        exit 1
+    fi
+}
+
+# Show Hoshin status summary
+hoshin_status() {
+    echo -e "${BLUE}📊 Hoshin Kanri Status${NC}"
+    echo "========================"
+
+    # Check for bowling charts in Obsidian
+    BOWLING_DIR="${OBSIDIAN_DIR}/Hoshin/bowling-charts"
+    if [ -d "$BOWLING_DIR" ]; then
+        echo ""
+        echo -e "${GREEN}Active Bowling Charts:${NC}"
+        find "$BOWLING_DIR" -name "*.md" -mtime -30 2>/dev/null | while read f; do
+            basename "$f" .md
+        done
+    fi
+
+    # Check for A3s
+    A3_DIR="${OBSIDIAN_DIR}/Hoshin/a3s"
+    if [ -d "$A3_DIR" ]; then
+        echo ""
+        echo -e "${YELLOW}Active A3s:${NC}"
+        find "$A3_DIR" -name "*.md" -mtime -30 2>/dev/null | while read f; do
+            basename "$f" .md
+        done
+    fi
+
+    # Check for recent processed notes
+    PROCESSED_DIR="${OBSIDIAN_DIR}/AI-Processed"
+    if [ -d "$PROCESSED_DIR" ]; then
+        echo ""
+        echo -e "${BLUE}Recent Processed Notes (7 days):${NC}"
+        find "$PROCESSED_DIR" -name "*hoshin*" -o -name "*quality*" -o -name "*cost*" -mtime -7 2>/dev/null | head -5 | while read f; do
+            basename "$f" .md
+        done
+    fi
+
+    echo ""
+    echo "Use 'pai-query' for detailed analysis"
+}
+
+# List pending action items
+list_actions() {
+    echo -e "${BLUE}📋 Pending Action Items${NC}"
+    echo "========================"
+
+    # Scan processed notes for unchecked items
+    PROCESSED_DIR="${OBSIDIAN_DIR}/AI-Processed"
+    if [ -d "$PROCESSED_DIR" ]; then
+        echo ""
+        grep -rh "^\- \[ \]" "$PROCESSED_DIR"/*.md 2>/dev/null | head -20 || echo "No pending actions found"
+    fi
+
+    # Also check Inbox for unprocessed items
+    INBOX_DIR="${OBSIDIAN_DIR}/Inbox"
+    if [ -d "$INBOX_DIR" ]; then
+        UNPROCESSED=$(find "$INBOX_DIR" -name "*-telegram.md" -exec grep -L "pai-processed: true" {} \; 2>/dev/null | wc -l | tr -d ' ')
+        if [ "$UNPROCESSED" -gt 0 ]; then
+            echo ""
+            echo -e "${YELLOW}⚠️  $UNPROCESSED unprocessed Telegram notes in Inbox${NC}"
+            echo "Run: pai-quick inbox"
+        fi
+    fi
+}
+
+# Generate morning briefing
+morning_brief() {
+    echo -e "${BLUE}☀️  Morning Briefing - $(date '+%A, %B %d')${NC}"
+    echo "========================================"
+
+    echo ""
+    echo -e "${GREEN}📬 Inbox Status:${NC}"
+    INBOX_DIR="${OBSIDIAN_DIR}/Inbox"
+    if [ -d "$INBOX_DIR" ]; then
+        TOTAL=$(find "$INBOX_DIR" -name "*-telegram.md" 2>/dev/null | wc -l | tr -d ' ')
+        UNPROCESSED=$(find "$INBOX_DIR" -name "*-telegram.md" -exec grep -L "pai-processed: true" {} \; 2>/dev/null | wc -l | tr -d ' ')
+        echo "  Total Telegram notes: $TOTAL"
+        echo "  Unprocessed: $UNPROCESSED"
+    fi
+
+    echo ""
+    echo -e "${GREEN}📊 Recent Activity:${NC}"
+    PROCESSED_DIR="${OBSIDIAN_DIR}/AI-Processed"
+    if [ -d "$PROCESSED_DIR" ]; then
+        RECENT=$(find "$PROCESSED_DIR" -name "*.md" -mtime -1 2>/dev/null | wc -l | tr -d ' ')
+        echo "  Notes processed (24h): $RECENT"
+    fi
+
+    echo ""
+    echo -e "${GREEN}🎯 Hoshin Focus:${NC}"
+    # Try to find current month's focus
+    CURRENT_MONTH=$(date '+%Y-%m')
+    HOSHIN_DIR="${OBSIDIAN_DIR}/Hoshin"
+    if [ -d "$HOSHIN_DIR" ]; then
+        find "$HOSHIN_DIR" -name "*.md" -newer /tmp/.pai-week-marker 2>/dev/null | head -3 | while read f; do
+            echo "  - $(basename "$f" .md)"
+        done
+    fi
+
+    echo ""
+    echo "---"
+    echo "Commands: hoshin | inbox | actions"
+}
+
+# Main
+case "${1:-}" in
+    "")
+        usage
+        ;;
+    "help"|"-h"|"--help")
+        usage
+        ;;
+    "hoshin")
+        hoshin_status
+        ;;
+    "inbox")
+        process_inbox
+        ;;
+    "brief"|"briefing"|"morning")
+        morning_brief
+        ;;
+    "actions"|"todos"|"tasks")
+        list_actions
+        ;;
+    *)
+        # Pass query to Claude Code
+        echo -e "${BLUE}🤖 Querying PAI...${NC}"
+        echo ""
+        cd "${PAI_DIR}" && claude -p "$1"
+        ;;
+esac

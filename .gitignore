@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.bun/
+
+# Build outputs
+dist/
+build/
+*.js.map
+
+# Cache and temp files
+cache/
+.cache/
+*.log
+.DS_Store
+
+# State files (regenerated at runtime)
+skills/*/State/*.json
+
+# Sensitive data
+*.env
+*.env.*
+.env.homeassistant
+.credentials.json
+credentials.json
+secrets/
+
+# Runtime state
+.signals-state.json
+agent-sessions.json
+obs-embeddings.db
+
+# History (large/sensitive)
+history
+history.jsonl
+history_old_backup/
+history_to_remove/
+file-history/
+
+# Debug
+debug/
+
+# Session/runtime data
+projects/
+todos/
+shell-snapshots/
+statsig/
+stats-cache.json
+settings.local.json
+checkpoints/
+paste-cache/
+plans/
+
+# Backup files
+*.jsonl.bak-*
+*.bak
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db

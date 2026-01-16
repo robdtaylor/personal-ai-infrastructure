@@ -1,0 +1,15 @@
+{
+  "_customization": {
+    "description": "Personal YouTube channels for AI content",
+    "merge_strategy": "append"
+  },
+  "channels": [
+    {
+      "name": "Indy Dev Dan",
+      "channel_id": "@indydevdan",
+      "url": "https://www.youtube.com/@indydevdan",
+      "priority": "HIGH",
+      "description": "Claude Code tutorials and AI development"
+    }
+  ]
+}

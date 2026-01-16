@@ -1,0 +1,20 @@
+{
+  "name": "n8n-skill",
+  "version": "1.0.0",
+  "description": "PAI skill for creating n8n workflows from natural language",
+  "type": "module",
+  "scripts": {
+    "client": "bun run n8n-client.ts",
+    "generate": "bun run workflow-generator.ts",
+    "health": "bun run n8n-client.ts health",
+    "list": "bun run n8n-client.ts list",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  }
+}
