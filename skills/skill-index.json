@@ -1,8 +1,8 @@
 {
   "generated": "2026-01-15T19:48:00.000Z",
-  "totalSkills": 16,
+  "totalSkills": 15,
   "alwaysLoadedCount": 1,
-  "deferredCount": 15,
+  "deferredCount": 14,
   "skills": {
     "photorealisticart": {
       "name": "PhotoRealisticArt",
@@ -156,14 +156,6 @@
       "workflows": [],
       "tier": "always"
     },
-    "homeassistant": {
-      "name": "HomeAssistant",
-      "path": "HomeAssistant/SKILL.md",
-      "fullDescription": "|",
-      "triggers": [],
-      "workflows": [],
-      "tier": "deferred"
-    },
     "createskill": {
       "name": "CreateSkill",
       "path": "CreateSkill/SKILL.md",
@@ -226,21 +218,6 @@
       "workflows": ["Anthropic", "YouTube", "ReleaseNotesDeepDive"],
       "tier": "deferred"
     },
-    "infrastructure": {
-      "name": "Infrastructure",
-      "path": "Infrastructure/SKILL.md",
-      "fullDescription": "Network infrastructure, servers, and service endpoints. USE WHEN accessing Gitea, SSH, or local network services.",
-      "triggers": [
-        "gitea",
-        "ssh",
-        "server",
-        "infrastructure",
-        "network",
-        "192.168"
-      ],
-      "workflows": [],
-      "tier": "deferred"
-    },
     "research": {
       "name": "Research",
       "path": "Research/SKILL.md",
@@ -256,6 +233,36 @@
         "gemini"
       ],
       "workflows": ["Conduct", "ClaudeResearch", "PerplexityResearch", "Fabric", "Retrieve"],
+      "tier": "deferred"
+    },
+    "shippinglogistics": {
+      "name": "ShippingLogistics",
+      "path": "ShippingLogistics/SKILL.md",
+      "fullDescription": "UK, US, and Canadian shipping, logistics, customs, duties, and tariff expert with automotive commodity code expertise. Covers import/export documentation, HS/HTS codes, rules of origin, FTAs, and landed cost calculations. USE WHEN user says 'shipping', 'customs', 'tariff', 'duty', 'import', 'export', 'HS code', 'HTS code', 'commodity code', 'landed cost', 'incoterms', 'customs broker', 'freight', 'logistics', 'rules of origin', 'CUSMA', 'USMCA', 'TCA', or needs help with international trade compliance.",
+      "triggers": [
+        "shipping",
+        "customs",
+        "tariff",
+        "duty",
+        "import",
+        "export",
+        "HS code",
+        "HTS code",
+        "commodity code",
+        "landed cost",
+        "incoterms",
+        "customs broker",
+        "freight",
+        "logistics",
+        "rules of origin",
+        "CUSMA",
+        "USMCA",
+        "TCA",
+        "CBSA",
+        "CBP",
+        "HMRC"
+      ],
+      "workflows": [],
       "tier": "deferred"
     }
   }
