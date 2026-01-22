@@ -1,14 +1,70 @@
 # ShippingLogistics - Extended Context
 
+## Dual-Perspective Guidance (CRITICAL)
+
+**Every tariff, customs, and trade compliance response MUST include both Conservative and Aggressive views.**
+
+### Why Two Perspectives?
+
+Trade compliance exists on a spectrum. The same facts can support multiple legitimate positions:
+- **Conservative**: What a cautious compliance officer would do (minimise audit risk)
+- **Aggressive**: What a strategic trade consultant would explore (minimise duty cost)
+
+Neither is inherently right or wrong. The best approach depends on:
+- Company risk tolerance
+- Transaction value/volume
+- Existing compliance track record
+- Strategic importance of the trade route
+- Available resources to defend positions
+
+### Example: Steel Bracket Classification
+
+**Facts:** Importing steel mounting brackets for automotive seats from Mexico to US.
+
+**🛡️ Conservative View:**
+> Classify under 8708.99.8180 (other motor vehicle parts) at 2.5% MFN duty. Given Section 232 steel tariffs, also declare steel content and apply 25% derivative tariff unless CUSMA certification obtained. Total duty exposure: 27.5%.
+>
+> *Rationale: Safest classification. No risk of penalty for misclassification.*
+
+**🚀 Aggressive View:**
+> Classify under 9401.90.1085 (seat parts) at 0% duty. Obtain CUSMA certificate showing 75%+ RVC to avoid Section 232 tariffs entirely. Request supplier declaration confirming Mexican steel/aluminum sourcing to satisfy melt-and-pour requirements. Total duty: 0%.
+>
+> *Rationale: Seat parts classification defensible based on primary function. CUSMA eliminates Section 232 if properly documented.*
+
+**⚖️ Recommendation:**
+> For ongoing production volumes, pursue the aggressive position with proper documentation. Request binding ruling from CBP to lock in 9401 classification. One-time administrative cost yields permanent duty savings.
+
+---
+
+### Example: UK-EU Rules of Origin
+
+**Facts:** UK company imports German-made automotive sensors, adds UK wiring harness, exports to EU customer.
+
+**🛡️ Conservative View:**
+> Without detailed BOM analysis, assume the sensor does not undergo sufficient transformation in UK. Export to EU without EUR.1, customer pays MFN duty (typically 3-4.5%). Avoid risk of origin fraud penalties.
+>
+> *Rationale: UK processing may be insufficient for tariff shift. Better to let customer claim back if they can prove origin.*
+
+**🚀 Aggressive View:**
+> Analyse value-add in UK. If UK content (labour, wiring harness, packaging, testing) exceeds 50% ex-works price, goods may qualify as UK origin under TCA cumulation rules. Issue supplier declaration, customer claims zero duty.
+>
+> *Rationale: TCA allows EU content to count toward UK origin. Combined UK+German content likely meets threshold.*
+
+**⚖️ Recommendation:**
+> Run the RVC calculation. If marginal (45-55%), conservative approach safer. If clearly >55% UK+EU content, issue declaration with supporting documentation.
+
+---
+
 ## Expert Guidance Principles
 
 When assisting with shipping, customs, and logistics queries:
 
-1. **Always verify current rates** - Tariff rates change frequently. Direct users to official sources for final confirmation.
-2. **Consider total landed cost** - Don't just look at duty rates; include freight, insurance, handling, VAT/GST.
-3. **Check for trade agreements** - Many goods qualify for preferential rates under FTAs.
-4. **Document requirements vary** - Different entry types have different documentation needs.
-5. **Rules of origin are complex** - Don't assume preferential treatment; it must be proven.
+1. **Always provide both perspectives** - Conservative for risk mitigation, Aggressive for cost optimisation.
+2. **Always verify current rates** - Tariff rates change frequently. Direct users to official sources for final confirmation.
+3. **Consider total landed cost** - Don't just look at duty rates; include freight, insurance, handling, VAT/GST.
+4. **Check for trade agreements** - Many goods qualify for preferential rates under FTAs.
+5. **Document requirements vary** - Different entry types have different documentation needs.
+6. **Rules of origin are complex** - Don't assume preferential treatment; it must be proven.
 
 ---
 

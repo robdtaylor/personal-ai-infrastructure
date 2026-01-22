@@ -1,10 +1,6 @@
 ---
-name: SkillsMatrix
-description: |
-  Operator training and competency tracking for MNMUK machine shop.
-  Supports IATF 16949 competency requirements and workforce planning.
-  USE WHEN user asks 'who can run', 'training matrix', 'competency', 'skills matrix',
-  'operator certification', 'who is trained on', or workforce planning questions.
+name: Skillsmatrix
+description: Operator training and competency tracking for MNMUK machine shop. Supports IATF 16949 competency requirements and workforce planning. USE WHEN user asks 'who can run', 'training matrix', 'competency', 'skills matrix', 'operator certification', 'who is trained on', or workforce planning questions.
 ---
 
 # SkillsMatrix - Operator Competency Tracking

@@ -1,10 +1,6 @@
 ---
-name: ToolCrib
-description: |
-  Tool inventory management for MNMUK machine shop.
-  Tracks tooling, inserts, consumables with reorder points and usage.
-  USE WHEN user asks 'tool inventory', 'what inserts', 'reorder', 'tool crib',
-  'do we have', 'tooling cost', or 'tool usage'.
+name: Toolcrib
+description: Tool inventory management for MNMUK machine shop. Tracks tooling, inserts, consumables with reorder points and usage. USE WHEN user asks 'tool inventory', 'what inserts', 'reorder', 'tool crib', 'do we have', 'tooling cost', or 'tool usage'.
 ---
 
 # ToolCrib - Tooling Inventory Management

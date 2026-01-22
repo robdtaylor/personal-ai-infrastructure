@@ -1,12 +1,6 @@
 ---
-name: HoshinKanri
-description: |
-  Strategic policy deployment system for automotive manufacturing. Cascades Group-level targets to shop floor through X-Matrix, catchball process, and bowling chart tracking.
-
-  USE WHEN user says 'hoshin', 'x-matrix', 'catchball', 'bowling chart', 'strategy deployment', 'cascade objectives',
-  'breakthrough objectives', 'strategic planning', 'policy deployment', or requests help with annual planning integration.
-
-  Integrates with IATF 16949 quality systems and AutomotiveManufacturing skill for work instruction cascade.
+name: Hoshinkanri
+description: Strategic policy deployment system for automotive manufacturing. Cascades Group-level targets to shop floor through X-Matrix, catchball process, and bowling chart tracking.  USE WHEN user says 'hoshin', 'x-matrix', 'catchball', 'bowling chart', 'strategy deployment', 'cascade objectives', 'breakthrough objectives', 'strategic planning', 'policy deployment', or requests help with annual planning integration.  Integrates with IATF 16949 quality systems and AutomotiveManufacturing skill for work instruction cascade.
 ---
 
 # Hoshin Kanri - Strategic Policy Deployment

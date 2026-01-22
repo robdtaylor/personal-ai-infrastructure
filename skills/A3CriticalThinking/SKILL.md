@@ -1,13 +1,6 @@
 ---
-name: A3CriticalThinking
-description: |
-  Toyota-style A3 problem solving with embedded priority hierarchy: Safety First, then Customer Value, then Shareholder Value.
-  Structured thinking framework for manufacturing decisions, root cause analysis, and countermeasure development.
-
-  USE WHEN user says 'A3', 'problem solving', 'root cause', 'countermeasure', '5 whys', 'fishbone', 'ishikawa',
-  'priority decision', 'safety first', 'critical thinking', or needs structured analysis of manufacturing problems.
-
-  Integrates with AutomotiveManufacturing and HoshinKanri skills.
+name: A3criticalthinking
+description: Toyota-style A3 problem solving with embedded priority hierarchy: Safety First, then Customer Value, then Shareholder Value. Structured thinking framework for manufacturing decisions, root cause analysis, and countermeasure development.  USE WHEN user says 'A3', 'problem solving', 'root cause', 'countermeasure', '5 whys', 'fishbone', 'ishikawa', 'priority decision', 'safety first', 'critical thinking', or needs structured analysis of manufacturing problems.  Integrates with AutomotiveManufacturing and HoshinKanri skills.
 ---
 
 # A3 Critical Thinking

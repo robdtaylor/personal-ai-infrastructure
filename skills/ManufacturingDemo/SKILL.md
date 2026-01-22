@@ -1,5 +1,5 @@
 ---
-name: ManufacturingDemo
+name: Manufacturingdemo
 description: Demo manufacturing knowledge base for Taylored Systems. Shows how tribal knowledge gets captured and made queryable. USE WHEN demonstrating to potential clients or answering manufacturing process questions.
 ---
 

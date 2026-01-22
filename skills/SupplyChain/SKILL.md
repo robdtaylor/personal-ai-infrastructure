@@ -1,14 +1,6 @@
 ---
-name: SupplyChain
-description: |
-  Executive-level supply chain expertise for automotive manufacturing. Strategic purchasing, materials management,
-  supplier development, and cost optimization aligned with IATF 16949 requirements.
-
-  USE WHEN user says 'supply chain', 'purchasing', 'procurement', 'supplier', 'materials management',
-  'inventory', 'sourcing', 'vendor', 'BOM cost', 'PPV', 'should cost', 'make vs buy', 'RFQ', 'category management',
-  or needs strategic guidance on automotive supply chain decisions.
-
-  Integrates with AutomotiveManufacturing, A3CriticalThinking, and HoshinKanri skills.
+name: Supplychain
+description: Executive-level supply chain expertise for automotive manufacturing. Strategic purchasing, materials management, supplier development, and cost optimization aligned with IATF 16949 requirements.  USE WHEN user says 'supply chain', 'purchasing', 'procurement', 'supplier', 'materials management', 'inventory', 'sourcing', 'vendor', 'BOM cost', 'PPV', 'should cost', 'make vs buy', 'RFQ', 'category management', or needs strategic guidance on automotive supply chain decisions.  Integrates with AutomotiveManufacturing, A3CriticalThinking, and HoshinKanri skills.
 ---
 
 # Supply Chain Management - Automotive Manufacturing
