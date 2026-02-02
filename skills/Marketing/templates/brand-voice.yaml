@@ -1,0 +1,179 @@
+# Brand Voice Configuration Template
+# Copy this file and customize for each brand/client
+
+brand:
+  name: "Your Brand Name"
+  tagline: "Your memorable tagline"
+  mission: "One sentence mission statement"
+
+  # Visual identity references (for Art skill integration)
+  colors:
+    primary: "#000000"
+    secondary: "#ffffff"
+    accent: "#ff0000"
+
+  logo: "path/to/logo.png"
+
+voice:
+  # Core tone (pick primary + 1-2 supporting)
+  # Options: professional, casual, playful, authoritative, empathetic,
+  #          witty, inspiring, educational, bold, warm
+  tone:
+    primary: "professional"
+    supporting:
+      - "warm"
+      - "educational"
+
+  # Personality traits (3-5 adjectives)
+  personality:
+    - "knowledgeable"
+    - "approachable"
+    - "direct"
+    - "helpful"
+
+  # Writing style
+  style:
+    sentence_length: "mixed"  # short, medium, long, mixed
+    formality: "business casual"  # formal, business casual, casual, very casual
+    contractions: true  # use contractions like "don't", "we're"
+    first_person: "we"  # I, we, the company name
+    humor_level: "light"  # none, light, moderate, heavy
+
+  # Vocabulary preferences
+  vocabulary:
+    use:
+      - "transform"
+      - "streamline"
+      - "empower"
+      - "practical"
+      - "proven"
+
+    avoid:
+      - "synergy"
+      - "leverage"
+      - "disrupt"
+      - "guru"
+      - "ninja"
+      - "rockstar"
+
+    industry_terms:
+      # Terms to use (understood by audience)
+      familiar:
+        - "ROI"
+        - "conversion"
+        - "funnel"
+
+      # Terms to explain or avoid
+      jargon:
+        - "CAC"  # explain as "customer acquisition cost"
+        - "LTV"  # explain as "lifetime value"
+
+audience:
+  # Primary target audience
+  primary:
+    description: "Small business owners, 30-50, trying to grow online"
+
+    demographics:
+      age_range: "30-50"
+      location: "US, UK, Australia"
+      industry: "Service businesses"
+      role: "Owner/Founder"
+
+    psychographics:
+      values:
+        - "Independence"
+        - "Growth"
+        - "Work-life balance"
+
+      goals:
+        - "Scale without burning out"
+        - "Automate repetitive tasks"
+        - "Increase revenue predictably"
+
+      fears:
+        - "Being left behind by technology"
+        - "Wasting money on the wrong tools"
+        - "Looking unprofessional"
+
+  # Pain points (for PAS framework)
+  pain_points:
+    - "Spending too much time on admin tasks"
+    - "Inconsistent lead flow"
+    - "Can't afford enterprise solutions"
+    - "Don't know what to focus on"
+
+  # Desires (for benefit-focused copy)
+  desires:
+    - "Predictable revenue"
+    - "More time with family"
+    - "Confidence in business decisions"
+    - "Recognition as an expert"
+
+  # Common objections (for FAQ/objection handling)
+  objections:
+    - question: "Is this too complicated for me?"
+      answer: "We designed it for non-technical users. Most customers are up and running in under an hour."
+
+    - question: "What if it doesn't work for my industry?"
+      answer: "We've helped businesses in [X] industries. Book a call and we'll show you relevant examples."
+
+    - question: "Why should I trust you?"
+      answer: "[X] businesses use us, we've been in business [Y] years, and we offer a [Z]-day guarantee."
+
+competitors:
+  # For comparison pages and differentiation
+  main:
+    - name: "Competitor A"
+      weakness: "Too expensive for small businesses"
+      our_advantage: "Same features at 1/3 the price"
+
+    - name: "Competitor B"
+      weakness: "Complicated setup"
+      our_advantage: "Start in under 5 minutes"
+
+messaging:
+  # Key messages to reinforce
+  value_proposition: "Get enterprise-level [solution] at small business prices"
+
+  differentiators:
+    - "No technical skills required"
+    - "Start free, pay only when you grow"
+    - "Real human support, not just chatbots"
+
+  proof_points:
+    - "10,000+ businesses trust us"
+    - "4.9/5 star rating"
+    - "Featured in [Publications]"
+
+  # Elevator pitches
+  pitches:
+    one_sentence: "We help small business owners [achieve outcome] without [common pain]."
+    thirty_second: "You know how [audience] struggle with [problem]? We built [product] to [solution]. Unlike [alternative], we [differentiator]. That's why [proof point]."
+
+content:
+  # Content pillars for social/blog
+  pillars:
+    - topic: "How-to guides"
+      purpose: "Educate and demonstrate expertise"
+      frequency: "2x per week"
+
+    - topic: "Customer stories"
+      purpose: "Build trust and show results"
+      frequency: "1x per week"
+
+    - topic: "Industry insights"
+      purpose: "Thought leadership"
+      frequency: "1x per week"
+
+  # Content formats that work
+  preferred_formats:
+    - "Step-by-step tutorials"
+    - "Before/after case studies"
+    - "Checklists and templates"
+    - "Expert interviews"
+
+  # Topics to avoid
+  avoid_topics:
+    - "Politics"
+    - "Competitor bashing"
+    - "Controversial social issues"

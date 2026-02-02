@@ -1,0 +1,162 @@
+# THE ALGORITHM Capabilities Registry
+# Source of truth for all orchestratable capabilities
+# Effort levels: TRIVIAL < QUICK < STANDARD < THOROUGH < DETERMINED
+
+version: "1.0"
+
+# === COMPUTE RESOURCES ===
+models:
+  haiku:
+    effort_min: QUICK
+    description: "Fast, cheap execution"
+    use_for: "Parallel grunt work, simple execution, spotchecks"
+  sonnet:
+    effort_min: STANDARD
+    description: "Balanced reasoning"
+    use_for: "Analysis, planning, research, standard work"
+  opus:
+    effort_min: DETERMINED
+    description: "Maximum intelligence"
+    use_for: "Architecture, critical decisions, complex reasoning"
+
+# === THINKING MODES ===
+thinking:
+  deep_thinking:
+    effort_min: STANDARD
+    use_when: "Need creative solutions, novel approaches, quality thinking"
+
+  tree_of_thought:
+    effort_min: THOROUGH
+    use_when: "Complex multi-factor decisions, branching exploration"
+
+  plan_mode:
+    tool: EnterPlanMode
+    effort_min: THOROUGH
+    use_when: "Complex multi-step implementation needing user approval"
+
+# === DEBATE SYSTEMS ===
+debate:
+  council:
+    skill: Council
+    effort_min: THOROUGH
+    agents: 4
+    rounds: 3
+    use_when: "Need multiple perspectives, collaborative analysis, design decisions"
+
+# === ANALYSIS MODES ===
+analysis:
+  first_principles:
+    effort_min: STANDARD
+    use_when: "Challenge assumptions, find root truths, deconstruct problems"
+
+# === RESEARCH AGENTS ===
+research:
+  perplexity:
+    subagent_type: general-purpose
+    model: sonnet
+    effort_min: STANDARD
+    use_when: "Web research, current events, citations needed"
+
+  claude:
+    subagent_type: general-purpose
+    model: sonnet
+    effort_min: STANDARD
+    use_when: "Academic research, scholarly sources"
+
+# === EXECUTION AGENTS ===
+execution:
+  intern:
+    subagent_type: general-purpose
+    model: haiku
+    effort_min: QUICK
+    use_when: "Parallel grunt work, simple tasks, data gathering"
+
+  engineer:
+    subagent_type: general-purpose
+    model: sonnet
+    effort_min: STANDARD
+    use_when: "Implementation, coding tasks"
+
+  qa_tester:
+    subagent_type: general-purpose
+    model: sonnet
+    effort_min: STANDARD
+    use_when: "Testing, validation, quality assurance"
+
+  ralph_loop:
+    type: iterative_loop
+    model: sonnet
+    effort_min: QUICK
+    icon: "🔄"
+    keywords:
+      - "iterate until"
+      - "keep trying"
+      - "until tests pass"
+      - "until it works"
+      - "persistent"
+      - "ralph"
+    max_iterations_default: 10
+    use_when: "Need persistent iteration until success criteria met"
+
+# === PARALLEL EXECUTION ===
+parallel:
+  max_concurrent:
+    QUICK: 1
+    STANDARD: 3
+    THOROUGH: 5
+    DETERMINED: 10
+  background_enabled: true
+
+# === VERIFICATION ===
+verification:
+  browser:
+    skill: Browser
+    effort_min: STANDARD
+    use_when: "Web application validation, visual verification"
+
+  skeptical_verifier:
+    traits: [skeptical, meticulous, adversarial]
+    model: sonnet
+    rule: "Must be different agent than executor"
+    use_when: "Validate work against ISC criteria"
+
+# === EFFORT SUMMARY ===
+effort_unlocks:
+  TRIVIAL:
+    description: "Skip algorithm, direct response"
+    capabilities: []
+
+  QUICK:
+    description: "Single-step, fast execution"
+    capabilities:
+      - models.haiku
+      - execution.intern
+      - execution.ralph_loop
+
+  STANDARD:
+    description: "Multi-step bounded work"
+    capabilities:
+      - models.haiku
+      - models.sonnet
+      - thinking.deep_thinking
+      - analysis.first_principles
+      - research.*
+      - execution.intern
+      - execution.engineer
+      - execution.qa_tester
+      - verification.browser
+      - verification.skeptical_verifier
+
+  THOROUGH:
+    description: "Complex, multi-file work"
+    capabilities:
+      - all_standard
+      - thinking.tree_of_thought
+      - thinking.plan_mode
+      - debate.council
+
+  DETERMINED:
+    description: "Mission-critical, unlimited iteration"
+    capabilities:
+      - all_capabilities
+      - models.opus
