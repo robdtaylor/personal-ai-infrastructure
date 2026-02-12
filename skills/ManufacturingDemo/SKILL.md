@@ -1,6 +1,6 @@
 ---
 name: Manufacturingdemo
-description: Demo manufacturing knowledge base for Taylored Systems. Shows how tribal knowledge gets captured and made queryable. USE WHEN demonstrating to potential clients or answering manufacturing process questions.
+description: Demo manufacturing knowledge base showing how tribal knowledge gets captured and made queryable. USE WHEN demonstrating to potential clients or answering manufacturing process questions.
 ---
 
 # Manufacturing Operations Knowledge Base
@@ -13,7 +13,7 @@ description: Demo manufacturing knowledge base for Taylored Systems. Shows how t
 
 ## How To Use This Skill
 
-This demonstrates how Taylored Systems captures and structures manufacturing knowledge. Staff can ask natural questions like:
+This demonstrates how PAI captures and structures manufacturing knowledge. Staff can ask natural questions like:
 
 - "How do I set up the CNC for aluminium?"
 - "What's the inspection process for incoming materials?"
@@ -347,7 +347,7 @@ Try these first:
 
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
-| 1.0 | 2026-01-11 | Initial demo version | Taylored Systems |
+| 1.0 | 2026-01-11 | Initial demo version | PAI |
 
 ---
 

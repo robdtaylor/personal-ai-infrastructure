@@ -1,6 +1,6 @@
 # Personal AI Infrastructure (PAI)
 
-A skills-based context management system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). PAI extends Claude Code with domain-specific knowledge, custom workflows, and automated session management.
+A skills-based context management system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). PAI extends Claude Code with domain-specific knowledge, custom workflows, and automated session management - focused on **automotive manufacturing operations**.
 
 ## What is PAI?
 
@@ -10,6 +10,8 @@ PAI is a personal AI infrastructure layer that sits on top of Claude Code, provi
 - **Hook System** - Event-driven automation for session lifecycle management
 - **Memory System** - Session history, learnings, and signal capture
 - **Custom Commands** - Slash commands for common workflows
+
+This repository contains **38 automotive manufacturing skills** covering IATF 16949 quality management, CNC operations, damper engineering, business operations, and plant management.
 
 ## Prerequisites
 
@@ -52,19 +54,7 @@ curl -fsSL https://bun.sh/install | bash
 cd ~/.claude/hooks && bun install
 ```
 
-### 4. Personalize your setup
-
-Edit the following files in `skills/CORE/USER/`:
-
-| File | Purpose |
-|------|---------|
-| `BASICINFO.md` | Your contact information |
-| `CONTACTS.md` | Directory of people you work with |
-| `ABOUTME.md` | Personal background for AI context |
-| `DAIDENTITY.md` | AI assistant name and personality |
-| `TECHSTACKPREFERENCES.md` | Your preferred technologies |
-
-### 5. Verify installation
+### 4. Verify installation
 
 ```bash
 claude
@@ -77,10 +67,10 @@ You should see the PAI context load at session start.
 ```
 ~/.claude/
 ├── skills/           # Skill packages (context modules)
-│   ├── CORE/         # Core identity and system docs
-│   ├── Research/     # Multi-source research workflows
-│   ├── Browser/      # Web automation
-│   └── ...           # Domain-specific skills
+│   ├── Pfmea/        # Process FMEA generation
+│   ├── Spc/          # Statistical Process Control
+│   ├── Cncsetup/     # CNC setup sheets
+│   └── ...           # 38 automotive manufacturing skills
 ├── hooks/            # Event-driven automation
 ├── commands/         # Custom slash commands
 ├── bin/              # CLI tools and utilities
@@ -88,47 +78,69 @@ You should see the PAI context load at session start.
 └── settings.json     # Claude Code configuration
 ```
 
-## Skills Included
+## Skills Included (38)
 
-### Manufacturing & Operations
-- **AutomotiveManufacturing** - IATF 16949, work instructions, SOPs
-- **A3CriticalThinking** - Toyota-style problem solving
-- **CNCSetup** - Machine setup sheets
-- **CuttingParams** - Feeds and speeds reference
-- **PlantCapability** - Machine shop capabilities
-- **QuoteEstimator** - Cycle time and cost estimation
-- **SkillsMatrix** - Operator competency tracking
-- **ToolCrib** - Tool inventory management
-- **TribalKnowledge** - Expertise capture
-- **MaintenancePM** - Preventive maintenance schedules
-- **HoshinKanri** - Strategy deployment (X-Matrix, catchball)
-- **SapEcc** - SAP transaction codes and processes
-- **SupplyChain** - Purchasing and materials management
+### IATF 16949 Quality Management
+| Skill | Description |
+|-------|-------------|
+| **Pfmea** | AIAG-VDA compliant Process FMEAs with S/O/D ratings and RPN calculations |
+| **Spc** | SPC charting, process capability (Cpk/Ppk), control chart interpretation |
+| **Msa** | Gage R&R studies per AIAG MSA manual |
+| **Controlplan** | AIAG-format Control Plans linked to PFMEAs |
+| **Eightd** | 8D problem solving with containment and root cause analysis |
+| **Internalaudit** | IATF 16949 internal audit programme support |
+| **A3criticalthinking** | Toyota-style structured problem solving |
+| **Apqpppap** | APQP phase gates and PPAP 18-element documentation |
 
-### Business & Strategy
-- **BusinessStrategy** - Financial analysis, valuations, business plans
-- **PowerPlatform** - Power Automate flow generation
+### Manufacturing Operations
+| Skill | Description |
+|-------|-------------|
+| **Cncsetup** | Standardized CNC setup sheets (DMG MORI, CITIZEN, MITSUBISHI EDM, Haas) |
+| **Cuttingparams** | Feeds, speeds, and depths of cut for common materials |
+| **Plantcapability** | Machine shop capability checking and machine selection |
+| **Maintenancepm** | Preventive maintenance schedules for shop equipment |
+| **Toolcrib** | Tool inventory management with reorder points |
+| **Assemblyoperations** | LVA and FML assembly guidance (kitting, torque, poka-yoke) |
+| **Tribalknowledge** | Machinist expertise capture and preservation |
+| **Quoteestimator** | Rough cycle time and cost estimation |
+| **Skillsmatrix** | Operator training and competency tracking |
 
-### Infrastructure & Automation
-- **HomeAssistant** - Smart home integration
-- **Infrastructure** - Network services and endpoints
-- **MobileApp** - Mobile web interface for PAI
-- **Proxmox** - VM management
-- **Unifi** - Network monitoring
-- **n8n** - Workflow automation
+### Damper Engineering
+| Skill | Description |
+|-------|-------------|
+| **DamperEngineering** | Hydraulic damper design - DSSV valves, seals, materials |
+| **Damperassembly** | Dept 71 DSSV damper assembly operations |
+| **StructuralFEA** | Open source FEA structural analysis (CalculiX) |
 
-### AI & Research
-- **Research** - Multi-source parallel research
-- **AgentObservability** - Real-time agent monitoring dashboard
-- **PhotoRealisticArt** - AI image generation prompting
-- **Art** - Excalidraw-style visualizations
+### Business Operations
+| Skill | Description |
+|-------|-------------|
+| **Commercialsales** | RFQ processing, contract review, customer management |
+| **Costengineering** | Manufacturing cost analysis, make vs buy, value engineering |
+| **Supplychain** | Strategic purchasing, supplier development, materials management |
+| **Shippinglogistics** | UK/US/Canadian shipping, customs, tariffs, HS codes |
+| **Sapecc** | SAP ECC operations (MM, PP, SD, QM, PM, FICO) |
+| **Powerplatform** | Power Automate flow generation from natural language |
+| **Msoffice** | Word/PowerPoint document creation |
 
-### Core
-- **CORE** - Identity, preferences, security protocols
-- **Browser** - Web automation and verification
-- **Context** - Obsidian vault integration
-- **CreateSkill** - Skill authoring tools
-- **Upgrades** - Track Claude Code updates
+### Management & Strategy
+| Skill | Description |
+|-------|-------------|
+| **Hoshinkanri** | Strategic policy deployment (X-Matrix, catchball, bowling charts) |
+| **Automotivegm** | Plant GM / Executive VP operations expertise |
+| **Directorofoperations** | Multi-plant operations leadership perspective |
+| **Automotivemanufacturing** | Manufacturing SOPs and work instructions (IATF 16949/ISO 9001) |
+| **Automotiveproductplanning** | 5-10 year product planning for specialist vehicle manufacturers |
+| **Businessstrategy** | Financial analysis, P&L, valuations, competitive analysis |
+| **Healthsafety** | UK H&S management (risk assessments, COSHH, LOTO) |
+| **Ukhradviser** | UK employment law, ACAS procedures, HR guidance |
+
+### General Utility
+| Skill | Description |
+|-------|-------------|
+| **Algorithm** | Universal 7-phase execution pattern for structured work |
+| **Council** | Multi-perspective deliberation for complex decisions |
+| **Manufacturingdemo** | Demo manufacturing knowledge base |
 
 ## Creating Custom Skills
 
@@ -206,10 +218,6 @@ Set in `settings.json` under `env`:
 }
 ```
 
-### Security
-
-The `security-validator.ts` hook blocks dangerous bash commands. Customize patterns in `skills/CORE/USER/PAISECURITYSYSTEM/patterns.yaml`.
-
 ## Troubleshooting
 
 ### Hooks not running
@@ -222,11 +230,6 @@ The `security-validator.ts` hook blocks dangerous bash commands. Customize patte
 
 1. Regenerate skill index: `bun run ~/.claude/tools/GenerateSkillIndex.ts`
 2. Check skill has valid YAML frontmatter in `SKILL.md`
-
-### Context not appearing
-
-1. Verify `load-core-context.ts` hook is configured in SessionStart
-2. Check `CORE/SKILL.md` exists and has valid content
 
 ## Contributing
 

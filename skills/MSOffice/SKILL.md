@@ -1,12 +1,6 @@
 ---
-name: MSOffice
-description: |
-  Create MS Word and PowerPoint documents on any topic.
-
-  USE WHEN user wants: documents, reports, word docs, presentations, slides, powerpoint, decks.
-
-allowed-tools:
-  - Bash(~/.claude/Skills/MSOffice/venv/bin/python:*)
+name: Msoffice
+description: Create MS Word and PowerPoint documents on any topic.  USE WHEN user wants: documents, reports, word docs, presentations, slides, powerpoint, decks.
 ---
 
 # MS Office Document Generator

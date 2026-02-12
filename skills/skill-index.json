@@ -1,85 +1,196 @@
 {
-  "generated": "2026-01-15T19:48:00.000Z",
-  "totalSkills": 15,
-  "alwaysLoadedCount": 1,
-  "deferredCount": 14,
+  "generated": "2026-02-12T20:40:44.150Z",
+  "totalSkills": 38,
+  "alwaysLoadedCount": 0,
+  "deferredCount": 38,
+  "note": "Automotive manufacturing skills for sharing with colleagues. Filtered from PAI production system.",
   "skills": {
-    "photorealisticart": {
-      "name": "PhotoRealisticArt",
-      "path": "PhotoRealisticArt/SKILL.md",
-      "fullDescription": "Generate stunning photorealistic images using advanced AI models. Covers portrait photography, landscapes, product shots, architecture, and cinematic scenes. Includes prompting techniques for lighting, composition, and camera settings. USE WHEN user says 'photorealistic', 'photo realistic', 'realistic image', 'stunning photo', 'cinematic', 'portrait photo', 'product photography', 'landscape photo', 'hyper realistic', 'professional photo', or needs high-quality realistic image generation.",
+    "automotivemanufacturing": {
+      "name": "Automotivemanufacturing",
+      "path": "Automotivemanufacturing/SKILL.md",
+      "fullDescription": "Expert guidance for writing automotive manufacturing business processes, work instructions, and standard operating procedures. Follows IATF 16949, ISO 9001, and APQP/PPAP standards. Covers assembly, machining, quality/inspection, and material handling. USE WHEN user says 'write work instruction', 'create business process', 'automotive SOP', 'manufacturing procedure', 'APQP documentation', 'process flow', or 'quality procedure'.  Integrates with A3CriticalThinking for problem solving and SupplyChain for supplier requirements.",
       "triggers": [
-        "photorealistic",
-        "photo realistic",
-        "realistic image",
-        "stunning photo",
-        "cinematic",
-        "portrait photo",
-        "product photography",
-        "landscape photo",
-        "hyper realistic",
-        "professional photo",
-        "8K UHD",
-        "RAW photo"
-      ],
-      "workflows": ["Portrait", "Landscape", "Product", "Architecture", "Cinematic"],
-      "tier": "deferred"
-    },
-    "sapecc": {
-      "name": "SapEcc",
-      "path": "SapEcc/SKILL.md",
-      "fullDescription": "SAP ECC expert for automotive manufacturing operations. Covers Materials Management (MM), Production Planning (PP), Sales & Distribution (SD), Quality Management (QM), Plant Maintenance (PM), and Finance/Controlling (FI/CO). USE WHEN user says 'SAP', 'ECC', 'transaction code', 't-code', 'MRP', 'purchase order', 'production order', 'goods receipt', 'goods issue', 'material master', 'BOM', 'routing', 'work center', or needs help with SAP processes. Integrates with AutomotiveManufacturing and SupplyChain skills.",
-      "triggers": [
-        "SAP",
-        "ECC",
-        "transaction code",
-        "t-code",
-        "MRP",
-        "purchase order",
-        "production order",
-        "goods receipt",
-        "goods issue",
-        "material master",
-        "BOM",
-        "routing",
-        "work center",
-        "MIGO",
-        "MM01",
-        "CO01"
+        "automotivemanufacturing",
+        "write",
+        "work",
+        "instruction",
+        "write work instruction",
+        "create business process",
+        "automotive sop",
+        "manufacturing procedure",
+        "apqp documentation",
+        "process flow",
+        "quality procedure"
       ],
       "workflows": [],
       "tier": "deferred"
     },
-    "supplychain": {
-      "name": "SupplyChain",
-      "path": "SupplyChain/SKILL.md",
-      "fullDescription": "Executive-level supply chain expertise for automotive manufacturing. Strategic purchasing, materials management, supplier development, and cost optimization aligned with IATF 16949 requirements. USE WHEN user says 'supply chain', 'purchasing', 'procurement', 'supplier', 'materials management', 'inventory', 'sourcing', 'vendor', 'BOM cost', 'PPV', 'should cost', 'make vs buy', 'RFQ', 'category management', or needs strategic guidance on automotive supply chain decisions. Integrates with AutomotiveManufacturing, A3CriticalThinking, and HoshinKanri skills.",
+    "pfmea": {
+      "name": "Pfmea",
+      "path": "Pfmea/SKILL.md",
+      "fullDescription": "Generate AIAG-VDA compliant Process FMEAs with proper Severity/Occurrence/Detection ratings, RPN calculations, and countermeasure recommendations. Covers MNMUK departments (Machine Shop, Damper, LVA, FML). USE WHEN user says 'PFMEA', 'FMEA', 'failure mode', 'risk analysis', 'RPN', 'severity occurrence detection', or 'process risk assessment'. Integrates with AutomotiveManufacturing, ControlPlan, and A3criticalthinking skills.",
       "triggers": [
-        "supply chain",
-        "purchasing",
-        "procurement",
-        "supplier",
-        "materials",
-        "inventory",
-        "sourcing",
-        "vendor",
-        "BOM cost",
-        "PPV",
-        "should cost",
-        "make vs buy",
-        "RFQ",
-        "category management",
-        "negotiation"
+        "pfmea",
+        "fmea",
+        "failure mode",
+        "risk analysis",
+        "rpn",
+        "severity occurrence detection",
+        "process risk assessment"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "spc": {
+      "name": "Spc",
+      "path": "Spc/SKILL.md",
+      "fullDescription": "Implement SPC charting, process capability analysis, and control chart interpretation. Covers control chart selection, capability indices, and out-of-control rules. USE WHEN user says 'SPC', 'Cpk', 'Ppk', 'control chart', 'process capability', 'X-bar R', 'statistical control', or 'out of control'. Integrates with ControlPlan, MSA, and AutomotiveManufacturing skills.",
+      "triggers": [
+        "spc",
+        "cpk",
+        "ppk",
+        "control chart",
+        "process capability",
+        "x-bar r",
+        "statistical control",
+        "out of control"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "plantcapability": {
+      "name": "Plantcapability",
+      "path": "Plantcapability/SKILL.md",
+      "fullDescription": "MNMUK machine shop capability checker. Answers \"can we make this?\" queries against the plant list. Recommends optimal machine selection based on part requirements. USE WHEN user asks 'can we make', 'which machine', 'capability check', 'feasibility', 'what can we hold', 'tolerance capability', or describes a part to quote.",
+      "triggers": [
+        "plantcapability",
+        "can",
+        "make",
+        "can we make this?",
+        "can we make",
+        "which machine",
+        "capability check",
+        "feasibility",
+        "what can we hold",
+        "tolerance capability"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "msa": {
+      "name": "Msa",
+      "path": "Msa/SKILL.md",
+      "fullDescription": "Conduct Gage R&R studies and validate measurement systems per AIAG MSA manual. Covers variable and attribute studies, acceptance criteria, and calculation methods. USE WHEN user says 'MSA', 'gage R&R', 'GR&R', 'measurement system', 'repeatability', 'reproducibility', 'attribute agreement', or 'ndc'. Integrates with ControlPlan, SPC, and AutomotiveManufacturing skills.",
+      "triggers": [
+        "msa",
+        "gage r&r",
+        "gr&r",
+        "measurement system",
+        "repeatability",
+        "reproducibility",
+        "attribute agreement",
+        "ndc"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "council": {
+      "name": "Council",
+      "path": "Council/SKILL.md",
+      "fullDescription": "Multi-perspective deliberation for complex decisions. Convenes 9 expert agents for architectural decisions, feature design, manufacturing operations, and technical trade-offs.",
+      "triggers": [
+        "council"
+      ],
+      "workflows": [
+        "Convenecouncil",
+        "Quickcouncil"
+      ],
+      "tier": "deferred",
+      "version": "1.0.0"
+    },
+    "assemblyoperations": {
+      "name": "Assemblyoperations",
+      "path": "Assemblyoperations/SKILL.md",
+      "fullDescription": "Assembly operations guidance for LVA (Low Volume Assembly) and FML (Full Manufacturing Line) departments. Covers kitting, torque operations, poka-yoke verification, line balancing, SMED changeovers, and serialized traceability. USE WHEN user says 'assembly', 'LVA', 'FML', 'kitting', 'torque operation', 'line balancing', 'takt time', 'poka-yoke', 'work instruction', 'build sequence', or needs assembly process guidance.",
+      "triggers": [
+        "assemblyoperations",
+        "assembly",
+        "lva",
+        "fml",
+        "kitting",
+        "torque operation",
+        "line balancing",
+        "takt time",
+        "poka-yoke",
+        "work instruction",
+        "build sequence"
+      ],
+      "workflows": [
+        "LineSetup",
+        "Kitting",
+        "Traceability",
+        "TorqueOperations"
+      ],
+      "tier": "deferred"
+    },
+    "tribalknowledge": {
+      "name": "Tribalknowledge",
+      "path": "Tribalknowledge/SKILL.md",
+      "fullDescription": "Capture and preserve machinist expertise before it retires. Structured knowledge extraction for CNC operations, troubleshooting, and process optimization. USE WHEN user says 'capture knowledge', 'document expertise', 'what does [name] know', 'troubleshooting tips', 'how do we handle', 'interview machinist', or 'tribal knowledge'.",
+      "triggers": [
+        "tribalknowledge",
+        "capture",
+        "knowledge",
+        "capture knowledge",
+        "document expertise",
+        "what does [name] know",
+        "troubleshooting tips",
+        "how do we handle",
+        "interview machinist",
+        "tribal knowledge"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "powerplatform": {
+      "name": "Powerplatform",
+      "path": "Powerplatform/SKILL.md",
+      "fullDescription": "Generate Power Automate flows from natural language. Reads connector schemas from work repo, outputs deployable solution files. USE WHEN user says 'create flow', 'power automate', 'automate workflow', or describes a business process to automate.",
+      "triggers": [
+        "powerplatform",
+        "create",
+        "flow",
+        "create flow",
+        "power automate",
+        "automate workflow"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "maintenancepm": {
+      "name": "Maintenancepm",
+      "path": "Maintenancepm/SKILL.md",
+      "fullDescription": "Preventive maintenance schedules for MNMUK machine shop equipment. Covers DMG MORI, CITIZEN, MITSUBISHI EDM, Haas, and support equipment. USE WHEN user asks 'PM schedule', 'maintenance', 'service due', 'machine maintenance', 'what maintenance', or 'TPM checklist'.",
+      "triggers": [
+        "maintenancepm",
+        "schedule",
+        "pm schedule",
+        "maintenance",
+        "service due",
+        "machine maintenance",
+        "what maintenance",
+        "tpm checklist"
       ],
       "workflows": [],
       "tier": "deferred"
     },
     "a3criticalthinking": {
-      "name": "A3CriticalThinking",
-      "path": "A3CriticalThinking/SKILL.md",
-      "fullDescription": "Toyota-style A3 problem solving with embedded priority hierarchy: Safety First, then Customer Value, then Shareholder Value. Structured thinking framework for manufacturing decisions, root cause analysis, and countermeasure development. USE WHEN user says 'A3', 'problem solving', 'root cause', 'countermeasure', '5 whys', 'fishbone', 'ishikawa', 'priority decision', 'safety first', 'critical thinking', or needs structured analysis of manufacturing problems. Integrates with AutomotiveManufacturing and HoshinKanri skills.",
+      "name": "A3criticalthinking",
+      "path": "A3criticalthinking/SKILL.md",
+      "fullDescription": "Toyota-style A3 problem solving with embedded priority hierarchy: Safety First, then Customer Value, then Shareholder Value. Structured thinking framework for manufacturing decisions, root cause analysis, and countermeasure development.  USE WHEN user says 'A3', 'problem solving', 'root cause', 'countermeasure', '5 whys', 'fishbone', 'ishikawa', 'priority decision', 'safety first', 'critical thinking', or needs structured analysis of manufacturing problems.  Integrates with AutomotiveManufacturing and HoshinKanri skills.",
       "triggers": [
-        "A3",
+        "a3criticalthinking",
+        "a3",
         "problem solving",
         "root cause",
         "countermeasure",
@@ -88,166 +199,153 @@
         "ishikawa",
         "priority decision",
         "safety first",
-        "critical thinking",
-        "decision matrix"
+        "critical thinking"
       ],
       "workflows": [],
       "tier": "deferred"
     },
-    "art": {
-      "name": "Art",
-      "path": "Art/SKILL.md",
-      "fullDescription": "Visual content generation with Excalidraw hand-drawn aesthetic. USE WHEN user wants diagrams, visualizations, comics, or editorial illustrations.",
+    "cuttingparams": {
+      "name": "Cuttingparams",
+      "path": "Cuttingparams/SKILL.md",
+      "fullDescription": "Cutting parameter lookup and optimization for CNC machining. Covers feeds, speeds, depths of cut for common materials and operations. USE WHEN user asks 'feeds and speeds', 'cutting parameters', 'SFM for', 'what RPM', 'feed rate for', 'DOC for', or needs machining parameter guidance.",
       "triggers": [
-        "diagram",
-        "diagrams",
-        "visualization",
-        "comic",
-        "comics",
-        "illustration",
-        "image",
-        "generate",
-        "art",
-        "excalidraw",
-        "blog header",
-        "editorial"
+        "cuttingparams",
+        "feeds",
+        "and",
+        "speeds",
+        "feeds and speeds",
+        "cutting parameters",
+        "sfm for",
+        "what rpm",
+        "feed rate for",
+        "doc for"
       ],
-      "workflows": ["TechnicalDiagrams", "Essay", "Comics"],
-      "tier": "deferred"
-    },
-    "mobileapp": {
-      "name": "MobileApp",
-      "path": "MobileApp/SKILL.md",
-      "fullDescription": "|",
-      "triggers": [],
       "workflows": [],
       "tier": "deferred"
     },
-    "context": {
-      "name": "Context",
-      "path": "Context/SKILL.md",
-      "fullDescription": "|",
-      "triggers": [],
-      "workflows": [],
-      "tier": "deferred"
-    },
-    "core": {
-      "name": "CORE",
-      "path": "CORE/SKILL.md",
-      "fullDescription": "Personal AI Infrastructure core. AUTO-LOADS at session start. USE WHEN any session begins OR user asks about identity, response format, contacts, stack preferences, security protocols, or asset management.",
+    "damperengineering": {
+      "name": "Damperengineering",
+      "path": "DamperEngineering/SKILL.md",
+      "fullDescription": "Hydraulic damper design engineering for customer applications. Mechanical and hydraulic engineering, materials selection (aluminium/steel), seal/O-ring design, DSSV valve specification. USE WHEN user says 'damper design', 'application engineering', 'damper spec', 'customer application', 'damping curve', 'valve sizing', 'seal design', 'O-ring', 'slyde ring', or needs to capture customer damper requirements.",
       "triggers": [
-        "any",
-        "session",
-        "begins",
-        "user",
-        "asks",
-        "about",
-        "identity",
-        "response",
-        "format",
-        "contacts",
-        "stack",
-        "preferences",
-        "security",
-        "protocols",
-        "asset",
-        "management"
+        "damperengineering",
+        "damper",
+        "design",
+        "damper design",
+        "application engineering",
+        "damper spec",
+        "customer application",
+        "damping curve",
+        "valve sizing",
+        "seal design",
+        "o-ring",
+        "slyde ring"
       ],
-      "workflows": [],
-      "tier": "always"
+      "workflows": [
+        "MaterialSelection",
+        "DampingDesign",
+        "ValveSpecification",
+        "ApplicationCapture",
+        "SealDesign"
+      ],
+      "tier": "deferred"
     },
-    "createskill": {
-      "name": "CreateSkill",
-      "path": "CreateSkill/SKILL.md",
-      "fullDescription": "Create and validate skills. USE WHEN create skill, new skill, skill structure, canonicalize. SkillSearch('createskill') for docs.",
+    "controlplan": {
+      "name": "Controlplan",
+      "path": "Controlplan/SKILL.md",
+      "fullDescription": "Generate AIAG-format Control Plans linked to PFMEAs with proper inspection methods, frequencies, and reaction plans. Supports Prototype/Pre-launch/Production phases. USE WHEN user says 'control plan', 'CP', 'inspection plan', 'process control', 'sampling frequency', 'reaction plan', or 'special characteristics'. Integrates with PFMEA, AutomotiveManufacturing, and MSA skills.",
       "triggers": [
-        "create",
-        "skill",
-        "new",
-        "structure",
-        "canonicalize"
+        "controlplan",
+        "control",
+        "plan",
+        "control plan",
+        "cp",
+        "inspection plan",
+        "process control",
+        "sampling frequency",
+        "reaction plan",
+        "special characteristics"
       ],
       "workflows": [],
       "tier": "deferred"
     },
-    "kai-todo": {
-      "name": "kai-todo",
-      "path": "KaiTodo/SKILL.md",
-      "fullDescription": "|",
-      "triggers": [],
-      "workflows": [],
-      "tier": "deferred"
-    },
-    "browser": {
-      "name": "Browser",
-      "path": "Browser/SKILL.md",
-      "fullDescription": "Code-first browser automation and web verification. USE WHEN browser, screenshot, navigate, web testing, verify UI, VERIFY phase. Replaces Playwright MCP with 99% token savings.",
+    "costengineering": {
+      "name": "Costengineering",
+      "path": "Costengineering/SKILL.md",
+      "fullDescription": "Manufacturing cost accounting, analysis, and reduction for automotive operations. Covers overhead/burden rate calculation, variance analysis, make vs buy decisions, value engineering, and cycle time to cost conversion. USE WHEN user says 'cost analysis', 'overhead rate', 'burden rate', 'variance analysis', 'make vs buy', 'value engineering', 'cost reduction', 'should cost', 'labour rate', or needs manufacturing cost guidance.",
       "triggers": [
-        "browser",
-        "screenshot",
-        "navigate",
-        "web",
-        "testing",
-        "verify",
-        "phase"
+        "costengineering",
+        "cost",
+        "analysis",
+        "cost analysis",
+        "overhead rate",
+        "burden rate",
+        "variance analysis",
+        "make vs buy",
+        "value engineering",
+        "cost reduction",
+        "should cost",
+        "labour rate"
+      ],
+      "workflows": [
+        "CostReduction",
+        "VarianceAnalysis",
+        "MakeVsBuy",
+        "OverheadCalculation"
+      ],
+      "tier": "deferred"
+    },
+    "algorithm": {
+      "name": "Algorithm",
+      "path": "Algorithm/SKILL.md",
+      "fullDescription": "Universal 7-phase execution pattern for all work. USE WHEN starting complex tasks, needing structured approach, defining success criteria, or tracking work phases.",
+      "triggers": [
+        "algorithm"
+      ],
+      "workflows": [
+        "Isctable",
+        "Executealgorithm",
+        "Phasechecklist"
+      ],
+      "tier": "deferred"
+    },
+    "sapecc": {
+      "name": "Sapecc",
+      "path": "Sapecc/SKILL.md",
+      "fullDescription": "SAP ECC expert for automotive manufacturing operations. Covers Materials Management (MM), Production Planning (PP), Sales & Distribution (SD), Quality Management (QM), Plant Maintenance (PM), and Finance/Controlling (FI/CO).  USE WHEN user says 'SAP', 'ECC', 'transaction code', 't-code', 'MRP', 'purchase order', 'production order', 'goods receipt', 'goods issue', 'material master', 'BOM', 'routing', 'work center', or needs help with SAP processes.  Integrates with AutomotiveManufacturing and SupplyChain skills.",
+      "triggers": [
+        "sapecc",
+        "sap",
+        "ecc",
+        "transaction code",
+        "t-code",
+        "mrp",
+        "purchase order",
+        "production order",
+        "goods receipt",
+        "goods issue",
+        "material master",
+        "bom",
+        "routing",
+        "work center"
       ],
       "workflows": [],
-      "tier": "deferred"
-    },
-    "agentobservability": {
-      "name": "AgentObservability",
-      "path": "AgentObservability/SKILL.md",
-      "fullDescription": "|",
-      "triggers": [],
-      "workflows": [],
-      "tier": "deferred"
-    },
-    "upgrades": {
-      "name": "Upgrades",
-      "path": "Upgrades/SKILL.md",
-      "fullDescription": "Track PAI upgrade opportunities. USE WHEN upgrades, improvement tracking. SkillSearch('upgrades') for docs.",
-      "triggers": [
-        "upgrades",
-        "improvement",
-        "tracking",
-        "anthropic",
-        "updates",
-        "youtube",
-        "videos"
-      ],
-      "workflows": ["Anthropic", "YouTube", "ReleaseNotesDeepDive"],
-      "tier": "deferred"
-    },
-    "research": {
-      "name": "Research",
-      "path": "Research/SKILL.md",
-      "fullDescription": "Multi-source parallel research using Perplexity, Gemini, and Claude. Three modes - Quick (1 query), Standard (3 queries), Extensive (8 queries). USE WHEN user says 'research', 'investigate', 'find out about', 'do research on', or requests comprehensive information gathering.",
-      "triggers": [
-        "research",
-        "investigate",
-        "find out",
-        "do research",
-        "extensive research",
-        "quick research",
-        "perplexity",
-        "gemini"
-      ],
-      "workflows": ["Conduct", "ClaudeResearch", "PerplexityResearch", "Fabric", "Retrieve"],
       "tier": "deferred"
     },
     "shippinglogistics": {
-      "name": "ShippingLogistics",
-      "path": "ShippingLogistics/SKILL.md",
-      "fullDescription": "UK, US, and Canadian shipping, logistics, customs, duties, and tariff expert with automotive commodity code expertise. Covers import/export documentation, HS/HTS codes, rules of origin, FTAs, and landed cost calculations. USE WHEN user says 'shipping', 'customs', 'tariff', 'duty', 'import', 'export', 'HS code', 'HTS code', 'commodity code', 'landed cost', 'incoterms', 'customs broker', 'freight', 'logistics', 'rules of origin', 'CUSMA', 'USMCA', 'TCA', or needs help with international trade compliance.",
+      "name": "Shippinglogistics",
+      "path": "Shippinglogistics/SKILL.md",
+      "fullDescription": "UK, US, and Canadian shipping, logistics, customs, duties, and tariff expert with automotive commodity code expertise. Covers import/export documentation, HS/HTS codes, rules of origin, FTAs, and landed cost calculations.  USE WHEN user says 'shipping', 'customs', 'tariff', 'duty', 'import', 'export', 'HS code', 'HTS code', 'commodity code', 'landed cost', 'incoterms', 'customs broker', 'freight', 'logistics', 'rules of origin', 'CUSMA', 'USMCA', 'TCA', or needs help with international trade compliance.",
       "triggers": [
+        "shippinglogistics",
         "shipping",
         "customs",
         "tariff",
         "duty",
         "import",
         "export",
-        "HS code",
-        "HTS code",
+        "hs code",
+        "hts code",
         "commodity code",
         "landed cost",
         "incoterms",
@@ -255,12 +353,389 @@
         "freight",
         "logistics",
         "rules of origin",
-        "CUSMA",
-        "USMCA",
-        "TCA",
-        "CBSA",
-        "CBP",
-        "HMRC"
+        "cusma",
+        "usmca",
+        "tca"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "supplychain": {
+      "name": "Supplychain",
+      "path": "Supplychain/SKILL.md",
+      "fullDescription": "Executive-level supply chain expertise for automotive manufacturing. Strategic purchasing, materials management, supplier development, and cost optimization aligned with IATF 16949 requirements.  USE WHEN user says 'supply chain', 'purchasing', 'procurement', 'supplier', 'materials management', 'inventory', 'sourcing', 'vendor', 'BOM cost', 'PPV', 'should cost', 'make vs buy', 'RFQ', 'category management', or needs strategic guidance on automotive supply chain decisions.  Integrates with AutomotiveManufacturing, A3CriticalThinking, and HoshinKanri skills.",
+      "triggers": [
+        "supplychain",
+        "supply",
+        "chain",
+        "supply chain",
+        "purchasing",
+        "procurement",
+        "supplier",
+        "materials management",
+        "inventory",
+        "sourcing",
+        "vendor",
+        "bom cost",
+        "ppv",
+        "should cost",
+        "make vs buy",
+        "rfq",
+        "category management"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "manufacturingdemo": {
+      "name": "Manufacturingdemo",
+      "path": "Manufacturingdemo/SKILL.md",
+      "fullDescription": "Demo manufacturing knowledge base showing how tribal knowledge gets captured and made queryable. USE WHEN demonstrating to potential clients or answering manufacturing process questions.",
+      "triggers": [
+        "manufacturingdemo"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "quoteestimator": {
+      "name": "Quoteestimator",
+      "path": "Quoteestimator/SKILL.md",
+      "fullDescription": "Rough cycle time and cost estimation for CNC machined parts. Uses MNMUK plant capabilities and standard estimating factors. USE WHEN user says 'quote', 'estimate', 'cycle time', 'how long', 'cost estimate', 'pricing', 'how much to make', or describes a part needing a rough quote.",
+      "triggers": [
+        "quoteestimator",
+        "quote",
+        "estimate",
+        "cycle time",
+        "how long",
+        "cost estimate",
+        "pricing",
+        "how much to make"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "damperassembly": {
+      "name": "Damperassembly",
+      "path": "Damperassembly/SKILL.md",
+      "fullDescription": "Dept 71 damper assembly operations for DSSV (Dynamic Suspensions Spool Valve) dampers. Covers component receipt, sub-assembly, fluid fill, gas charging, functional testing, and troubleshooting. USE WHEN user says 'damper', 'Dept 71', 'DSSV', 'spool valve', 'damper assembly', 'damper test', 'dyno test', 'fluid fill', 'gas charge', or needs damper-specific guidance.",
+      "triggers": [
+        "damperassembly",
+        "damper",
+        "dept 71",
+        "dssv",
+        "spool valve",
+        "damper assembly",
+        "damper test",
+        "dyno test",
+        "fluid fill",
+        "gas charge"
+      ],
+      "workflows": [
+        "FunctionalTesting",
+        "Troubleshooting",
+        "ComponentReceipt",
+        "AssemblyProcess"
+      ],
+      "tier": "deferred"
+    },
+    "cncsetup": {
+      "name": "Cncsetup",
+      "path": "Cncsetup/SKILL.md",
+      "fullDescription": "Generate standardized CNC setup sheets for MNMUK machine shop. Covers DMG MORI mills/lathes, CITIZEN Swiss, MITSUBISHI EDM, and Haas machines. USE WHEN user says 'setup sheet', 'create setup', 'job setup', 'machine setup', 'tooling list', 'fixture setup', or 'new job' for any CNC operation.",
+      "triggers": [
+        "cncsetup",
+        "setup",
+        "sheet",
+        "setup sheet",
+        "create setup",
+        "job setup",
+        "machine setup",
+        "tooling list",
+        "fixture setup",
+        "new job"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "internalaudit": {
+      "name": "Internalaudit",
+      "path": "Internalaudit/SKILL.md",
+      "fullDescription": "Support IATF 16949 internal audit programme - QMS audits, process audits, product audits, and layered process audits. Covers audit planning, checklists, findings, and corrective actions. USE WHEN user says 'internal audit', 'audit checklist', 'process audit', 'product audit', 'QMS audit', 'audit finding', 'nonconformance', or 'LPA'. Integrates with AutomotiveManufacturing and A3criticalthinking skills.",
+      "triggers": [
+        "internalaudit",
+        "internal",
+        "audit",
+        "internal audit",
+        "audit checklist",
+        "process audit",
+        "product audit",
+        "qms audit",
+        "audit finding",
+        "nonconformance",
+        "lpa"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "commercialsales": {
+      "name": "Commercialsales",
+      "path": "Commercialsales/SKILL.md",
+      "fullDescription": "Customer relationship and contract management for automotive manufacturing. Covers RFQ processing, contract review, customer requirements management, order handling, customer communication, complaint escalation, and satisfaction monitoring per IATF 16949 requirements. USE WHEN user says 'RFQ', 'quotation', 'contract review', 'customer requirements', 'CSR', 'customer complaint', 'customer satisfaction', 'order management', or 'customer communication'. Integrates with QuoteEstimator, Apqpppap, and EightD skills.",
+      "triggers": [
+        "commercialsales",
+        "rfq",
+        "quotation",
+        "contract review",
+        "customer requirements",
+        "csr",
+        "customer complaint",
+        "customer satisfaction",
+        "order management",
+        "customer communication"
+      ],
+      "workflows": [
+        "ComplaintEscalation",
+        "RfqProcess",
+        "CustomerRequirements",
+        "ContractReview"
+      ],
+      "tier": "deferred"
+    },
+    "toolcrib": {
+      "name": "Toolcrib",
+      "path": "Toolcrib/SKILL.md",
+      "fullDescription": "Tool inventory management for MNMUK machine shop. Tracks tooling, inserts, consumables with reorder points and usage. USE WHEN user asks 'tool inventory', 'what inserts', 'reorder', 'tool crib', 'do we have', 'tooling cost', or 'tool usage'.",
+      "triggers": [
+        "toolcrib",
+        "tool",
+        "inventory",
+        "tool inventory",
+        "what inserts",
+        "reorder",
+        "tool crib",
+        "do we have",
+        "tooling cost",
+        "tool usage"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "apqpppap": {
+      "name": "Apqpppap",
+      "path": "Apqpppap/SKILL.md",
+      "fullDescription": "APQP phase gate management and PPAP documentation for automotive product launches. Covers all 5 APQP phases, phase gate checklists, PPAP 18 elements, PSW generation, timing plans, and open issues tracking. USE WHEN user says 'APQP', 'PPAP', 'phase gate', 'product launch', 'PSW', 'PPAP elements', 'launch readiness', 'timing plan', or 'program management'. Integrates with PFMEA, ControlPlan, and MSA skills.",
+      "triggers": [
+        "apqpppap",
+        "apqp",
+        "ppap",
+        "phase gate",
+        "product launch",
+        "psw",
+        "ppap elements",
+        "launch readiness",
+        "timing plan",
+        "program management"
+      ],
+      "workflows": [
+        "PhaseGate",
+        "OpenIssues",
+        "PpapPackage",
+        "TimingPlan"
+      ],
+      "tier": "deferred"
+    },
+    "ukhradviser": {
+      "name": "Ukhradviser",
+      "path": "Ukhradviser/SKILL.md",
+      "fullDescription": "Professional UK HR adviser with CIPD Level 7 expertise and employment law solicitor experience. Provides up-to-date guidance on UK employment law, ACAS procedures, pay rates (minimum wage, living wage), disciplinary/grievance procedures, contracts, dismissals, and all HR compliance matters.  USE WHEN user needs HR advice, employment law guidance, asks about UK workplace issues, dismissals, contracts, pay rates, ACAS procedures, discrimination, redundancy, or any HR compliance question.  Always searches current legislation and ACAS guidance before advising.",
+      "triggers": [
+        "ukhradviser",
+        "workplace",
+        "issues"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "eightd": {
+      "name": "Eightd",
+      "path": "Eightd/SKILL.md",
+      "fullDescription": "Structured 8D problem solving for customer complaints and quality issues. D0-D8 phases with containment, root cause analysis, and escape point identification. USE WHEN user says '8D', 'eight disciplines', 'customer complaint', 'corrective action', 'root cause analysis', 'containment', 'escape point', or 'problem solving report'.",
+      "triggers": [
+        "eightd",
+        "8d",
+        "eight disciplines",
+        "customer complaint",
+        "corrective action",
+        "root cause analysis",
+        "containment",
+        "escape point",
+        "problem solving report"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "structuralfea": {
+      "name": "StructuralFEA",
+      "path": "StructuralFEA/SKILL.md",
+      "fullDescription": "Open source FEA structural analysis for damper and mechanical components. Generates CalculiX input files, guides mesh setup, provides material databases, interprets results. USE WHEN user says 'FEA', 'structural analysis', 'stress analysis', 'buckling', 'modal analysis', 'finite element', 'CalculiX', 'mesh', or needs to validate damper component designs.",
+      "triggers": [
+        "structuralfea",
+        "fea",
+        "structural analysis",
+        "stress analysis",
+        "buckling",
+        "modal analysis",
+        "finite element",
+        "calculix",
+        "mesh"
+      ],
+      "workflows": [
+        "ComponentFEA",
+        "QuickStress"
+      ],
+      "tier": "deferred"
+    },
+    "msoffice": {
+      "name": "Msoffice",
+      "path": "Msoffice/SKILL.md",
+      "fullDescription": "Create MS Word and PowerPoint documents on any topic.  USE WHEN user wants: documents, reports, word docs, presentations, slides, powerpoint, decks.",
+      "triggers": [
+        "msoffice"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "skillsmatrix": {
+      "name": "Skillsmatrix",
+      "path": "Skillsmatrix/SKILL.md",
+      "fullDescription": "Operator training and competency tracking for MNMUK machine shop. Supports IATF 16949 competency requirements and workforce planning. USE WHEN user asks 'who can run', 'training matrix', 'competency', 'skills matrix', 'operator certification', 'who is trained on', or workforce planning questions.",
+      "triggers": [
+        "skillsmatrix",
+        "who",
+        "can",
+        "run",
+        "who can run",
+        "training matrix",
+        "competency",
+        "skills matrix",
+        "operator certification",
+        "who is trained on"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "hoshinkanri": {
+      "name": "Hoshinkanri",
+      "path": "Hoshinkanri/SKILL.md",
+      "fullDescription": "Strategic policy deployment system for automotive manufacturing. Cascades Group-level targets to shop floor through X-Matrix, catchball process, and bowling chart tracking.  USE WHEN user says 'hoshin', 'x-matrix', 'catchball', 'bowling chart', 'strategy deployment', 'cascade objectives', 'breakthrough objectives', 'strategic planning', 'policy deployment', or requests help with annual planning integration.  Integrates with IATF 16949 quality systems and AutomotiveManufacturing skill for work instruction cascade.",
+      "triggers": [
+        "hoshinkanri",
+        "hoshin",
+        "x-matrix",
+        "catchball",
+        "bowling chart",
+        "strategy deployment",
+        "cascade objectives",
+        "breakthrough objectives",
+        "strategic planning",
+        "policy deployment"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "automotivegm": {
+      "name": "Automotivegm",
+      "path": "Automotivegm/SKILL.md",
+      "fullDescription": "Executive Vice President / General Manager expertise for automotive manufacturing plants. Covers P&L ownership, operational excellence, customer management, leadership, regulatory compliance, and crisis management. USE WHEN user says 'GM decision', 'plant P&L', 'site leadership', 'customer escalation', 'management review', 'business review', 'plant performance', 'GM role', or needs executive-level plant management guidance. Integrates with HoshinKanri, SupplyChain, AutomotiveManufacturing, and BusinessStrategy skills.",
+      "triggers": [
+        "automotivegm",
+        "decision",
+        "gm decision",
+        "plant p&l",
+        "site leadership",
+        "customer escalation",
+        "management review",
+        "business review",
+        "plant performance",
+        "gm role"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "businessstrategy": {
+      "name": "Businessstrategy",
+      "path": "Businessstrategy/SKILL.md",
+      "fullDescription": "MBA-trained business strategist with full commercial awareness. USE WHEN user says 'business plan', 'financial analysis', 'P&L', 'cash flow', 'valuation', 'market analysis', 'competitive analysis', 'SWOT', 'business model', 'unit economics', 'fundraising', 'pitch deck', or needs strategic business guidance.",
+      "triggers": [
+        "businessstrategy",
+        "business",
+        "plan",
+        "business plan",
+        "financial analysis",
+        "p&l",
+        "cash flow",
+        "valuation",
+        "market analysis",
+        "competitive analysis",
+        "swot",
+        "business model",
+        "unit economics",
+        "fundraising",
+        "pitch deck"
+      ],
+      "workflows": [
+        "Businessplan",
+        "Marketanalysis",
+        "Valuation",
+        "Financialanalysis",
+        "Pitchdeck",
+        "Strategicreview"
+      ],
+      "tier": "deferred"
+    },
+    "directorofoperations": {
+      "name": "Directorofoperations",
+      "path": "Directorofoperations/SKILL.md",
+      "fullDescription": "Group Director of Operations perspective for multi-plant automotive manufacturing. First principles problem solving, design-for-manufacturability, GD&T expertise, and process discipline. Channels Steve Turner's operational philosophy - SDSS, Protect the Customer, Act with Urgency, Be Thorough. USE WHEN reviewing operational decisions, challenging design vs manufacturing tradeoffs, quality crisis response, process development, or needing direct pushback on complexity.",
+      "triggers": [
+        "directorofoperations"
+      ],
+      "workflows": [],
+      "tier": "deferred"
+    },
+    "healthsafety": {
+      "name": "Healthsafety",
+      "path": "Healthsafety/SKILL.md",
+      "fullDescription": "UK health and safety management for manufacturing operations. Covers risk assessments, COSHH, PPE, incident reporting, LOTO, manual handling, and emergency procedures. Aligned with UK HSE regulations and IATF 16949 clause 7.1.4. USE WHEN user says 'health and safety', 'risk assessment', 'COSHH', 'PPE', 'accident', 'incident', 'LOTO', 'lockout tagout', 'manual handling', 'emergency procedure', or needs safety compliance guidance.",
+      "triggers": [
+        "healthsafety",
+        "health",
+        "and",
+        "safety",
+        "health and safety",
+        "risk assessment",
+        "coshh",
+        "ppe",
+        "accident",
+        "incident",
+        "loto",
+        "lockout tagout",
+        "manual handling",
+        "emergency procedure"
+      ],
+      "workflows": [
+        "IncidentReporting",
+        "CoshhAssessment",
+        "RiskAssessment",
+        "SafetyAudit"
+      ],
+      "tier": "deferred"
+    },
+    "automotiveproductplanning": {
+      "name": "Automotiveproductplanning",
+      "path": "Automotiveproductplanning/SKILL.md",
+      "fullDescription": "Strategic 5-10 year product planning for low-volume sportscar and specialist vehicle manufacturers. Covers new production vehicles, restomods/continuation cars, bespoke commissions, and motorsport programmes. Board-ready financial analysis with NPV/IRR. Integrates with HoshinKanri, SupplyChain, and AutomotiveManufacturing skills. USE WHEN creating product roadmaps, model lifecycle planning, platform strategy, powertrain transitions, competitive positioning, or OEM partnership evaluation.",
+      "triggers": [
+        "automotiveproductplanning"
       ],
       "workflows": [],
       "tier": "deferred"
