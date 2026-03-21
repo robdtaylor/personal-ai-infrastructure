@@ -128,7 +128,7 @@ LCL = 0
 | Rule | Pattern | Indicates |
 |------|---------|-----------|
 | **Rule 1** | 1 point beyond 3σ | Sudden shift |
-| **Rule 2** | 9 points in a row on same side of CL | Process shift |
+| **Rule 2** | 8 points in a row on same side of CL (some sources: 9) | Process shift/mean shift |
 | **Rule 3** | 6 points in a row trending (up or down) | Trend/drift |
 | **Rule 4** | 14 points in a row alternating up/down | Over-adjustment |
 
@@ -144,6 +144,8 @@ LCL = 0
 ### MNMUK Standard
 
 Use Rules 1-4 (Western Electric) as standard. Apply Nelson rules for critical characteristics or detailed analysis.
+
+> **Important:** Western Electric Rule 2 triggers at **8 consecutive points** on one side of the centerline (some references cite 9 — use 8 as the conservative standard). A run of 7 points is a strong warning signal but does not yet meet the rule threshold; 8 or more points on one side IS an out-of-control condition requiring investigation.
 
 ---
 

@@ -159,7 +159,7 @@ description: APQP phase gate management and PPAP documentation for automotive pr
 
 | Level | Requirements | When Used |
 |-------|--------------|-----------|
-| **Level 1** | PSW and Appearance Approval Report only | Customer trusts supplier |
+| **Level 1** | PSW only | Customer trusts supplier |
 | **Level 2** | PSW with product samples and limited data | Reduced documentation |
 | **Level 3** | PSW with product samples and complete data | **Default** |
 | **Level 4** | PSW with complete data (no samples) | Customer-specific |

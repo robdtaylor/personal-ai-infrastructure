@@ -467,7 +467,25 @@ Machine ID: ___________
 
 ---
 
-## Downtime Tracking
+## MTBF Calculation & Data-Driven PM Intervals
+
+### How to Calculate MTBF
+
+**MTBF (Mean Time Between Failures)** = Total Operating Hours ÷ Number of Failures
+
+Example: Machine runs 2,000 hours and has 4 breakdowns → MTBF = 500 hours
+
+### Setting PM Intervals from MTBF
+
+| MTBF Result | Recommended PM Interval | Rationale |
+|-------------|------------------------|-----------|
+| MTBF = 500 hrs | PM at 350 hrs (70% of MTBF) | Intervene before predicted failure |
+| MTBF = 200 hrs | PM at 140 hrs (70% of MTBF) | High-failure item needs more frequent checks |
+| MTBF = 1000 hrs | PM at 700 hrs (70% of MTBF) | Reliable item, less frequent PM justified |
+
+**Rule:** Set PM interval = 70% × MTBF to catch deterioration before failure occurs.
+
+### MTBF Tracking Template
 
 ```markdown
 # Downtime Log - [Month]

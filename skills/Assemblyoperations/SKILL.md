@@ -36,7 +36,7 @@ Expert guidance for MNMUK assembly departments - Low Volume Assembly (LVA) and F
 | Functional Verification | WI-LVA-005 | In-process and final testing |
 | Traceability | WI-LVA-006 | Serial number and build record management |
 
-### FML (Full Manufacturing Line)
+### FML (Full Manufacturing Line — also referred to as Full Module Line)
 
 **Characteristics:**
 - Paced production line
@@ -172,11 +172,13 @@ Standard format for assembly work instructions:
 | [Tool] | [Description] | [#] |
 
 ## Procedure
-1. [Step with photo/diagram]
+1. [Step with photo/diagram reference]
+   - Visual Aid: ![Step 1 Diagram](images/WI-[DEPT]-[SEQ]-step1.png) *(photo or diagram required for each key step)*
    - Torque: [value] Nm
    - Quality check: [description]
 
-2. [Next step...]
+2. [Next step with photo/diagram reference]
+   - Visual Aid: ![Step 2 Diagram](images/WI-[DEPT]-[SEQ]-step2.png)
 
 ## Quality Checkpoints
 | Step | Check | Method | Acceptance |

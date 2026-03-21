@@ -51,6 +51,18 @@ UK health and safety management for MNMUK manufacturing operations, aligned with
 
 ## Risk Assessment Framework
 
+### UK HSE 5-Step Methodology
+
+All risk assessments at MNMUK **must** follow the UK HSE 5-step methodology:
+
+| Step | HSE Step | Description |
+|------|----------|-------------|
+| **1** | **Identify the hazards** | Walk the area, consult workers, review SDS/accident history, consider non-routine tasks |
+| **2** | **Decide who might be harmed and how** | Employees, contractors, visitors, vulnerable persons; identify exposure routes |
+| **3** | **Evaluate the risks and decide on precautions** | Consider existing controls, apply hierarchy of control, use risk matrix to prioritise |
+| **4** | **Record your findings and implement them** | Document hazards, persons at risk, existing and additional controls; assign actions with owners and dates |
+| **5** | **Review your assessment and update if necessary** | Review after incidents, process changes, or at least annually |
+
 ### Hazard Categories
 
 | Category | Examples | Assessment Approach |
@@ -61,28 +73,7 @@ UK health and safety management for MNMUK manufacturing operations, aligned with
 | **Ergonomic** | Repetitive motion, posture, lifting | Workstation assessment |
 | **Electrical** | Shock, arc flash | Electrical safety programme |
 
-### Risk Matrix
-
-```
-              LIKELIHOOD
-              Low    Medium   High
-         ┌────────┬────────┬────────┐
-    High │ Medium │  High  │Critical│
-SEVERITY ├────────┼────────┼────────┤
-  Medium │  Low   │ Medium │  High  │
-         ├────────┼────────┼────────┤
-    Low  │  Low   │  Low   │ Medium │
-         └────────┴────────┴────────┘
-```
-
-### Risk Response
-
-| Risk Level | Response Required | Timeframe |
-|------------|-------------------|-----------|
-| **Critical** | Stop work, immediate action | Immediate |
-| **High** | Implement controls before work | Within 24 hours |
-| **Medium** | Plan and implement controls | Within 1 week |
-| **Low** | Document and monitor | Ongoing |
+### Risk Matrix (Step 3)
 
 ## PPE Requirements
 

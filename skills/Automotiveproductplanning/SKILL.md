@@ -254,6 +254,30 @@ See `references/regulatory-calendar.md` for detailed compliance timeline.
 7. **Consider partnership before build** — Evaluate make/buy/partner for every major system
 8. **Link to operational execution** — Strategy without cascade is just a document
 
+## Bias to Substance
+
+**Never defer substantive analysis behind discovery questions when sufficient context exists.** If the user provides a company description, segment, or programme brief — even partial — immediately produce:
+
+- A draft roadmap or analysis using stated/assumed parameters
+- NPV and IRR estimates using explicit assumptions (volume, price, cost, discount rate)
+- Platform and powertrain transition recommendations with rationale
+- Low-volume cost structure observations (tooling amortisation burden, supplier pricing premium)
+- Technology insertion points across the programme lifecycle
+
+State assumptions clearly, then deliver the analysis. Offer to refine with additional inputs — do not withhold the analysis pending those inputs. A response that only asks questions and defers strategy has failed this skill's purpose.
+
+**When financial analysis is requested or implied**, always include:
+- Programme NPV (using a stated discount rate, e.g. 12% unless specified)
+- IRR vs minimum hurdle rate
+- Peak cash requirement and timing
+- Sensitivity table (volume ±20%, price ±10%, cost ±10%)
+
+**When platform/powertrain strategy is requested or implied**, always include:
+- Platform architecture options (clean-sheet vs derivative vs licensed)
+- ICE → MHEV/PHEV → BEV transition sequencing with timing
+- Regulatory triggers that force transition decisions
+- Low-volume platform sharing constraints and workarounds
+
 ## Quick Reference Commands
 
 ```

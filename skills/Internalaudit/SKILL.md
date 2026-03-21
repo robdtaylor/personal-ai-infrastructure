@@ -27,12 +27,15 @@ The organization shall:
 
 ### Types of Internal Audits
 
+IATF 16949 **requires three types** of internal audit (clauses 9.2.2.2–9.2.2.4):
+
 | Audit Type | Focus | Frequency | Reference |
 |------------|-------|-----------|-----------|
-| QMS Audit | Management system conformance | Annual minimum per clause | 9.2.2.2 |
-| Process Audit | Manufacturing process effectiveness | Based on risk, min annual | 9.2.2.3 |
-| Product Audit | Product conformance | Per control plan, min annual | 9.2.2.4 |
-| LPA | Layered process audit | Daily/weekly/monthly | Customer CSR |
+| QMS Audit | Management system conformance to IATF 16949/ISO 9001 | Annual minimum per clause | 9.2.2.2 |
+| Process Audit | Manufacturing process effectiveness (process approach) | Based on risk, min annual | 9.2.2.3 |
+| Product Audit | Product conformance at production/delivery stages | Per control plan, min annual | 9.2.2.4 |
+
+> **Note:** Layered Process Audits (LPA) are **not** a standalone IATF 16949 requirement. They are a **customer-specific requirement (CSR)** from certain OEMs (e.g., GM, Ford, Stellantis). They must be implemented when required by customer CSRs but are separate from the three IATF-mandated audit types above.
 
 ---
 

@@ -159,9 +159,15 @@ Overhead Rate:                    £40/machine hour
 
 | Element | Cost | % |
 |---------|------|---|
-| Material | £[X.XX] | [X]% |
-| Conversion | £[X.XX] | [X]% |
-| **Standard Cost** | **£[X.XX]** | 100% |
+| Material (incl. scrap/yield loss) | £[X.XX] | [X]% |
+| Conversion (machining + setup amortised) | £[X.XX] | [X]% |
+| Inspection / Quality | £[X.XX] | [X]% |
+| General Overhead Allocation (facility, indirect costs) | £[X.XX] | [X]% |
+| **Standard Cost (Manufacturing)** | **£[X.XX]** | [X]% |
+| SG&A + Profit Margin (e.g. 25%) | £[X.XX] | [X]% |
+| **Total Selling Price** | **£[X.XX]** | 100% |
+
+> **Note:** Always include general overhead allocation (facility rent, rates, indirect labour absorption) as a distinct line item, and always show target selling price = Standard Cost ÷ (1 − margin%) to confirm commercial viability.
 ```
 
 ### Yield and Scrap Impact

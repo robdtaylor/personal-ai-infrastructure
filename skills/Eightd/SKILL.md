@@ -5,6 +5,25 @@ description: Structured 8D problem solving for customer complaints and quality i
 
 # 8D Problem Solving Skill
 
+## CRITICAL REQUIREMENT: Complete All Phases
+
+When generating an 8D report, you MUST include ALL nine phases (D0 through D8) in every response. Never truncate or omit phases. If the response would be long, still complete all phases — use concise language but include every discipline. A partial 8D report is invalid.
+
+**Mandatory phases checklist for every 8D report output:**
+- D0: Emergency Response Actions
+- D1: Team Formation
+- D2: Problem Description (with IS/IS NOT)
+- D3: Interim Containment Actions + Escape Point
+- D4: Root Cause Analysis (occurrence AND detection)
+- D5: Permanent Corrective Actions
+- D6: Implementation and Verification
+- D7: Systemic Prevention
+- D8: Team Recognition and Closure
+
+**CONDENSED FORMAT RULE:** When generating an 8D report, write each phase in 3-6 bullet points maximum. Do NOT use elaborate multi-column tables — use simple prose or brief bullets. This keeps total length manageable so ALL phases D0–D8 are always included in a single response. Never stop writing before D8 is complete. If you are generating a long response and feel you are running out of space, shorten earlier phases to make room — but D8 MUST always be the final section written, fully completed. An 8D report that ends before D8 is a critical failure.
+
+**NO PLACEHOLDERS RULE:** Every field must be populated with real, specific content derived from the user's input. Never output brackets like [PART NUMBER] or [TBD] — if information is missing, make a reasonable inference and note the assumption clearly (e.g., "Assumed: thread spec M12×1.75 based on typical application"). A template with empty fields is not an 8D report. The IS/IS NOT analysis in D2 must contain actual specific values for What, Where, When, and Extent — never leave cells empty, never use ⚠️ markers or "unknown" labels, never ask the user to fill in the data later. If a dimension or quantity is not stated, derive a plausible specific value from context and label it as assumed. A D2 section that withholds values pending more information is a failing response.
+
 ## Overview
 
 The 8D (Eight Disciplines) methodology is a team-based problem-solving process for identifying, correcting, and eliminating recurring problems. Originally developed by Ford Motor Company, it is now the automotive industry standard for customer complaint resolution and internal quality problem solving.
@@ -299,106 +318,36 @@ Before implementing corrective actions:
 
 ## D6: Implement and Verify Corrective Actions
 
-### Implementation Steps
+- Implement each PCA per owner and due date; confirm completion in writing
+- Verify implementation (did we do it correctly?) then validate effectiveness (did it work?)
+- Collect before/after data — control charts, PPM, Cpk — over 1–3 months
+- Update WI, Control Plan, FMEA to reflect changes; retain records
 
-1. **Plan** - Detailed implementation plan
-2. **Communicate** - Notify all affected parties
-3. **Train** - Train operators on changes
-4. **Execute** - Implement changes
-5. **Verify** - Confirm actions completed
-6. **Validate** - Confirm actions are effective
-
-### Verification vs Validation
-
-| Verification | Validation |
-|--------------|------------|
-| Did we implement the action correctly? | Did the action solve the problem? |
-| Check implementation | Check effectiveness |
-| Immediate | Over time |
-
-### Effectiveness Verification
-
-| Method | Description | Duration |
-|--------|-------------|----------|
-| Before/After comparison | Metric improvement | 1-3 months data |
-| Control chart | Process stability | 25+ subgroups |
-| Capability study | Cpk improvement | Per standard |
-| Audit | Process compliance | Scheduled |
-| Zero defects | No recurrence | 3-6 months |
-
-### D6 Outputs
-
-- All corrective actions implemented
-- Implementation verification completed
-- Effectiveness validation initiated
-- Updated documentation (WI, Control Plan, FMEA)
+**D6 Outputs:** Actions implemented, effectiveness data collected, documents updated.
 
 ---
 
 ## D7: Prevent Recurrence
 
-### Systemic Prevention Actions
+- Update PFMEA: add new failure mode, revise S/O/D ratings, add new controls
+- Update Control Plan: add/modify inspection steps and reaction plan
+- Revise Work Instructions: embed process changes permanently
+- Retrain operators and quality staff on changes
+- Document Lessons Learned; deploy horizontally to similar parts/processes/suppliers
 
-| System | Update Required |
-|--------|-----------------|
-| **PFMEA** | Add failure mode, update S/O/D, add controls |
-| **Control Plan** | Add/modify inspection, update reaction plan |
-| **Work Instructions** | Incorporate process changes |
-| **Training** | Update training materials, retrain |
-| **Lessons Learned** | Document for future reference |
-| **Similar Products** | Apply to similar parts/processes |
-
-### Horizontal Deployment
-
-Apply learning across:
-- Similar parts on same equipment
-- Similar processes in other areas
-- Similar failure modes in PFMEA
-- Supplier processes if applicable
-
-### D7 Outputs
-
-- FMEA updated with new failure mode
-- Control Plan updated
-- Work instructions revised
-- Training completed
-- Lessons learned documented
-- Horizontal deployment completed
+**D7 Outputs:** PFMEA updated, Control Plan updated, WI revised, training done, lessons learned filed, horizontal deployment complete.
 
 ---
 
 ## D8: Recognise Team and Close
 
-### Closure Criteria
+- Confirm all closure criteria met: root cause verified, PCAs implemented and effective, documents updated, training complete, customer satisfied
+- Obtain customer acceptance of 8D closure (if customer complaint)
+- Formally recognise team contribution — acknowledge individuals, share success with organisation
+- Archive completed 8D report in quality records (minimum 3 years per IATF 16949)
+- Close 8D number in tracking system
 
-- [ ] Root cause verified
-- [ ] All corrective actions implemented
-- [ ] Effectiveness verified (no recurrence period)
-- [ ] FMEA/Control Plan updated
-- [ ] Work instructions updated
-- [ ] Training completed
-- [ ] Customer accepts closure (if customer complaint)
-- [ ] Lessons learned documented
-
-### Team Recognition
-
-- Acknowledge team contribution
-- Share success with organisation
-- Consider formal recognition programme
-
-### 8D Archive
-
-Retain 8D reports for:
-- Customer-required retention period
-- Minimum 3 years per IATF 16949
-- Accessible for reference and audits
-
-### D8 Outputs
-
-- 8D report complete and approved
-- Customer acceptance (if applicable)
-- Archive in quality records
-- Team recognised
+**D8 Outputs:** 8D report approved and archived, customer acceptance received, team recognised, report closed.
 
 ---
 

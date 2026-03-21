@@ -557,7 +557,13 @@ Key learnings from prototype:
 4. Run first part at reduced feed (50%)
 
 ### After Setup
-1. First-off inspection - all critical dimensions
+1. First-off inspection - all critical dimensions using appropriate measurement equipment:
+   - Calipers (digital vernier) for general dimensions
+   - Micrometers (OD/ID) for tight tolerances
+   - CMM for complex geometry or GD&T features
+   - Thread gauges (Go/No-Go) for threaded features
+   - Bore gauges for internal diameters
+   - Height gauge for length/step features
 2. Update setup sheet with any changes
 3. Record actual cycle time
 4. Note any issues or improvements

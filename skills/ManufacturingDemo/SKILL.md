@@ -1,6 +1,6 @@
 ---
 name: Manufacturingdemo
-description: Demo manufacturing knowledge base showing how tribal knowledge gets captured and made queryable. USE WHEN demonstrating to potential clients or answering manufacturing process questions.
+description: Demo manufacturing knowledge base for Taylored Systems. Shows how tribal knowledge gets captured and made queryable. USE WHEN user wants a manufacturing demo OR demonstrating to potential clients OR asks about CNC setup, machine error codes, quality inspection, startup procedures, troubleshooting, or safety OR says 'manufacturing demo', 'show me an example', 'how does it work', 'Taylored Systems demo'.
 ---
 
 # Manufacturing Operations Knowledge Base
@@ -8,12 +8,56 @@ description: Demo manufacturing knowledge base showing how tribal knowledge gets
 **Company:** Demo Manufacturing Ltd (Example)
 **Last Updated:** 2026-01-11
 **Knowledge Source:** Captured from shop floor experts
+**Powered by:** Taylored Systems — turning tribal knowledge into queryable AI
+
+This demonstrates how **Taylored Systems** turns expert experience into queryable, AI-accessible tribal knowledge — your team's know-how, instantly searchable. Taylored Systems captures the unwritten expertise that lives in your team's heads and makes it available to every operator, every shift, instantly.
+
+---
+
+## Workflow Routing
+
+This skill answers queries directly from its embedded knowledge base. Route to the relevant section based on query type:
+
+| Query Type | Keywords | Section |
+|------------|----------|---------|
+| **CNC Setup** | "set up", "speeds", "feeds", "aluminium", "steel", "tooling" | §1: CNC Machine Setup |
+| **Quality Control** | "inspection", "first-off", "CMM", "tolerance", "reject", "incoming" | §2: Quality Control |
+| **Machine Errors** | "error code", "E-47", "alarm", "fault", "not working" | §3: Machine Error Codes |
+| **Startup/Shutdown** | "morning", "startup", "checklist", "end of shift", "daily" | §4: Daily Startup |
+| **Safety** | "PPE", "safety", "emergency", "fire", "injury", "accident" | §5: Safety |
+| **Troubleshooting** | "problem", "chatter", "oversize", "rough finish", "tool breakage" | §6: Troubleshooting |
+
+## Examples
+
+**Example 1: New operator setup question**
+```
+User: "How do I set up the CNC for aluminium?"
+→ Routes to §1.1 (Aluminium Setup, Haas VF-2)
+→ Returns step-by-step: torque spec (45 Nm), work offset procedure, speed/feed tables
+→ Includes Dave's tribal tip: 7075 needs 20% speed reduction vs 6061
+```
+
+**Example 2: Machine fault diagnosis**
+```
+User: "Machine 3 is showing error code E-47, what do I do?"
+→ Routes to §3.1 (Haas VF-2 Error Codes)
+→ Returns: Spindle overload — stop program, check chip pack/dull tool/excessive DOC
+→ Includes escalation path: Maintenance Ext 247
+```
+
+**Example 3: Client demo of the system**
+```
+User: "Show me how this works — I'm a potential customer"
+→ Presents knowledge base overview and "How To Use This Skill" section
+→ Demonstrates how expert knowledge (Dave's 30 years, Sarah's QC insight) is captured and searchable
+→ Explains: in your real system, all content comes from YOUR team's actual procedures
+```
 
 ---
 
 ## How To Use This Skill
 
-This demonstrates how PAI captures and structures manufacturing knowledge. Staff can ask natural questions like:
+This demonstrates how Taylored Systems captures and structures manufacturing knowledge. Staff can ask natural questions like:
 
 - "How do I set up the CNC for aluminium?"
 - "What's the inspection process for incoming materials?"
@@ -347,8 +391,8 @@ Try these first:
 
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
-| 1.0 | 2026-01-11 | Initial demo version | PAI |
+| 1.0 | 2026-01-11 | Initial demo version | Taylored Systems |
 
 ---
 
-*This is a demonstration skill. In a real implementation, all content would be captured from YOUR team, YOUR equipment, YOUR procedures.*
+*This is a Taylored Systems demonstration skill. In a real implementation, all content would be captured from YOUR team, YOUR equipment, YOUR procedures — structured and delivered by Taylored Systems so your tribal knowledge is never lost.*
