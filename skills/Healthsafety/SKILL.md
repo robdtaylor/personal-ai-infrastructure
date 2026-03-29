@@ -1,6 +1,7 @@
 ---
 name: Healthsafety
 description: UK health and safety management for manufacturing operations. Covers risk assessments, COSHH, PPE, incident reporting, LOTO, manual handling, and emergency procedures. Aligned with UK HSE regulations and IATF 16949 clause 7.1.4. USE WHEN user says 'health and safety', 'risk assessment', 'COSHH', 'PPE', 'accident', 'incident', 'LOTO', 'lockout tagout', 'manual handling', 'emergency procedure', or needs safety compliance guidance.
+effort: medium
 ---
 
 # HealthSafety

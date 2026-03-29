@@ -11,7 +11,7 @@ PAI is a personal AI infrastructure layer that sits on top of Claude Code, provi
 - **Memory System** - Session history, learnings, and signal capture
 - **Custom Commands** - Slash commands for common workflows
 
-This repository contains **38 automotive manufacturing skills** covering IATF 16949 quality management, CNC operations, damper engineering, business operations, and plant management.
+This repository contains **39 automotive manufacturing skills** covering IATF 16949 quality management, CNC operations, damper engineering, business operations, and plant management.
 
 ## Prerequisites
 
@@ -78,7 +78,7 @@ You should see the PAI context load at session start.
 └── settings.json     # Claude Code configuration
 ```
 
-## Skills Included (38)
+## Skills Included (39)
 
 ### IATF 16949 Quality Management
 | Skill | Description |
@@ -141,6 +141,7 @@ You should see the PAI context load at session start.
 | **Algorithm** | Universal 7-phase execution pattern for structured work |
 | **Council** | Multi-perspective deliberation for complex decisions |
 | **Manufacturingdemo** | Demo manufacturing knowledge base |
+| **Marketing** | Marketing content creation and campaign planning for manufacturing businesses |
 
 ## Creating Custom Skills
 

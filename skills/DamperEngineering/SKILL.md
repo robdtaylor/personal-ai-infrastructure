@@ -1,6 +1,7 @@
 ---
 name: Damperengineering
 description: Hydraulic damper design engineering for customer applications. Mechanical and hydraulic engineering, materials selection (aluminium/steel), seal/O-ring design, DSSV valve specification. USE WHEN user says 'damper design', 'application engineering', 'damper spec', 'customer application', 'damping curve', 'valve sizing', 'seal design', 'O-ring', 'slyde ring', or needs to capture customer damper requirements.
+effort: high
 ---
 
 # DamperEngineering

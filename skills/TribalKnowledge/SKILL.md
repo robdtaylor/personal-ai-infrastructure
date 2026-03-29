@@ -1,6 +1,7 @@
 ---
 name: Tribalknowledge
 description: Capture and preserve machinist expertise before it retires. Structured knowledge extraction for CNC operations, troubleshooting, and process optimization. USE WHEN user says 'capture knowledge', 'document expertise', 'what does [name] know', 'troubleshooting tips', 'how do we handle', 'interview machinist', or 'tribal knowledge'.
+effort: medium
 ---
 
 # TribalKnowledge - Expertise Preservation System
@@ -630,6 +631,34 @@ tags:
 ```
 
 ---
+
+## Critical Requirement: Machine-Specific Context
+
+When capturing ANY knowledge entry, you MUST populate machine-specific fields with **concrete, machine-specific details** — not generic machining advice. Generic advice that applies to "any lathe" or "any mill" is a capture failure.
+
+For every entry, explicitly state:
+- **Exact machine model** (e.g., "CITIZEN L20" not just "Swiss lathe")
+- **Machine-specific parameters** (e.g., guide bushing clearance on that specific machine, collet size range, spindle RPM limits for that model)
+- **Machine-specific quirks** (e.g., "This L20's Y-axis has 0.002mm backlash — always approach from the same direction")
+- **Why this differs on THIS machine** vs. other machines in the shop
+
+If the knowledge could apply equally to a different machine, ask: "What makes this specific to [machine]?" and capture that answer before completing the entry.
+
+## Critical Requirement: Produce Actual Knowledge, Not Just Templates
+
+When a user asks to "capture knowledge about [topic]" or provides specific information, **immediately produce a filled-out knowledge entry** using the relevant template with real content — not a blank template for them to fill in later.
+
+**Wrong response:** Return an empty template with `[machine model]`, `[material]`, `[your tip here]` placeholders.
+
+**Correct response:** Use whatever context is available (machine mentioned, problem described, operation named) to produce a populated entry. If details are missing, make reasonable inferences based on MNMUK's machine list and ask targeted follow-up questions AFTER showing a draft entry.
+
+Example: If asked "capture knowledge about chatter on the Swiss machines," produce a filled entry covering the CITIZEN Swiss (Laser Head / LFV models), specific symptoms (audible frequency, surface pattern pitch), likely causes specific to Swiss guide bushing setups, and concrete parameter adjustments — then ask "Does this match what you've seen? What would you add or correct?"
+
+This also means every entry must capture the **WHY** behind each practice, not just the **WHAT**:
+- Not just: "Run 15-minute warm-up"
+- But: "Run 15-minute warm-up **because** the spindle grows ~0.008mm thermally in the first 10 minutes — skipping this causes first-part dimensional failures on tight-tolerance bores"
+
+Knowledge without reasoning is fragile. Always explain the mechanism so future machinists can adapt the rule when conditions change.
 
 ## Commands
 

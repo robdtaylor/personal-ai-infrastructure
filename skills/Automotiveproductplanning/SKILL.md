@@ -1,6 +1,7 @@
 ---
 name: Automotiveproductplanning
 description: Strategic 5-10 year product planning for low-volume sportscar and specialist vehicle manufacturers. Covers new production vehicles, restomods/continuation cars, bespoke commissions, and motorsport programmes. Board-ready financial analysis with NPV/IRR. Integrates with HoshinKanri, SupplyChain, and AutomotiveManufacturing skills. USE WHEN creating product roadmaps, model lifecycle planning, platform strategy, powertrain transitions, competitive positioning, or OEM partnership evaluation.
+effort: high
 ---
 
 # Automotive Product Planning Skill

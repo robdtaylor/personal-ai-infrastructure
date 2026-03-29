@@ -13,6 +13,7 @@ triggers:
   - process for this
   - manufacturing problem
   - operational review
+effort: high
 ---
 
 # Director of Operations - Group Level

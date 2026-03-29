@@ -1,6 +1,7 @@
 ---
 name: Apqpppap
 description: APQP phase gate management and PPAP documentation for automotive product launches. Covers all 5 APQP phases, phase gate checklists, PPAP 18 elements, PSW generation, timing plans, and open issues tracking. USE WHEN user says 'APQP', 'PPAP', 'phase gate', 'product launch', 'PSW', 'PPAP elements', 'launch readiness', 'timing plan', or 'program management'. Integrates with PFMEA, ControlPlan, and MSA skills.
+effort: high
 ---
 
 # APQP/PPAP - Advanced Product Quality Planning & Production Part Approval

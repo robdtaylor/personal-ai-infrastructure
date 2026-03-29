@@ -1,6 +1,7 @@
 ---
 name: Supplychain
 description: Executive-level supply chain expertise for automotive manufacturing. Strategic purchasing, materials management, supplier development, and cost optimization aligned with IATF 16949 requirements.  USE WHEN user says 'supply chain', 'purchasing', 'procurement', 'supplier', 'materials management', 'inventory', 'sourcing', 'vendor', 'BOM cost', 'PPV', 'should cost', 'make vs buy', 'RFQ', 'category management', or needs strategic guidance on automotive supply chain decisions.  Integrates with AutomotiveManufacturing, A3CriticalThinking, and HoshinKanri skills.
+effort: medium
 ---
 
 # Supply Chain Management - Automotive Manufacturing
@@ -261,23 +262,6 @@ Always have alternatives:
 
 **Stage Gate Approach:**
 
-```
-GATE 1: POTENTIAL
-    └── Initial assessment, capability review
-
-GATE 2: QUALIFIED
-    └── Audit passed, sample approved
-
-GATE 3: APPROVED
-    └── PPAP approved, first articles accepted
-
-GATE 4: PREFERRED
-    └── Consistent performance, competitive cost
-
-GATE 5: STRATEGIC
-    └── Joint development, innovation partner
-```
-
 ---
 
 ## Risk Management
@@ -387,3 +371,34 @@ For detailed methodologies, case studies, and advanced strategies:
 
 For templates:
 `ls ~/.claude/skills/SupplyChain/templates/`
+
+## Workflow Routing
+
+| User Request | Workflow | Output |
+|---|---|---|
+| "Negotiate with supplier X" | Negotiation Framework | BATNA analysis, multi-variable strategy |
+| "Create RFQ for [part]" | RFQ Package | Structured RFQ document using template |
+| "Supplier scorecard for [vendor]" | Scorecard Framework | Weighted performance assessment |
+| "Should-cost analysis for [part]" | Should-Cost Model | Cost breakdown by material/conversion/overhead |
+| "Make vs buy for [process]" | Make vs Buy Framework | Decision matrix with recommendation |
+| "Category strategy for [commodity]" | Category Management | Spend analysis, tiering, sourcing strategy |
+| "Reduce BOM cost" | Cost Reduction Levers | Prioritized list of cost reduction opportunities |
+| "Supplier quality issue" | Supplier Development / 8D | Escalation path, containment, corrective action |
+| "Materials planning / inventory" | Materials Planning | ABC analysis, safety stock, replenishment strategy |
+| "Risk assessment for supply base" | Risk Management | Risk matrix, mitigation actions |
+
+---
+
+## Examples
+
+**Supplier negotiation prep:**
+> "Help me prepare for a negotiation with our casting supplier who wants a 10% price increase"
+→ Provides BATNA development, should-cost comparison, multi-variable trade strategy, and walk-away point.
+
+**Total Cost of Ownership analysis:**
+> "We found a cheaper supplier in Eastern Europe — should we switch?"
+→ Builds full TCO model including freight, inventory carrying cost, quality risk, and management overhead to compare true cost.
+
+**Supplier development plan:**
+> "Our key machining supplier is at 800 PPM and 90% OTD — what do we do?"
+→ Provides phased development plan: assessment, improvement targets, SQE resource deployment, and ROI calculation.

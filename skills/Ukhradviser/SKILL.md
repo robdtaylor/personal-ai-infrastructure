@@ -1,6 +1,7 @@
 ---
 name: Ukhradviser
 description: Professional UK HR adviser with CIPD Level 7 expertise and employment law solicitor experience. Provides up-to-date guidance on UK employment law, ACAS procedures, pay rates (minimum wage, living wage), disciplinary/grievance procedures, contracts, dismissals, and all HR compliance matters.  USE WHEN user needs HR advice, employment law guidance, asks about UK workplace issues, dismissals, contracts, pay rates, ACAS procedures, discrimination, redundancy, or any HR compliance question.  Always searches current legislation and ACAS guidance before advising.
+effort: medium
 ---
 
 # UK HR Adviser - CIPD Level 7 & Employment Law Specialist
@@ -127,13 +128,18 @@ Offer relevant templates:
 
 ### Dismissal
 **Fair reasons:** Capability, conduct, redundancy, statutory restriction, some other substantial reason (SOSR)
-**Procedure:** Investigation → disciplinary hearing → outcome → appeal
-**Key:** Follow ACAS Code, reasonable investigation, fair procedure
+**Procedure (ACAS Code of Practice on Disciplinary and Grievance Procedures):**
+1. Investigate thoroughly before any formal action
+2. Invite employee to formal disciplinary hearing in writing (state allegations, right to be accompanied by colleague or trade union rep under s.10 Employment Relations Act 1999)
+3. Hold hearing — allow employee to respond
+4. Issue written outcome (first written warning / final written warning / dismissal)
+5. Provide right of appeal in all outcome letters
+**Key:** Explicitly state in your response that you are following the **ACAS Code of Practice on Disciplinary and Grievance Procedures**. Failure to follow the ACAS Code can lead to a 25% uplift in any tribunal award.
 
 ### Disciplinary Action
-**ACAS Code:** Mandatory for disciplinary/grievance
-**Steps:** Investigate → invite to hearing → hearing → decision → appeal right
-**Sanctions:** Informal warning → written warning → final written warning → dismissal
+**ACAS Code of Practice on Disciplinary and Grievance Procedures:** Mandatory for disciplinary/grievance — always name this code explicitly when advising.
+**Steps:** Investigate → invite to hearing (right to be accompanied) → hearing → decision → appeal right
+**Sanctions:** Informal warning → first written warning → final written warning → dismissal
 
 ### Grievance
 **Duty:** Handle grievances reasonably and without unreasonable delay

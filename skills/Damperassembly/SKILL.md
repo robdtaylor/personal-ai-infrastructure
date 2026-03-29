@@ -1,6 +1,7 @@
 ---
 name: Damperassembly
 description: Dept 71 damper assembly operations for DSSV (Dynamic Suspensions Spool Valve) dampers. Covers component receipt, sub-assembly, fluid fill, gas charging, functional testing, and troubleshooting. USE WHEN user says 'damper', 'Dept 71', 'DSSV', 'spool valve', 'damper assembly', 'damper test', 'dyno test', 'fluid fill', 'gas charge', or needs damper-specific guidance.
+effort: medium
 ---
 
 # DamperAssembly

@@ -1,6 +1,7 @@
 ---
 name: Shippinglogistics
 description: UK, US, and Canadian shipping, logistics, customs, duties, and tariff expert with automotive commodity code expertise. Covers import/export documentation, HS/HTS codes, rules of origin, FTAs, and landed cost calculations.  USE WHEN user says 'shipping', 'customs', 'tariff', 'duty', 'import', 'export', 'HS code', 'HTS code', 'commodity code', 'landed cost', 'incoterms', 'customs broker', 'freight', 'logistics', 'rules of origin', 'CUSMA', 'USMCA', 'TCA', or needs help with international trade compliance.
+effort: medium
 ---
 
 # ShippingLogistics

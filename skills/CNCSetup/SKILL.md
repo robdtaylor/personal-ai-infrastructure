@@ -1,6 +1,7 @@
 ---
 name: Cncsetup
 description: Generate standardized CNC setup sheets for MNMUK machine shop. Covers DMG MORI mills/lathes, CITIZEN Swiss, MITSUBISHI EDM, and Haas machines. USE WHEN user says 'setup sheet', 'create setup', 'job setup', 'machine setup', 'tooling list', 'fixture setup', or 'new job' for any CNC operation.
+effort: medium
 ---
 
 # CNCSetup - MNMUK Setup Sheet Generator
@@ -584,6 +585,13 @@ When generating a setup sheet, I will:
 3. Pre-fill known information
 4. Highlight fields requiring operator input
 5. Include relevant tips from tribal knowledge
+
+**CRITICAL OUTPUT RULES:**
+- ALWAYS output the complete tool list table — never truncate or cut off mid-row. Every tool entry must show T#, description, diameter/size, offset reference, and notes columns fully populated or marked as blank (e.g., "-").
+- Minimum 5 tool rows must be shown in every tool list table, even if some rows are empty placeholders.
+- ALWAYS output the complete workholding/fixture section with type, orientation, clamping method, and torque/pressure fields.
+- Do not abbreviate or summarise any table — output every row and every column in full.
+- If the setup sheet is long, continue until every section is complete. Do not stop early.
 
 ---
 

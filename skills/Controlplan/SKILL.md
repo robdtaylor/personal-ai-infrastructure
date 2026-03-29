@@ -1,6 +1,7 @@
 ---
 name: Controlplan
 description: Generate AIAG-format Control Plans linked to PFMEAs with proper inspection methods, frequencies, and reaction plans. Supports Prototype/Pre-launch/Production phases. USE WHEN user says 'control plan', 'CP', 'inspection plan', 'process control', 'sampling frequency', 'reaction plan', or 'special characteristics'. Integrates with PFMEA, AutomotiveManufacturing, and MSA skills.
+effort: high
 ---
 
 # Control Plan

@@ -1,6 +1,7 @@
 ---
 name: Powerplatform
 description: Generate Power Automate flows from natural language. Reads connector schemas from work repo, outputs deployable solution files. USE WHEN user says 'create flow', 'power automate', 'automate workflow', or describes a business process to automate.
+effort: medium
 ---
 
 # PowerPlatform - Flow Generation Skill
@@ -10,12 +11,6 @@ Generate Power Automate flows from natural language descriptions using connector
 ## Examples
 
 **Example: Simple notification flow**
-```
-User: "Create a flow that sends me a Teams message when I get an email with 'urgent' in the subject"
--> Reads Office365/Teams connector schemas
--> Generates flow JSON with email trigger + Teams action
--> Outputs solution ZIP to work repo
-```
 
 **Example: Approval workflow**
 ```

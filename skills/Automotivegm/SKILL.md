@@ -1,6 +1,7 @@
 ---
 name: Automotivegm
 description: Executive Vice President / General Manager expertise for automotive manufacturing plants. Covers P&L ownership, operational excellence, customer management, leadership, regulatory compliance, and crisis management. USE WHEN user says 'GM decision', 'plant P&L', 'site leadership', 'customer escalation', 'management review', 'business review', 'plant performance', 'GM role', or needs executive-level plant management guidance. Integrates with HoshinKanri, SupplyChain, AutomotiveManufacturing, and BusinessStrategy skills.
+effort: high
 ---
 
 # Automotive General Manager - EVP Level
@@ -129,6 +130,7 @@ description: Executive Vice President / General Manager expertise for automotive
 |---------|---------|
 | Safety & Compliance | YTD incidents, open actions, regulatory status |
 | Quality | Customer PPM, internal PPM, warranty, audits |
+| Audit Results | Internal audit findings, external audit results (customer, registrar, regulatory), open corrective actions status, repeat findings |
 | Delivery | OTD trend, inventory turns, past due aging |
 | Financial | P&L vs budget, margin, cost drivers |
 | Operations | OEE, productivity, major downtime |

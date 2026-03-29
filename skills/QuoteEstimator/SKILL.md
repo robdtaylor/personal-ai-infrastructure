@@ -1,6 +1,7 @@
 ---
 name: Quoteestimator
 description: Rough cycle time and cost estimation for CNC machined parts. Uses MNMUK plant capabilities and standard estimating factors. USE WHEN user says 'quote', 'estimate', 'cycle time', 'how long', 'cost estimate', 'pricing', 'how much to make', or describes a part needing a rough quote.
+effort: medium
 ---
 
 # QuoteEstimator - MNMUK Quoting Support

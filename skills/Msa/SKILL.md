@@ -1,6 +1,7 @@
 ---
 name: Msa
 description: Conduct Gage R&R studies and validate measurement systems per AIAG MSA manual. Covers variable and attribute studies, acceptance criteria, and calculation methods. USE WHEN user says 'MSA', 'gage R&R', 'GR&R', 'measurement system', 'repeatability', 'reproducibility', 'attribute agreement', or 'ndc'. Integrates with ControlPlan, SPC, and AutomotiveManufacturing skills.
+effort: medium
 ---
 
 # Measurement System Analysis (MSA)
@@ -108,9 +109,9 @@ For measurements that produce pass/fail, good/bad, or categorical results
 - Consider: different gage, training, environment
 
 **ndc (Number of Distinct Categories):**
-- Represents how many groups the gage can distinguish
+- Represents the number of non-overlapping confidence intervals that span the product variation
 - ndc ≥5 required for variable data
-- ndc <5 means gage acts more like attribute (good/bad only)
+- ndc <5 means the measurement system cannot adequately distinguish part-to-part variation (acts more like attribute good/bad only)
 
 ---
 

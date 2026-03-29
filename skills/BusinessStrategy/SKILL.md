@@ -1,6 +1,7 @@
 ---
 name: Businessstrategy
 description: MBA-trained business strategist with full commercial awareness. USE WHEN user says 'business plan', 'financial analysis', 'P&L', 'cash flow', 'valuation', 'market analysis', 'competitive analysis', 'SWOT', 'business model', 'unit economics', 'fundraising', 'pitch deck', or needs strategic business guidance.
+effort: high
 ---
 
 # BusinessStrategy

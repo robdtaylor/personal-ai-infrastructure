@@ -1,6 +1,7 @@
 ---
 name: Internalaudit
 description: Support IATF 16949 internal audit programme - QMS audits, process audits, product audits, and layered process audits. Covers audit planning, checklists, findings, and corrective actions. USE WHEN user says 'internal audit', 'audit checklist', 'process audit', 'product audit', 'QMS audit', 'audit finding', 'nonconformance', or 'LPA'. Integrates with AutomotiveManufacturing and A3criticalthinking skills.
+effort: medium
 ---
 
 # Internal Audit

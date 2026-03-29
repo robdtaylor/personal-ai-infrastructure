@@ -1,6 +1,7 @@
 ---
 name: Costengineering
 description: Manufacturing cost accounting, analysis, and reduction for automotive operations. Covers overhead/burden rate calculation, variance analysis, make vs buy decisions, value engineering, and cycle time to cost conversion. USE WHEN user says 'cost analysis', 'overhead rate', 'burden rate', 'variance analysis', 'make vs buy', 'value engineering', 'cost reduction', 'should cost', 'labour rate', or needs manufacturing cost guidance.
+effort: high
 ---
 
 # CostEngineering

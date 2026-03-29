@@ -1,6 +1,7 @@
 ---
 name: Spc
 description: Implement SPC charting, process capability analysis, and control chart interpretation. Covers control chart selection, capability indices, and out-of-control rules. USE WHEN user says 'SPC', 'Cpk', 'Ppk', 'control chart', 'process capability', 'X-bar R', 'statistical control', or 'out of control'. Integrates with ControlPlan, MSA, and AutomotiveManufacturing skills.
+effort: medium
 ---
 
 # Statistical Process Control (SPC)
@@ -145,7 +146,7 @@ LCL = 0
 
 Use Rules 1-4 (Western Electric) as standard. Apply Nelson rules for critical characteristics or detailed analysis.
 
-> **Important:** Western Electric Rule 2 triggers at **8 consecutive points** on one side of the centerline (some references cite 9 — use 8 as the conservative standard). A run of 7 points is a strong warning signal but does not yet meet the rule threshold; 8 or more points on one side IS an out-of-control condition requiring investigation.
+> **Important:** Western Electric Rule 2 triggers at **7 or more consecutive points** on one side of the centerline (some references cite 8 or 9 — the broadly accepted standard is that 7+ points on one side constitutes an out-of-control signal requiring investigation). A run of 7 consecutive points on one side of the centerline IS an out-of-control condition.
 
 ---
 

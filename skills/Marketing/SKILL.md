@@ -1,6 +1,7 @@
 ---
 name: Marketing
 description: Marketing content creation and campaign planning framework. USE WHEN user says 'marketing', 'campaign', 'copy', 'headline', 'landing page', 'email sequence', 'social media', 'brand voice', 'AIDA', 'PAS', 'value proposition', or needs persuasive content.
+effort: medium
 ---
 
 # Marketing
@@ -98,12 +99,35 @@ audience:
 - **Value**: "Free [resource] inside"
 - **Social proof**: "[Number] people already [action]"
 
+### Email Sequence Strategic Order (Critical)
+Always structure nurture sequences in this progression — order matters for conversion:
+1. **Email 1 — Welcome/Value Delivery**: Deliver promised resource, set expectations, quick win
+2. **Email 2 — Social Proof/Case Study**: Establish credibility NOW while interest is high; specific customer result, certification, or data point
+3. **Email 3 — Objections/FAQ/Deeper Positioning**: Address the 3–5 real reasons prospects don't buy; answer "why you over competitors"
+4. **Email 4 — Direct Offer/Conversion CTA**: Hard close with specific offer, deadline, or next step — NOT a "reply with later" graceful exit
+
+> ⚠️ Do NOT swap Email 2 and Email 3. Social proof must come before objection handling. Email 4 must drive a real conversion action.
+
 ### CTAs
 - **Action-oriented**: "Start [Benefit] Now"
 - **Benefit-focused**: "Get My Free [Resource]"
 - **Low-commitment**: "See How It Works"
 - **Urgency**: "Claim Your Spot Before [Deadline]"
 - **Social proof**: "Join [Number] [Audience]"
+
+### Buyer Objection Handling (Required for B2B/High-Consideration Copy)
+When writing copy for any product or service, proactively identify and address realistic buyer objections with **specific proof points** — not vague references to "case studies" or "ROI calculators." Always provide substantive responses even without full product details by using placeholder specifics that demonstrate the pattern:
+
+| Common Objection | Evidence-Based Response Pattern |
+|-----------------|--------------------------------|
+| **Switching costs / disruption** | "Onboarding takes X days; dedicated account manager handles transition; [specific guarantee]" |
+| **Unknown supplier risk** | Lead with certifications (ISO, industry accreditations), years in operation, named clients or sectors served |
+| **Price vs. competitors** | Total cost of ownership argument: "[Competitor] costs less upfront but [specific failure mode] costs £X; our [feature] prevents this" |
+| **Qualification/lead time** | Specific turnaround data: "95% of quotes returned within 24 hours; standard orders ship in X days" |
+| **Capacity concerns** | Concrete capacity metric: "X,000 sq ft facility, Y machines, Z shifts — current utilisation at N%" |
+| **Quality uncertainty** | Named certifications + specific tolerance/accuracy claims + defect rate or rework stats |
+
+> ✅ When generating objection-handling content, always write out the **actual counter-message copy**, not just the category name. Show the specific proof point in the response itself.
 
 ## Integration Points
 

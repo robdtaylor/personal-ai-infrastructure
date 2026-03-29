@@ -1,6 +1,7 @@
 ---
 name: Commercialsales
 description: Customer relationship and contract management for automotive manufacturing. Covers RFQ processing, contract review, customer requirements management, order handling, customer communication, complaint escalation, and satisfaction monitoring per IATF 16949 requirements. USE WHEN user says 'RFQ', 'quotation', 'contract review', 'customer requirements', 'CSR', 'customer complaint', 'customer satisfaction', 'order management', or 'customer communication'. Integrates with QuoteEstimator, Apqpppap, and EightD skills.
+effort: medium
 ---
 
 # CommercialSales - Customer & Contract Management

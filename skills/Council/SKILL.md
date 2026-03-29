@@ -3,6 +3,9 @@ name: Council
 description: Multi-perspective deliberation for complex decisions. Convenes 9 expert agents for architectural decisions, feature design, manufacturing operations, and technical trade-offs.
 version: 1.0.0
 author: PAI
+effort: high
+context: fork
+argument-hint: "decision or question to deliberate"
 triggers:
   - council
   - deliberate
@@ -15,6 +18,7 @@ triggers:
 workflows:
   - convene-council
   - quick-council
+effort: high
 ---
 
 # Council - Multi-Agent Deliberation System
@@ -183,21 +187,9 @@ Each member provides independent analysis without seeing others' input.
    [Analysis]      [Analysis]      [Analysis]      [Analysis]
 ```
 
-**Output format per member:**
-```markdown
-## [Member] Perspective
+**Output format per member (keep concise — 50 words MAX per perspective). Brevity is required. If you find yourself writing more than 50 words for any member, stop and move on.**
 
-**Assessment:** [1-2 sentence summary]
-
-**Key Considerations:**
-1. [Point 1]
-2. [Point 2]
-3. [Point 3]
-
-**Recommendation:** [Specific recommendation]
-
-**Concerns:** [Any reservations or risks]
-```
+> ⚠️ **BEFORE STARTING ROUND 1:** Sketch the Round 3 recommendation block as a placeholder, then fill in Round 1 and Round 2, then finalize Round 3. This ensures the recommendation is never cut off.
 
 ### Round 2: Direct Responses (Sequential)
 
@@ -217,7 +209,11 @@ Members respond to each other's points, identifying agreements and disagreements
 - [Question that emerged from discussion]
 ```
 
-### Round 3: Synthesis
+### Round 3: Synthesis (MANDATORY — THIS IS THE MOST IMPORTANT SECTION)
+
+**CRITICAL RULE:** The council MUST always complete Round 3 and deliver a concrete recommendation. Do NOT end mid-deliberation. Even under uncertainty, commit to a direction (e.g., "Outsource if lead time < 8 weeks, otherwise insource") rather than leaving the decision open. "It depends" without a concrete decision is a failure mode.
+
+**If you are running out of space:** Skip or abbreviate Round 2, but NEVER skip Round 3. The recommendation block below is non-negotiable and must appear in every council response.
 
 Consolidate into unified recommendation with dissenting notes.
 
@@ -254,6 +250,8 @@ Consolidate into unified recommendation with dissenting notes.
 - [Any unresolved disagreements]
 
 **Confidence Level:** [High/Medium/Low]
+
+> ⚠️ **Completion Check:** If you have not written the above recommendation block, you are not done. Complete the deliberation before responding.
 ```
 
 ---

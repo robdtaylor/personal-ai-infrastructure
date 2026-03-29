@@ -1,6 +1,7 @@
 ---
 name: Eightd
 description: Structured 8D problem solving for customer complaints and quality issues. D0-D8 phases with containment, root cause analysis, and escape point identification. USE WHEN user says '8D', 'eight disciplines', 'customer complaint', 'corrective action', 'root cause analysis', 'containment', 'escape point', or 'problem solving report'.
+effort: high
 ---
 
 # 8D Problem Solving Skill
@@ -23,6 +24,10 @@ When generating an 8D report, you MUST include ALL nine phases (D0 through D8) i
 **CONDENSED FORMAT RULE:** When generating an 8D report, write each phase in 3-6 bullet points maximum. Do NOT use elaborate multi-column tables — use simple prose or brief bullets. This keeps total length manageable so ALL phases D0–D8 are always included in a single response. Never stop writing before D8 is complete. If you are generating a long response and feel you are running out of space, shorten earlier phases to make room — but D8 MUST always be the final section written, fully completed. An 8D report that ends before D8 is a critical failure.
 
 **NO PLACEHOLDERS RULE:** Every field must be populated with real, specific content derived from the user's input. Never output brackets like [PART NUMBER] or [TBD] — if information is missing, make a reasonable inference and note the assumption clearly (e.g., "Assumed: thread spec M12×1.75 based on typical application"). A template with empty fields is not an 8D report. The IS/IS NOT analysis in D2 must contain actual specific values for What, Where, When, and Extent — never leave cells empty, never use ⚠️ markers or "unknown" labels, never ask the user to fill in the data later. If a dimension or quantity is not stated, derive a plausible specific value from context and label it as assumed. A D2 section that withholds values pending more information is a failing response.
+
+**NEVER REQUEST INFORMATION BEFORE GENERATING RULE:** When a user describes a problem or asks for an 8D report, you MUST immediately generate the full D0–D8 report using whatever information is provided. Do NOT ask clarifying questions first. Do NOT present a list of questions requesting the user to supply data before you begin. Use assumed/inferred values for any missing details and label them as assumptions. A response that asks "please provide the following information" instead of generating the 8D report is a critical failure. If the user provides even a brief problem description, that is sufficient to generate a complete 8D report.
+
+**D6–D8 TRUNCATION PREVENTION:** These three phases are the most commonly truncated. As you write D5, actively monitor response length. If D5 is growing long, cut it short — D6, D7, and D8 are non-negotiable. After completing D5, you must write D6, then D7, then D8 in sequence. Do not stop. Do not summarise with "phases D6–D8 follow the standard template." Write each phase fully. The response is invalid if it ends before D8 closure text is written.
 
 ## Overview
 
@@ -271,6 +276,8 @@ Before releasing containment:
 
 ## D5: Develop Corrective Actions
 
+**⚠ WORD BUDGET: D5 content MUST NOT exceed 80 words total. Stop writing D5 immediately when you approach 80 words. D6, D7, and D8 MUST be written after D5 — they are more important than a complete D5. After writing D5, your very next characters must be "## D6".**
+
 ### Corrective Action Types
 
 | Type | Addresses | Example |
@@ -307,16 +314,17 @@ Before implementing corrective actions:
 - Update PFMEA with new information
 - Validate action doesn't create new problems
 
-### D5 Outputs
+**D5 Outputs:** Corrective actions with owners/dates, risk assessed, PFMEA and Control Plan updates identified.
 
-- List of corrective actions with owners and dates
-- Risk assessment of each action
-- PFMEA updates identified
-- Control Plan updates identified
+---
+
+**⚠ MANDATORY CONTINUATION: You MUST now write D6, D7, and D8. Do not stop. Do not summarise. Write "## D6" as your next line.**
 
 ---
 
 ## D6: Implement and Verify Corrective Actions
+
+**⚠ MANDATORY SECTION — must appear in every 8D report output. Do not skip.**
 
 - Implement each PCA per owner and due date; confirm completion in writing
 - Verify implementation (did we do it correctly?) then validate effectiveness (did it work?)
@@ -328,6 +336,8 @@ Before implementing corrective actions:
 ---
 
 ## D7: Prevent Recurrence
+
+**⚠ MANDATORY SECTION — must appear in every 8D report output. Do not skip.**
 
 - Update PFMEA: add new failure mode, revise S/O/D ratings, add new controls
 - Update Control Plan: add/modify inspection steps and reaction plan
@@ -341,6 +351,8 @@ Before implementing corrective actions:
 
 ## D8: Recognise Team and Close
 
+**⚠ MANDATORY FINAL SECTION — the 8D report is NOT complete until D8 is written. If you have written D0 through D7, you MUST now write D8. Do not end the response before this section is fully written.**
+
 - Confirm all closure criteria met: root cause verified, PCAs implemented and effective, documents updated, training complete, customer satisfied
 - Obtain customer acceptance of 8D closure (if customer complaint)
 - Formally recognise team contribution — acknowledge individuals, share success with organisation
@@ -348,6 +360,10 @@ Before implementing corrective actions:
 - Close 8D number in tracking system
 
 **D8 Outputs:** 8D report approved and archived, customer acceptance received, team recognised, report closed.
+
+---
+
+**COMPLETION CHECK: If you have reached this line, you have completed all nine phases (D0–D8). The 8D report is now complete. Do not truncate any earlier phase to reach this point — shorten prose if needed but all nine phase headers must appear.**
 
 ---
 
@@ -402,3 +418,36 @@ Example: `8D-2026-001`
 # 8D review
 "Review this 8D for completeness"
 ```
+
+---
+
+## Workflow Routing
+
+| Input / Trigger | Workflow | Output |
+|-----------------|----------|--------|
+| "Create 8D for..." / "Customer complaint about..." | Full D0–D8 report generation | Complete 8D report with all 9 phases |
+| "5-Why for..." / "Root cause analysis for..." | D4 root cause analysis only | 5-Why chain with verified root cause |
+| "Fishbone for..." / "Ishikawa for..." | Fishbone diagram (6M) | Cause-and-effect diagram in text format |
+| "Containment for..." / "ICA for..." | D3 containment only | Containment action plan + escape point |
+| "Corrective actions for..." / "Fix for root cause..." | D5 corrective action development | Ranked action list with owners/dates |
+| "Review this 8D..." / "Check 8D quality..." | 8D quality audit | Gap list against AIAG criteria |
+| "8D number / format / template" | Template provision | 8D blank template or MNMUK format |
+
+---
+
+## Examples
+
+**Example 1 — Full 8D for customer complaint:**
+> "Create an 8D for customer complaint: supplier received 50 damper assemblies with incorrect gas charge pressure — 85 bar actual vs 110 bar spec. Customer is Multimatic, complaint received 2026-03-20."
+
+Kai generates a complete D0–D8 report with ERA, team, IS/IS NOT analysis, containment actions, 5-Why root cause, corrective actions, and closure criteria — all in a single condensed response.
+
+**Example 2 — Root cause analysis only:**
+> "Help me do a 5-Why analysis: CNC lathe produced 30 parts with OD oversize by 0.08mm — tool offset not applied after tool change."
+
+Kai builds a 5-Why chain from the symptom down to the procedural/training root cause, then identifies both occurrence and detection root causes.
+
+**Example 3 — Corrective action development:**
+> "Our 8D root cause is: no documented procedure requires the operator to verify tool offset after an unplanned tool change. Recommend corrective actions."
+
+Kai provides a ranked corrective action hierarchy (eliminate → poka-yoke → procedure → training), with SMART criteria, owners, and FMEA/Control Plan update requirements.

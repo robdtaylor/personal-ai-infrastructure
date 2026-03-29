@@ -1,6 +1,7 @@
 ---
 name: Maintenancepm
 description: Preventive maintenance schedules for MNMUK machine shop equipment. Covers DMG MORI, CITIZEN, MITSUBISHI EDM, Haas, and support equipment. USE WHEN user asks 'PM schedule', 'maintenance', 'service due', 'machine maintenance', 'what maintenance', or 'TPM checklist'.
+effort: low
 ---
 
 # MaintenancePM - Preventive Maintenance System

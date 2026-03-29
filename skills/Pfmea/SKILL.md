@@ -1,6 +1,7 @@
 ---
 name: Pfmea
 description: Generate AIAG-VDA compliant Process FMEAs with proper Severity/Occurrence/Detection ratings, RPN calculations, and countermeasure recommendations. Covers MNMUK departments (Machine Shop, Damper, LVA, FML). USE WHEN user says 'PFMEA', 'FMEA', 'failure mode', 'risk analysis', 'RPN', 'severity occurrence detection', or 'process risk assessment'. Integrates with AutomotiveManufacturing, ControlPlan, and A3criticalthinking skills.
+effort: high
 ---
 
 # Process FMEA (PFMEA)
@@ -148,6 +149,18 @@ When addressing failure modes, apply controls in this priority order:
 - Marked with diamond or (SC)
 - Requires appropriate controls
 - SPC typically required
+
+## Output Format Requirements
+
+**CRITICAL**: Every PFMEA response MUST be complete. Never truncate or cut off mid-entry. Every failure mode listed MUST have:
+- All causes fully documented
+- S/O/D ratings for EVERY cause row
+- RPN calculated for EVERY row
+- Current controls listed
+- Recommended actions specified
+- After-action ratings included
+
+If the full PFMEA would be very long, reduce the NUMBER of failure modes covered, but each one included MUST be 100% complete. Do not start a failure mode entry you cannot finish.
 
 ## Output Format
 

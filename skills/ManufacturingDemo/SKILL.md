@@ -1,6 +1,7 @@
 ---
 name: Manufacturingdemo
 description: Demo manufacturing knowledge base for Taylored Systems. Shows how tribal knowledge gets captured and made queryable. USE WHEN user wants a manufacturing demo OR demonstrating to potential clients OR asks about CNC setup, machine error codes, quality inspection, startup procedures, troubleshooting, or safety OR says 'manufacturing demo', 'show me an example', 'how does it work', 'Taylored Systems demo'.
+effort: medium
 ---
 
 # Manufacturing Operations Knowledge Base

@@ -1,6 +1,7 @@
 ---
 name: Assemblyoperations
 description: Assembly operations guidance for LVA (Low Volume Assembly) and FML (Full Manufacturing Line) departments. Covers kitting, torque operations, poka-yoke verification, line balancing, SMED changeovers, and serialized traceability. USE WHEN user says 'assembly', 'LVA', 'FML', 'kitting', 'torque operation', 'line balancing', 'takt time', 'poka-yoke', 'work instruction', 'build sequence', or needs assembly process guidance.
+effort: medium
 ---
 
 # AssemblyOperations
@@ -8,6 +9,8 @@ description: Assembly operations guidance for LVA (Low Volume Assembly) and FML 
 Expert guidance for MNMUK assembly departments - Low Volume Assembly (LVA) and Full Manufacturing Line (FML).
 
 ## Workflow Routing
+
+> **Department Note:** LVA = Low Volume Assembly. FML = Final Module Line (also referred to as Full Manufacturing Line) — a paced, takt-driven production line distinct from LVA's high-mix flexible configuration.
 
 | Workflow | Trigger | File |
 |----------|---------|------|
@@ -36,7 +39,7 @@ Expert guidance for MNMUK assembly departments - Low Volume Assembly (LVA) and F
 | Functional Verification | WI-LVA-005 | In-process and final testing |
 | Traceability | WI-LVA-006 | Serial number and build record management |
 
-### FML (Full Manufacturing Line — also referred to as Full Module Line)
+### FML (Full Manufacturing Line / Final Module Line)
 
 **Characteristics:**
 - Paced production line
@@ -161,9 +164,12 @@ Standard format for assembly work instructions:
 [Brief description of operation]
 
 ## Safety Requirements
-- [ ] PPE required: [list]
-- [ ] Hazards: [list]
+- [ ] PPE required: [list — e.g., safety glasses, gloves, steel-toe boots, hearing protection]
+- [ ] Torque tool handling: ensure tool is within calibration, never exceed rated capacity
+- [ ] Hazards: [list — e.g., pinch points, sharp edges, heavy components]
 - [ ] Emergency procedures: [reference]
+
+> **PPE is mandatory** before beginning any assembly operation. Operator must verify and don all specified PPE prior to first step.
 
 ## Materials and Tools
 | Item | Specification | Qty |

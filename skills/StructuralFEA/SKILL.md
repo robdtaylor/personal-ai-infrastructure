@@ -1,6 +1,7 @@
 ---
 name: StructuralFEA
 description: Open source FEA structural analysis for damper and mechanical components. Generates CalculiX input files, guides mesh setup, provides material databases, interprets results. USE WHEN user says 'FEA', 'structural analysis', 'stress analysis', 'buckling', 'modal analysis', 'finite element', 'CalculiX', 'mesh', or needs to validate damper component designs.
+effort: high
 ---
 
 # StructuralFEA
