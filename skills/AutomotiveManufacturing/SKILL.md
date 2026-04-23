@@ -279,3 +279,68 @@ For strategic alignment of manufacturing objectives:
 5. **Traceability**: Link to higher-level documents and standards
 6. **Living Documents**: Build in revision and improvement processes
 7. **Problem Solving**: Use A3 methodology for issues and improvements
+
+
+## Workflow Routing
+
+| Request Type | Workflow | Output |
+|---|---|---|
+| "Write work instruction for [process]" | Work Instruction template | Numbered WI document with all 10 sections |
+| "Create SOP for [department/process]" | SOP template | Standard procedure with flowchart |
+| "APQP documentation" | APQP/PPAP integration | Phase-aligned docs: process flow, PFMEA linkage, control plan, WI |
+| "IATF 16949 clause mapping" | Standards compliance | Turtle diagram + clause-by-clause alignment table |
+| "Business process document" | Business Process template | High-level process with KPIs and risk table |
+| "Inspection/quality procedure" | Quality SOP template | Inspection WI with gage specs and sampling plan |
+| Complex quality issue | → A3CriticalThinking | Load A3 skill for root cause + countermeasure |
+| Supplier requirements | → SupplyChain | Load SupplyChain skill for PPAP/SQE docs |
+
+## Examples
+
+### Example 1: APQP Work Instruction Draft
+
+**Input**: "Draft a work instruction for the damper assembly final inspection station as an APQP deliverable."
+
+**Output structure**:
+```
+WI-QUA-DAMP-001 | Rev A | APQP Phase 4 | PPAP Element 11
+
+Purpose: 100% end-of-line inspection for DSS damper assemblies before shipment.
+
+Safety: Safety glasses mandatory. WARNING: Damper contains pressurised gas — do not disassemble.
+
+Steps:
+1. Retrieve damper from assembly conveyor
+2. Visual: inspect for scoring, leaks, damage — reject on any defect
+3. Rod extension length: 245mm +/-1mm (gauge G-044) — record on TL-DAMP-001
+4. Leak test: submerge 30s in water bath — zero bubbles (CRITICAL: PFMEA #7, RPN 160)
+5. Scan serial number into MES for traceability
+6. Place approved part in shipping rack DS-007
+```
+
+IATF 16949 linkage: clause 8.5.1 (control of production), 8.6 (release), PPAP Element 11.
+
+---
+
+### Example 2: IATF 16949 Clause Mapping for CNC Machining
+
+**Input**: "Map our CNC turning operation to IATF 16949 — what do we need to document?"
+
+| IATF 16949 Clause | Requirement | Required Document |
+|---|---|---|
+| 7.1.3 | Infrastructure | Equipment list, PM schedule |
+| 7.1.5 | Measurement resources | Calibration register, MSA records |
+| 7.2 | Competence | Operator skills matrix, training records |
+| 8.1 | Operational planning | Process FMEA, control plan |
+| 8.5.1 | Control of production | Work instruction WI-MCH-TURN-001, setup sheet |
+| 8.5.2 | Identification & traceability | Part labels, traveller, lot records |
+| 8.6 | Release of products | First-off/last-off inspection record |
+| 9.1.1 | Monitoring & measurement | SPC charts on critical dims (Cpk >= 1.67) |
+| 10.2 | Nonconformity & corrective action | NCR process, 8D for customer complaints |
+
+**Turtle Diagram (CNC Turning)**:
+- Inputs: Raw bar stock (cert req'd), drawing rev B, CNC program P-4567
+- Outputs: Turned component to drawing tolerances, first-off inspection record
+- With What: CNC lathe, tooling per setup sheet, CMM for FAI
+- How: Work instruction, SPC control plan
+- Who: Level 2 machinist min; QE sign-off for new setups
+- Metrics: Cpk >= 1.67 on critical dims, scrap <= 0.5%, OEE >= 80%
