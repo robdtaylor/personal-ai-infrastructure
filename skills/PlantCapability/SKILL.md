@@ -147,7 +147,7 @@ IF cavity/pocket in hardened steel → Spark EDM
 
 ---
 
-## Example Queries and Responses
+## Examples
 
 **Query:** "Can we turn a Ø150mm x 400mm shaft in 316SS to ±0.008mm?"
 **Response:** YES - Use DMG MORI NLX2500 Single Spindle
@@ -171,6 +171,18 @@ IF cavity/pocket in hardened steel → Spark EDM
 - Recommendation: Discuss with engineering - may need post-process grinding or accept ±0.003mm
 
 ---
+
+## Workflow Routing
+
+| Trigger | Action | Notes |
+|---------|--------|-------|
+| "can we make", "feasibility", part with dimensions | Capability Check | Evaluate envelope, tolerance, material against plant list |
+| "which machine", "machine selection", "best machine for" | Machine Selection | Recommend optimal machine with justification |
+| "tolerance capability", "what can we hold", "what tolerance" | Tolerance Query | Report tolerance capabilities by machine category |
+| "hardened material", "hardened steel", "> 50 HRC" | EDM Route | Direct to MITSUBISHI EDM machines |
+| Small part ≤ Ø50mm, high volume | Swiss Route | Direct to CITIZEN sliding head machines |
+| Prototype or urgent one-off | Fast Response | Direct to Haas Mini Mill or Tool Room Lathe |
+
 
 ## Response Format
 
