@@ -595,6 +595,38 @@ When generating a setup sheet, I will:
 
 ---
 
+## Workflow Routing
+
+| Input | Workflow | Output |
+|-------|----------|--------|
+| "setup sheet for NLX2500" | DMG MORI Turning template | Complete turning setup sheet with turret layout, workholding, offsets |
+| "create setup for NMV3000" | DMG MORI 5-Axis Mill template | Complete 5-axis setup sheet with CELOS settings, tool list, datum |
+| "setup for Citizen Swiss" | CITIZEN Swiss template | Swiss setup with guide bushing, LFV settings, gang slide layout |
+| "EDM setup for tool steel" | MITSUBISHI EDM template | Wire or Spark EDM setup with cutting parameters and dielectric settings |
+| "quick Haas setup" | HAAS Fast Response template | Prototype/toolroom setup sheet with simplified tooling list |
+| "fixture setup / workholding" | Any applicable template | Workholding section pre-filled with relevant fixture details |
+
+---
+
+## Examples
+
+**Example 1 — Turning centre setup:**
+> "Create a setup sheet for OP10 on the NLX2500 Twin, turning 316SS bar stock Ø38mm"
+
+Generates a complete CNC Turning setup sheet pre-filled with: machine = NLX2500 Twin, OP10, bar stock Ø38mm 316SS, main/sub spindle workholding section, turret tool list with recommended facing/roughing/finishing positions, HP coolant enabled, first-off critical dimensions table.
+
+**Example 2 — 5-axis milling setup:**
+> "Setup sheet for the DMU50, part number MNM-4521, Op20 fixture on pallet B"
+
+Generates a 5-Axis Milling setup sheet with: part number MNM-4521, machine = DMU50, Op20, pallet B noted in workholding section, G54/G55 WCS selection, full tool list table (T1–T5 minimum), CELOS spindle warm-up and coolant fields, first-off dimension table.
+
+**Example 3 — Citizen Swiss new job:**
+> "New job setup on the Citizen LFV for a Ø12mm titanium screw, complete machined"
+
+Generates a CITIZEN Swiss setup sheet with: machine = Citizen LFV, bar diameter Ø12mm, material = titanium, LFV mode ON (recommended for titanium chip breaking), guide bushing size, main and back-working tool lists, cycle time target field. Includes Swiss-specific tip about guide bushing alignment and oil check.
+
+---
+
 ## Integration with Other Skills
 
 - **PlantCapability**: Verify machine selection before setup

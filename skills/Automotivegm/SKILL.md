@@ -371,6 +371,42 @@ SALES REVENUE
 
 ---
 
+## Examples
+
+**Example 1 — Customer escalation**
+> "A Tier 1 OEM customer just called threatening to pull our business over repeat quality issues on part 4872. How do I handle this?"
+
+Automotivegm responds using the Level 3 escalation protocol: GM-to-GM call within the hour, acknowledge impact, take ownership, commit to specific containment timeline, and schedule an on-site presentation of the corrective action plan within 5 business days.
+
+**Example 2 — Monthly business review prep**
+> "Prepare me for tomorrow's MBR with corporate. We're 3% under margin target."
+
+Automotivegm builds the MBR narrative: opens with Safety, surfaces the margin bridge (volume absorption shortfall + scrap spike in LVA), flags two countermeasures already in flight, and provides talking points that frame the gap as controlled rather than unknown.
+
+**Example 3 — P&L turnaround decision**
+> "Plant has been loss-making for two quarters. What's my diagnostic approach?"
+
+Automotivegm applies the 30/90/180-day turnaround framework: start with financial deep-dive to separate symptoms from root causes, walk every area, assess leadership team honestly, identify the vital-few issues (typically scrap, labor efficiency, overhead) before making any changes.
+
+---
+
+## Workflow Routing
+
+| Trigger | Route to |
+|---------|----------|
+| 'GM decision', 'GM role', 'plant P&L', 'site leadership' | GM Decision Framework |
+| 'customer escalation', 'relationship repair', 'customer threat' | Customer Management → Escalation Response |
+| 'management review', 'business review', 'MBR', 'monthly review' | Key Metrics Dashboard → Monthly Business Review |
+| 'plant performance', 'P&L analysis', 'margin', 'cost driver' | P&L Management |
+| 'crisis', 'incident', 'recall', 'line-down', 'fire' | Crisis Management |
+| 'team', 'leadership', 'hire', 'develop', 'succession' | Leadership Essentials |
+| 'strategy', 'hoshin', 'cascade', 'policy deployment' | → HoshinKanri skill |
+| 'supply chain', 'supplier', 'make vs buy', 'sourcing' | → SupplyChain skill |
+| 'quality', 'IATF', 'APQP', 'PPAP', 'audit' | → AutomotiveManufacturing skill |
+| 'business plan', 'market analysis', 'competitive' | → BusinessStrategy skill |
+
+---
+
 ## Extended Context
 
 For comprehensive methodologies, case studies, and detailed frameworks:

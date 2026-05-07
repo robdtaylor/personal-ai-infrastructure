@@ -279,6 +279,38 @@ State assumptions clearly, then deliver the analysis. Offer to refine with addit
 - Regulatory triggers that force transition decisions
 - Low-volume platform sharing constraints and workarounds
 
+## Workflow Routing
+
+| Input | Route | Output |
+|-------|-------|--------|
+| "Create 5-year product plan for [company]" | Full 8-phase cycle | Executive summary + roadmap + financials |
+| "Analyse competitive positioning for [segment]" | Phase 3 Analysis only | Competitive landscape map + positioning matrix |
+| "Evaluate powertrain options for [programme]" | Technology Pathways + Phase 3 | ICE/Hybrid/BEV comparison with regulatory timing |
+| "Model financial returns for [programme]" | Phase 5 Financial Validation | NPV/IRR table + sensitivity analysis + peak cash |
+| "Assess partnership opportunity with [OEM]" | Phase 6 Partnership Assessment | Opportunity matrix + deal structure options |
+| "Cascade product strategy to hoshin" | Phase 8 → HoshinKanri skill | X-Matrix breakthrough objectives |
+| "Create supplier development plan for [programme]" | Phase 8 → SupplyChain skill | PPAP timeline + supplier development plan |
+
+## Examples
+
+**Example 1 — Full 5-year product roadmap for a small sportscar OEM:**
+
+> "Create a 5-year product plan for a UK-based low-volume sportscar manufacturer, ~500 units/year, currently ICE-only, targeting £80k-£150k price band, facing Euro 7 and 2030 UK ICE restrictions."
+
+Response includes: Discovery summary with stated assumptions → Regulatory timeline anchors (Euro 7 July 2025, UK ICE ban 2030) → Roadmap with anchor model refresh (Y1-2), MHEV variant (Y2-3), BEV halo car (Y4-5) → NPV/IRR per programme at 12% discount rate → Sensitivity table (volume ±20%, price ±10%) → Peak cash requirement and gate timing.
+
+**Example 2 — Restomod programme financial model:**
+
+> "Model the financial returns for a continuation car programme: 50 units at £250k each, £8m tooling investment, 3-year build window."
+
+Response includes: Programme NPV at 12% discount = £2.1m, IRR = 34%, payback 2.1 years → Cash flow waterfall (Y0: -£8m tooling, Y1-3: +£4.2m/year revenue at 45% margin) → Sensitivity: volume sensitivity critical — below 38 units NPV turns negative → Recommendation: pre-sell 25 units before committing tooling spend.
+
+**Example 3 — Powertrain transition roadmap:**
+
+> "What's the optimal powertrain transition path for a 2,000 unit/year GT car manufacturer targeting US and European markets through 2032?"
+
+Response includes: ICE (2025-2027) → MHEV compliance bridge (2027-2029, triggered by EU CO2 -55% target) → PHEV for US market flexibility (2028 onwards) → BEV track variant (2030, motorsport tech transfer) → Regulatory trigger map by market → Small-volume exemption thresholds that may defer some requirements → Partnership options for battery supply (licence vs JV vs spot-buy).
+
 ## Quick Reference Commands
 
 ```

@@ -8,17 +8,34 @@ effort: high
 
 ## 📚 PHASE-TRANSITION LEARNING MARKERS
 
-At the end of any phase where you discovered a load-bearing insight (a file you didn't know existed, a constraint that changed your approach, a surprising tool behaviour, a pattern worth reusing), emit ONE line in this exact format before moving to the next phase:
+At the end of any phase where you discovered a load-bearing insight (a file you didn't know existed, a constraint that changed your approach, a surprising tool behaviour, a pattern worth reusing), emit ONE marker before moving to the next phase. **Substitute the bracketed phase name** with the actual phase you just finished — one of: `OBSERVE`, `THINK`, `PLAN`, `BUILD`, `EXECUTE`, `VERIFY`, `ALGORITHM`. Do NOT emit the literal word `PHASE`; the hook discards those.
+
+Worked examples (note: real phase names, not the word PHASE):
 
 ```
-📚 LEARNING [PHASE]: <short title>
-<one or two sentences of context — what, why it matters>
+📚 LEARNING [OBSERVE]: paiupdate URL is stale
+The /paiupdate command's git-archive path returns empty because .gitattributes filters it; clone --depth 1 to /tmp instead.
 ```
 
-`[PHASE]` must be one of: `OBSERVE`, `THINK`, `PLAN`, `BUILD`, `EXECUTE`, `VERIFY`, `ALGORITHM`. The `capture-learnings.ts` hook scans the transcript at session end and writes each marker to `~/.claude/MEMORY/Learning/<PHASE>/`, so these accumulate into a searchable corpus over time.
+```
+📚 LEARNING [PLAN]: split ISC into plan-mode vs execution-mode cleanly
+Plan-mode ISCs are hypotheses about what'll work; execution-mode ISCs are tested invariants. Conflating them blocked refinement.
+```
+
+```
+📚 LEARNING [EXECUTE]: launchd binary paths must be absolute
+PATH isn't inherited from the user shell; reference /opt/homebrew/bin/bun explicitly in plists or jobs silently fail.
+```
+
+```
+📚 LEARNING [ALGORITHM]: compaction at phase boundaries prevented context rot here
+Long OBSERVE phases were poisoning later phases with stale info; explicit handoff summaries fixed it.
+```
+
+The `capture-learnings.ts` hook scans the transcript at session end and writes each marker to `~/.claude/MEMORY/Learning/<PHASE>/`, so these accumulate into a searchable corpus over time.
 
 Rules:
-- Only emit when there is a genuine, non-obvious insight — not for every phase. Quality over quantity. `[ALGORITHM]` is reserved for meta-insights about the Algorithm itself (e.g. "compaction at phase boundaries prevented context rot here").
+- Only emit when there is a genuine, non-obvious insight — not for every phase. Quality over quantity. `[ALGORITHM]` is reserved for meta-insights about the Algorithm itself.
 - Do NOT emit markers for routine completions ("finished OBSERVE", "tests passed"). Routine progress already lives in the transcript.
 - The marker itself is a hint to your future self and to the human. Write it as one would a note in a field journal, not a compliance checkbox.
 
