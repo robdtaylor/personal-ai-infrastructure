@@ -367,6 +367,68 @@ RVC = ((NC - VNM) / NC) × 100
 
 ---
 
+## Workflow Routing
+
+| Trigger | What to do |
+|---------|-----------|
+| "classify [part] / what's the HS / HTS / commodity code for…" | Walk the chapter → heading → subheading hierarchy; emit Conservative + Aggressive + Recommendation; call out any country-specific 8/10-digit suffix and recommend a binding ruling for ongoing volume |
+| "what duty rate / tariff applies to [goods] from [origin] to [destination]?" | Look up MFN rate; check applicable FTA (TCA, CUSMA, CPTPP, UK-Canada); apply Section 232/301 surtaxes if relevant; emit Conservative + Aggressive + Recommendation |
+| "calculate landed cost for [shipment]" | Use the Landed Cost formula; show line-by-line breakdown (FOB → CIF → Duty → VAT/GST → handling); produce both a conservative classification and an optimised classification scenario |
+| "rules of origin for [trade lane]" | Identify wholly-obtained vs tariff-shift vs RVC; if RVC, run both Transaction Value and Net Cost methods; show how UK/EU cumulation or CUSMA labour/steel rules change the answer |
+| "what documents do I need to import / export…" | Pull the country's Standard Import Documents table; add automotive-specific docs (CUSMA cert, EUR.1, IMDS, PPAP); flag any PGA clearance (EPA / DOT / FCC for US) |
+| "duty drawback / refund / inward processing" | Map to the country's relief programme (UK IP / Customs Warehousing, US Drawback / FTZ, Canada Duty Drawback / Duties Relief); state time limits and authorisation requirements |
+| "incoterm advice / who pays customs?" | Use the Incoterms 2020 table; default automotive recommendation = DDP/DAP for finished, FCA/CIF for parts; explain risk/cost transfer point |
+| "Section 232 / 301 / surtax exposure" | Check current 2026 surtax table; identify CUSMA exemption path if applicable; require steel melt-and-pour or aluminum smelt-and-cast country declaration |
+| "binding ruling / advance ruling / BTI" | Recommend when ongoing volume × duty differential > admin cost; cite UK BTI (3yr), US CBP Ruling (until revoked), Canada Advance Ruling (3yr) timelines |
+
+---
+
+## Examples
+
+**Example 1 — UK to EU automotive sensor shipment, rules of origin**
+
+User: "I'm exporting automotive sensors from the UK to a customer in Germany. They want zero duty under the TCA. The sensors are German-made, I add a UK wiring harness here and re-export."
+
+Output (dual-perspective):
+
+🛡️ **Conservative**: Without a value-add analysis, assume processing in the UK is insufficient for tariff shift. Customer pays MFN ~3-4.5%. No EUR.1 issued. Avoids origin fraud risk.
+
+🚀 **Aggressive**: Run an RVC calculation. UK content (labour + harness + testing + packaging) plus EU content from the original sensor counts toward UK origin under TCA cumulation. If combined UK+EU content > the threshold, issue a supplier declaration; customer claims zero duty.
+
+⚖️ **Recommendation**: Run the RVC calculation first. Marginal (45-55%) → conservative. Clearly >55% UK+EU → aggressive with documented evidence.
+
+---
+
+**Example 2 — US import classification with Section 232 exposure**
+
+User: "I'm importing steel mounting brackets for automotive seats from Mexico to the US. What's the right HS code and duty?"
+
+Output (dual-perspective):
+
+🛡️ **Conservative**: Classify as 8708.99.8180 (other motor vehicle parts) at 2.5% MFN. Apply 25% Section 232 derivative-steel surtax. Total exposure ~27.5%. Safest, no penalty risk.
+
+🚀 **Aggressive**: Classify as 9401.90.1085 (seat parts) at 0% MFN. Obtain CUSMA certificate showing ≥75% RVC; Section 232 exempt. Request supplier declaration confirming Mexican melt-and-pour to satisfy the steel rule. Total duty: 0%.
+
+⚖️ **Recommendation**: For ongoing production, pursue the aggressive position. Apply for a CBP binding ruling on the 9401 classification — one-time admin cost yields permanent duty savings.
+
+---
+
+**Example 3 — Canadian landed cost calculation**
+
+User: "I'm importing CAD $10,000 worth of automotive parts (HS 8708.99) from Germany into Canada. International freight is $800. What's my landed cost?"
+
+Output: Landed cost breakdown — Product CAD $10,000 + Freight $800 + Insurance ($55) = CIF $10,855 → Duty (MFN 6%) $651 = $11,506 → GST 5% $575 + brokerage $150 = **CAD $12,231**. Note: Germany has no FTA with Canada — no preferential rate available. Aggressive scenario: route through UK first to claim UK-Canada FTA preferential rate (verify rules of origin not broken). Conservative: stick with MFN.
+
+---
+
+**Example 4 — UK inward processing for component assembly**
+
+User: "We import German bearings, assemble them into UK-made damper modules, and re-export to North America. Can we avoid paying UK duty on the bearings?"
+
+Output: Yes — apply for HMRC Inward Processing Relief authorization. Import the bearings under CPC 51 00 000 duty-free, process in UK, re-export within authorized period. Bond/guarantee required. Records of input-to-output yield must be maintained. Conservative: pay duty up front, claim Duty Drawback on re-export (3-year time limit). Aggressive: IP authorization avoids the cashflow hit entirely, but requires customs guarantee and HMRC audit readiness.
+
+---
+
 ## References
 
 - [UK Trade Tariff](https://trade-tariff.service.gov.uk/find_commodity)

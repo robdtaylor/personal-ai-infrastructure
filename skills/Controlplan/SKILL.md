@@ -266,6 +266,46 @@ Work instructions must reflect Control Plan:
 
 **Load:** `read ~/.claude/skills/Automotivemanufacturing/SKILL.md`
 
+## Workflow Routing
+
+| Trigger | What to do |
+|---------|-----------|
+| "create a control plan for [part / process]" | Pull PFMEA → enumerate ops → classify CCs/SCs → fill all 13 AIAG columns → emit phase-tagged CP markdown using the **Output Format** template above |
+| "what inspection frequency / sample size for [characteristic]?" | Cross-check PFMEA Severity table + Cpk table; recommend the stricter of the two; cite both rules in the answer |
+| "what's the reaction plan for [out-of-spec condition]?" | Match scenario to the Reaction Plan templates (Dimension OOS / Visual / SPC OOC); name responsibilities and timing explicitly — never "contact supervisor" alone |
+| "link PFMEA to control plan" / "verify PFMEA-CP linkage" | Run the Linkage Verification checklist for every CP line; flag any missing failure mode, mismatched CC/SC class, or missing reaction plan |
+| "review / audit my control plan" | Apply the Audit Preparation checklist from `CLAUDE.md` (current rev at point of use, MSA status, reaction-plan evidence, etc.) and report findings as a deficiency list |
+| "prototype / pre-launch / production control plan" | Use the matching phase row in **Control Plan Phases**; default sampling and SPC commitments differ between phases |
+| "special characteristic [CC / SC] — what controls?" | Apply the enhanced control requirements from `CLAUDE.md` (Cpk targets, MSA acceptance, error-proofing, traceability, annual review) |
+
+---
+
+## Examples
+
+**Example 1 — New production control plan from PFMEA**
+
+User: "Create a production control plan for the damper rod machining operation. PFMEA shows OD diameter as a CC with Severity 9."
+
+Output: Production-phase control plan markdown with one operation block — 100% CMM measurement (S=9 → no escape), Cpk ≥1.67 SPC requirement, X-bar/R chart with n=5 subgroups every hour, traceable record via MES, and a Type 1 "Stop and Contain" reaction plan referencing RP-CC-001 (segregate to last good, 100% sort suspect material, first-piece approval before restart).
+
+---
+
+**Example 2 — Sampling frequency from severity + Cpk**
+
+User: "What sample size and frequency for a process characteristic with PFMEA Severity 7 and Cpk 1.45?"
+
+Output: Stricter of the two rules wins. Severity 7-8 row says "100% or n≥5 per hour or per lot"; Cpk 1.33–1.67 says "per shift or setup". Recommendation: n≥5, per hour, X-bar/R SPC. Rationale citing both tables and the rule that high-severity overrides marginal capability advantages.
+
+---
+
+**Example 3 — Reaction plan for an SPC trend, dimension still in spec**
+
+User: "My X-bar chart shows 7 points trending up but everything's still inside tolerance. What's the reaction plan?"
+
+Output: SPC RP-SPC-002. Mark the chart (circle the rule violation, note WECO/Nelson rule number). Continue production since within spec. Investigate assignable cause — tool wear, fixture drift, incoming material. Implement correction. Document cause and action on the chart. Verify next 5 points return to control. Do NOT trigger Type 1 stop-and-contain because the part is still conforming.
+
+---
+
 ## Supplementary Resources
 
 For detailed guidance:
