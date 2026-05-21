@@ -422,7 +422,7 @@ Margin (25-40%): £____
 
 ---
 
-## Example Estimates
+## Examples
 
 ### Example 1: Turned Shaft
 
@@ -482,6 +482,16 @@ Costs (at £85/hr):
 ```
 
 ---
+
+## Workflow Routing
+
+| Trigger | Action |
+|---------|--------|
+| "quote", "estimate", "pricing", "how much to make" | Run full estimation workflow (Steps 1-4) |
+| "cycle time", "how long to make" | Run cycle time estimation only (Steps 1-3) |
+| "rough quote", "ballpark", "sanity check" | Use quick reference tables for rapid ROM estimate |
+| "feasibility", "can we make" | Defer to PlantCapability skill first |
+| "cost per part at qty X" | Apply quantity break multipliers to base cost |
 
 ## Integration
 

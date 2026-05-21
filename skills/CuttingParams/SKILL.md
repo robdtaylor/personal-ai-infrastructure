@@ -18,19 +18,45 @@ effort: low
 
 ---
 
+## Workflow Routing
+
+| User Request | Route |
+|---|---|
+| "feeds and speeds for [material]" | Look up material in turning/milling tables, return Vc + feed range |
+| "what RPM for [diameter] in [material]" | Calculate RPM = (Vc × 318.3) / diameter |
+| "SFM for [material]" | Convert: SFM × 0.3048 = m/min; m/min × 3.28084 = SFM |
+| "DOC for [operation]" | Return DOC column from material table |
+| "help with chatter / tool wear / surface finish" | Route to Troubleshooting Parameters section |
+| "Swiss machine / CITIZEN params" | Route to Swiss Machine Parameters section |
+| "optimize parameters" | Compare current vs table values, suggest adjustments |
+
+---
+
+## Examples
+
+**Example 1 — RPM calculation for 12mm endmill in 316SS:**
+> "What RPM for a 12mm endmill in 316 stainless?"
+> Vc = 90 m/min (starting point), RPM = (90 × 318.3) / 12 = **2,387 RPM**
+> Feed = Fz × flutes × RPM = 0.06 × 5 × 2387 = **716 mm/min**
+
+**Example 2 — Turning parameters for Ti-6Al-4V:**
+> "Feeds and speeds for titanium turning"
+> Roughing: Vc 40–70 m/min, Feed 0.1–0.2 mm/rev, DOC 0.8–2mm
+> Finishing: Vc 55–90 m/min, Feed 0.06–0.1 mm/rev
+> Tool: Uncoated or PVD carbide, high-pressure coolant 70+ bar
+
+**Example 3 — Troubleshooting chatter:**
+> "I'm getting chatter on 4140 steel — what should I adjust?"
+> Check: tool overhang (reduce stickout), try ±20% RPM change, increase feed/DOC,
+> verify workholding rigidity, try smaller nose radius insert
+
+---
+
 ## Core Formulas
 
-### Spindle Speed (RPM)
+### Unit Conversions
 
-```
-RPM = (SFM × 3.82) / Diameter (inches)
-RPM = (Vc × 1000) / (π × Diameter mm)
-RPM = (Vc × 318.3) / Diameter (mm)
-
-Where:
-- SFM = Surface Feet per Minute
-- Vc = Cutting Speed in m/min
-```
+**SFM to m/min (correct formula):**
 
 ### Feed Rate
 

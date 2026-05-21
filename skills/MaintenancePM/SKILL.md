@@ -516,6 +516,40 @@ Target: >95% Availability
 
 ---
 
+## Workflow Routing
+
+| Trigger | Action |
+|---------|--------|
+| "PM schedule for [machine]" | Look up machine section, output relevant interval checklists |
+| "What's due for service?" | Present Maintenance Schedule Summary tables |
+| "Create maintenance checklist" | Generate daily/weekly/monthly checklist for named machine |
+| "TPM checklist" | Output TPM level table + appropriate operator checklist |
+| "Maintenance history" | Provide Maintenance Log Template |
+| "Spare parts / what to stock" | Output Critical Spares table |
+| "MTBF / PM intervals" | Explain MTBF calculation, provide tracking template |
+
+---
+
+## Examples
+
+**Example 1 — PM schedule lookup**
+> "What's the weekly PM for the NLX2500?"
+Responds with the Weekly PM - DMG MORI Turning Centre checklist including chuck pressure, turret indexing, bar feeder, coolant filter, and live tooling checks.
+
+**Example 2 — Upcoming service**
+> "What maintenance is due this month for the CITIZEN Swiss?"
+Responds with the Monthly CITIZEN checklist: full oil tank clean, replace oil filter element, guide bushing check, Z-axis gibs, spindle accuracy, and cabinet cleaning.
+
+**Example 3 — TPM checklist generation**
+> "Generate a daily TPM checklist for the Mitsubishi Wire EDM"
+Responds with the Daily PM - MITSUBISHI Wire EDM checklist covering dielectric level, conductivity, wire path, filter pressure, guides, flushing nozzles, wire tension, and auto-threader.
+
+**Example 4 — MTBF-based interval**
+> "Our NMV3000 has had 4 breakdowns in 2000 hours. What PM interval should we use?"
+Calculates MTBF = 500 hours, recommends PM at 350 hours (70% × MTBF rule), and suggests updating the Monthly PM frequency accordingly.
+
+---
+
 ## Integration
 
 - **PlantCapability:** Factor maintenance windows into capacity
