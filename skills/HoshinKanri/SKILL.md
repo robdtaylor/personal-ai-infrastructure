@@ -215,6 +215,40 @@ Hoshin objectives cascade to:
 
 ---
 
+## Examples
+
+**Example 1 — Create an X-Matrix for a cost reduction target:**
+> "Create an X-Matrix for our 8% BOM cost reduction goal"
+→ Builds a one-page X-Matrix linking the breakthrough objective (8% BOM reduction) to annual department objectives, improvement projects (VA/VE, supplier consolidation, scrap reduction), and KPIs (PPV, FPY, scrap %).
+
+**Example 2 — Set up catchball documentation:**
+> "Prepare catchball documentation for cascading the quality objective to departments"
+→ Generates a catchball record template capturing the proposed objective, departmental counter-proposals, agreed commitments, and named owners at each level.
+
+**Example 3 — Monthly bowling chart review:**
+> "Set up a bowling chart for tracking OEE improvement"
+→ Creates a monthly tracking sheet with target/actual/status rows per month, RAG status logic, and automatic A3 trigger for any RED month.
+
+**Example 4 — Annual Hoshin planning kickoff:**
+> "We need to start our annual Hoshin planning — Group targets just came down"
+→ Guides through the full annual planning sequence: review prior year results, confirm breakthrough objectives from Group, run catchball process, populate X-Matrix, set bowling chart baselines.
+
+---
+
+## Workflow Routing
+
+| Trigger | Workflow | Output |
+|---------|----------|--------|
+| "X-Matrix", "create X-Matrix" | Build X-Matrix | One-page strategy visualization |
+| "catchball", "cascade objectives" | Catchball process | Negotiation record with commitments |
+| "bowling chart", "track KPI" | Bowling chart setup | Monthly tracking sheet with RAG |
+| "monthly review", "hoshin review" | Review meeting | Agenda + A3 trigger list |
+| "A3", "red objective", "countermeasure" | A3 problem solving | Structured A3 document |
+| "annual planning", "hoshin kickoff" | Annual planning | Full planning sequence |
+| "integrate", "IATF", "quality objectives" | Integration mapping | Hoshin ↔ IATF 16949 clause map |
+
+---
+
 ## Extended Context
 
 For comprehensive methodologies and detailed guidance:

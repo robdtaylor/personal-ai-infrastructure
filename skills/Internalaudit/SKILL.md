@@ -347,6 +347,40 @@ Consider:
 
 ---
 
+## Examples
+
+**Plan an audit programme:**
+> "I need to create our annual internal audit schedule for IATF 16949 — what processes should I prioritise and how do I structure the programme?"
+→ Generates risk-based audit schedule covering all QMS processes over the 3-year cycle with frequency guidance.
+
+**Create a process audit checklist:**
+> "Create a turtle diagram-based process audit checklist for our CNC machining area"
+→ Produces structured checklist with inputs, outputs, who, what, how, and KPI sections tailored to CNC machining.
+
+**Document an audit finding:**
+> "I found that 3 operators have no training records for the revised work instruction WI-MS-023 — write up the nonconformance"
+→ Generates a properly structured NCR with requirement reference, objective evidence, classification (Major/Minor), and corrective action timeline.
+
+**Set up an LPA programme:**
+> "We have a Ford CSR requiring layered process audits — help me set up our LPA programme with 4 layers"
+→ Creates LPA structure, sample checklist items, frequency matrix, and metrics tracking approach.
+
+---
+
+## Workflow Routing
+
+| User Intent | Audit Type | Key Outputs |
+|-------------|------------|-------------|
+| "Audit the QMS / system audit" | QMS Audit (9.2.2.2) | Clause-based checklist, audit report |
+| "Audit the machining/welding/assembly process" | Process Audit (9.2.2.3) | Turtle diagram checklist, process findings |
+| "Check product conformance / product audit" | Product Audit (9.2.2.4) | Dimensional/functional checklist, sampling plan |
+| "Daily/layered process audit / LPA" | Layered Process Audit (CSR) | LPA checklist, tier structure, trend metrics |
+| "Plan audit schedule / audit programme" | Audit Planning | Annual schedule, coverage matrix, risk ranking |
+| "Write up a finding / NCR" | Finding Documentation | NCR with evidence, classification, timeline |
+| "Prepare for certification / IATF audit" | Cert Preparation | 6/3/1 month checklists, common findings list |
+
+---
+
 ## Integration with Related Skills
 
 ### AutomotiveManufacturing
