@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 .bun/
+venv/
+.venv/
 
 # Build outputs
 dist/
