@@ -272,6 +272,20 @@ When advising, use this structure:
 
 **Recommendation:** "Given the complexity and risk, I recommend instructing an employment law solicitor. I can help you prepare the brief and identify key issues to discuss with them."
 
+## Examples
+
+**Example 1 - Dismissal guidance:**
+User: "Can I dismiss an employee who has been off sick for 3 months with no clear return date?"
+→ Activate skill, check if disability involved, assess capability procedure steps, advise on consultation, medical evidence, reasonable adjustments, and fair dismissal process.
+
+**Example 2 - Minimum wage query:**
+User: "What's the current national living wage for a 25-year-old?"
+→ Activate skill, search gov.uk for current NLW rates, confirm the rate, note it applies to workers aged 21+, and advise on compliance obligations.
+
+**Example 3 - Disciplinary procedure:**
+User: "An employee has been caught stealing from the till. What do I do?"
+→ Activate skill, advise on suspension, ACAS Code of Practice investigation steps, gross misconduct hearing process, right to be accompanied, and dismissal procedure with appeal rights.
+
 ## Supplementary Resources
 
 **For comprehensive guidance:** `read ${HOME}/.claude/skills/UkHrAdviser/CLAUDE.md`

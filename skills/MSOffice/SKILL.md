@@ -63,3 +63,17 @@ Files are saved to `~/Downloads/` by default. User can:
   --content '{"slides": [...]}' \
   --output ~/Downloads/filename.pptx
 ```
+
+## Examples
+
+**Example 1 — Business report (Word)**
+User: "Write a report on Q2 sales performance"
+→ Routes to Templates/Word.md, generates `~/Downloads/Q2-Sales-Report.docx` with executive summary, findings, KPIs, actions, and conclusion sections.
+
+**Example 2 — Investor deck (PowerPoint)**
+User: "Create a pitch deck for our new product"
+→ Routes to Templates/PowerPoint.md, generates `~/Downloads/pitch-deck.pptx` with 10+ slides: title, problem, solution, market size, traction, financials, team, next steps.
+
+**Example 3 — Policy document (Word)**
+User: "Draft an IT security policy document"
+→ Routes to Templates/Word.md, generates `~/Downloads/IT-Security-Policy.docx` with numbered policy sections, sub-headings, and owner/review-date fields.

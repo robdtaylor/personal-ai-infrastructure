@@ -399,6 +399,41 @@ G = Workholding
 
 ---
 
+## Examples
+
+**Check insert stock:**
+> "Do we have CNMG120408-PM inserts in stock?"
+→ Look up insert code in inventory database, report qty vs. min stock, flag if reorder needed.
+
+**Monthly reorder list:**
+> "What tooling do we need to reorder this week?"
+→ Generate Reorder Report listing all items below minimum stock level with supplier and estimated cost.
+
+**Tool cost analysis:**
+> "What's the insert cost per part for job 1234?"
+→ Pull insert usage log for that job, calculate cost/part by tool station, total vs. target.
+
+**Set up new tool crib inventory:**
+> "We need to set up a proper tool crib tracking system"
+→ Walk through Inventory Database Template, create spreadsheet structure, define location codes.
+
+---
+
+## Workflow Routing
+
+| Trigger | Workflow | Output |
+|---------|----------|--------|
+| "do we have", "in stock", "stock level" | Inventory lookup | Current qty vs. min stock |
+| "reorder", "need to order", "below minimum" | Reorder Report | Itemised reorder list with costs |
+| "cost per part", "tool cost", "insert cost" | Tool Cost Analysis | Cost breakdown per job |
+| "usage", "how many used", "consumption" | Usage Tracking | Insert usage log / monthly summary |
+| "set up", "create", "new system" | Inventory Setup | Database template + location codes |
+| "audit", "count", "stock take" | Monthly Audit | Checklist with discrepancy tracking |
+| "tool life", "insert life", "when to change" | Tool Life Standards | Expected life by material and type |
+| "regrind", "resharpen" | Regrind Tracking | Regrind log with max regrind limits |
+
+---
+
 ## Integration
 
 - **CNCSetup:** Reference tool locations in setup sheets

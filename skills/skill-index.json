@@ -1,8 +1,8 @@
 {
-  "generated": "2026-02-12T20:40:44.150Z",
-  "totalSkills": 38,
+  "generated": "2026-06-07T15:00:00.000Z",
+  "totalSkills": 39,
   "alwaysLoadedCount": 0,
-  "deferredCount": 38,
+  "deferredCount": 39,
   "note": "Automotive manufacturing skills for sharing with colleagues. Filtered from PAI production system.",
   "skills": {
     "automotivemanufacturing": {
@@ -394,6 +394,32 @@
         "manufacturingdemo"
       ],
       "workflows": [],
+      "tier": "deferred"
+    },
+    "marketing": {
+      "name": "Marketing",
+      "path": "Marketing/SKILL.md",
+      "fullDescription": "Marketing content creation and campaign planning framework. USE WHEN user says 'marketing', 'campaign', 'copy', 'headline', 'landing page', 'email sequence', 'social media', 'brand voice', 'AIDA', 'PAS', 'value proposition', or needs persuasive content.",
+      "triggers": [
+        "marketing",
+        "campaign",
+        "copy",
+        "headline",
+        "landing page",
+        "email sequence",
+        "social media",
+        "brand voice",
+        "aida",
+        "pas",
+        "value proposition"
+      ],
+      "workflows": [
+        "Email",
+        "Campaign",
+        "Social",
+        "Landing",
+        "Copy"
+      ],
       "tier": "deferred"
     },
     "quoteestimator": {
