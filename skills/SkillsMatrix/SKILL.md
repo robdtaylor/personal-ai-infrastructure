@@ -400,3 +400,38 @@ Based on: Coverage gaps, business risk, employee development
 - **PlantCapability:** Consider operator availability in machine selection
 - **TribalKnowledge:** Experts (Level 5) are primary knowledge sources
 - **AutomotiveManufacturing:** Supports IATF 16949 Clause 7.2 compliance
+
+---
+
+## Workflow Routing
+
+| User Request | Route To | Notes |
+|---|---|---|
+| "Who can run the NLX2500?" | Machine coverage query | Check by machine name |
+| "What is Dave trained on?" | Employee competency query | Check by operator name |
+| "Create training matrix" | Skills Matrix Template | Generate blank or populated matrix |
+| "Training needs for new hire" | New Hire Onboarding + Training Needs Analysis | Sequential checklist |
+| "Do we have backup for Swiss?" | Coverage Analysis → Single Point of Failure Report | Check min coverage |
+| "Competency gap analysis" | Coverage Analysis + Cross-Training Priority | Full gap report |
+| "Create training record for [name]" | Training Record Template | Fill employee details |
+| "Run practical assessment" | Competency Assessment Checklist | Generate assessment form |
+| "Monthly skills report" | Monthly Skills Report template | Reporting workflow |
+
+---
+
+## Examples
+
+**Example 1 — Coverage check:**
+> "Who can run the NLX2500 if Dave is off sick?"
+
+Uses Coverage Analysis. Checks current Level 3+ operators against the NLX2500 row in the skills matrix. Flags if fewer than 3 competent operators exist (Critical/High risk). Output: list of qualified backup operators plus risk level.
+
+**Example 2 — New hire training plan:**
+> "John starts Monday — he's an experienced CNC turner. Give me a training plan."
+
+Uses New Hire Onboarding template. Skips basic turning orientation (experience noted), prioritises machine-specific competencies (NLX2500/ALX2000), targets Level 3 sign-off within Month 4-6. Output: week-by-week plan with assessment milestones.
+
+**Example 3 — IATF 16949 audit prep:**
+> "Auditor is coming Friday. Are our competency records compliant?"
+
+References IATF 16949 Clause 7.2 requirements: competency definitions, training records, assessments, and revalidation evidence. Generates a compliance checklist and flags any operators missing formal sign-off documentation.
