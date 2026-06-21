@@ -660,6 +660,18 @@ This also means every entry must capture the **WHY** behind each practice, not j
 
 Knowledge without reasoning is fragile. Always explain the mechanism so future machinists can adapt the rule when conditions change.
 
+## Workflow Routing
+
+| User Intent | Trigger Phrase | Workflow |
+|---|---|---|
+| Capture ad-hoc tip | "capture knowledge", "add tip", "quick tip" | Quick Capture template (5 min) |
+| Deep expert session | "interview", "knowledge session", "what does [name] know" | Structured Interview template |
+| Leaving employee | "exit interview", "retiring", "leaving" | Exit Interview Checklist |
+| Look up existing knowledge | "what do we know about", "tips for", "how do we handle" | Search knowledge base in `knowledge/` |
+| Machine troubleshooting | "problem with", "alarm on", "chatter", "surface finish" | Troubleshooting Entry template |
+| Material guidance | "machining [material]", "tips for [material]" | Material-Specific Entry template |
+| Setup guidance | "setup tips", "setup secret", "how to set up" | Operation/Setup Entry template |
+
 ## Commands
 
 - `"Capture knowledge about [topic]"` → Start structured entry
